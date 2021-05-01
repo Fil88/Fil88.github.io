@@ -48,5 +48,9 @@ if (numberOfProcessors < 2) return 0;
 __IMG 1:__ Checking CPU
 
 
+## PPiD Spoofing 
+
+
+## Silecing ETW 
 
 
