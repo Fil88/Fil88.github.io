@@ -1,0 +1,36 @@
+title: "DarkOps"
+author: "test"
+description: "\"Drive defense with offense\""
+permalink: /:title/
+lang: "en"
+excerpt_separator: "\n\n\n"
+date_format: "%B %d, %Y"
+
+title-img: /assets/img/hk.png
+
+# Layout
+
+sidebar: true               # show a sidebar instead of the usual header
+show_excerpts: true          # show article excerpts on the home page
+show_related: true           # show the previous and next links after every post
+show_description: true       # show the site description in the sidebar
+show_title: false            # always keep the site title visible
+minimal: true             # use a dark header
+
+# Menu
+
+navigation:                # accepts {file, title, url, icon, sidebaricon}
+  - {file: "index.html", icon: home}
+  - {file: "notes.md", icon: tools}
+  - {file: "README.md", icon: address-card}
+
+external:                  # shows a footer with social links - for available icons see fontawesome.com/icons
+  - {title: Github, icon: github, url: "https://github.com/Fil88"}
+
+
+comments:
+#  disqus_shortname: ""    # see https://disqus.com/
+#  isso_domain: ""         # see https://posativ.org/isso/
+
+plugins:
+ - jekyll-feed
