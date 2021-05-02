@@ -3,7 +3,7 @@ title: "Notes"
 layout: "post"
 ---
 
-This blog post has been updated based on some tools and techniques from Offensive Security’s PEN-300 course as well ad the CRTO course from Rastamouse. Notable changes have been made in the sections on delegation, inter-forest exploitation, and lateral movement through MSSQL servers. It should be useful in a lot of cases when dealing with Windows / AD exploitation.
+This blog post has been updated based on some tools and techniques from Offensive Security’s PEN-300 course as well ad the CRTO course from Rastamouse. It should be useful in a lot of cases when dealing with Windows / AD exploitation.
 
 ## Enumeration
 
