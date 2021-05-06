@@ -139,7 +139,7 @@ signtool sign /v /f SPC.pfx <executable>
   <img src="/assets/posts/2021-03-01-Windows-Evasion/signedImplant.JPG">
 </p>
 
-__Note: A basic c# implementation and string b64 offuscation
+__Note:__ A basic c# implementation and string b64 offuscation
 
 
 ## Anti analysis defenses
