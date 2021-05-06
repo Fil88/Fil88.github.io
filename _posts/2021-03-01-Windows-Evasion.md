@@ -7,6 +7,8 @@ In modern Windows enterprise environment we often encounter lots of obstacles, w
 Endpoint protection agents (AV, IDS/IPS, EDR, etc.) are getting better and better at this, so this requires an extended effort in finding a way into the system and staying undetected during post-exploitation activities.
 Detection tecnology and endpoint security solutions aims to prevent, detect and stop our malware from being either stored on disk or executed directly from memory. 
 
+
+
 Security products among other things use static security analysis to detect malware at rest (file on disk) this is primarely based on searching for specific bytes pattenrs in the files. 
 This has been widely used and abused during the years so this is why to tend to say that signature detections is dead. It's not dead it's just an annoying aspect we have to deal to as red teamers.
 
@@ -105,19 +107,14 @@ This tool allows you to sign software using either a real code signing cert or f
   <img src="/assets/posts/2021-03-01-Windows-Evasion/lime.JPG">
 </p>
 
-Above we take our implant .exe and sign it using a fake code signing cert from Microsoft.
-
-<p align="center">
-  <img src="/assets/posts/2021-03-01-Windows-Evasion/signedImplant.JPG">
-</p>
 
 
 1) Self signed certificate
 
-We can use the following command to sign our malicous executable with a Microsoft signed certificate. 
+Furthermore, we can also use the following command to sign our malicous executable with a Microsoft signed certificate. 
 Bear is mind this is mostly to pass behind automatic tools. An educated human eye will recognize the spoofed signature applied.
 
-```py
+```cpp
 Self signed CA:
 makecert -r -pe -n "CN = Microsoft Root Certificate Authority 2015,O = Microsoft Corporation,L = Redmond,S = Washington,C = US" -ss CA -sr CurrentUser -a sha256 -cy authority -sky signature -sv CA.pvk CA.cer
 
@@ -129,10 +126,10 @@ pvk2pfx -pvk SPC.pvk -spc SPC.cer -pfx SPC.pfx
 
 Sign binary:
 signtool sign /v /f SPC.pfx <executable>
-```
+``` 
 
 <p align="center">
-  <img src="/assets/posts/2021-03-01-Windows-Evasion/SignedBinary.JPG">
+  <img src="/assets/posts/2021-03-01-Windows-Evasion/signedImplant.JPG">
 </p>
 
 
