@@ -211,27 +211,3 @@ To execute this PowerShell script on the target, go to the Interact CLI, import 
 # Domain Dominance
 
 
-The locations in the "pre-search" are highlighted in green because they are safe (from a privilege escalation perspective). If the name of the DLL doesn't correspond to a DLL which is already loaded in memory or if it's not a __known DLL__, the actual search begins. The program will first try to load it from the application's directory. If it succeeds, the search stops there otherwise it continues with the `C:\Windows\System32` folder and so on...
-
-
-```cpp
-HMODULE hModule = LoadLibrary(argv[1]);
-if (hModule) {
-    wprintf(L"LoadLibrary() OK\n");
-    FreeLibrary(hModule);
-} else {
-    wprintf(L"LoadLibrary() KO - Error: %d\n", GetLastError());
-}
-```
-
-__Scenario 1:__ loading a DLL which exists in the application's directory.
-
-<p align="center">
- <img src="/assets/posts/2020-04-24-windows-dll-hijacking-clarified/02_loadlibrary-appdir.png">
-</p>
-
-
-The program finds the DLL in its directory `C:\MyCustomApp`, that's the first location in the search order so the library is loaded successfully. Everything is fine. :ok_hand:
-
-
-
