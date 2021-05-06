@@ -171,7 +171,7 @@ __IMG 2:__ Checking RAM
 	ULONGLONG uptime = GetTickCount64() / 1000;
 	if (uptime < 1200) return 0; //20 minutes
 ```
-__IMG 3:__ Checking RAM
+__IMG 3:__ Checking UpTime
 
 
 ## Conclusion
