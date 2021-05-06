@@ -90,9 +90,6 @@ From here you land in a new version file where you can start filling out informa
 
 
 
-
-
-
 ## File and code binary Signing
 
 
@@ -104,7 +101,6 @@ This tool allows you to sign software using either a real code signing cert or f
 <p align="center">
   <img src="/assets/posts/2021-03-01-Windows-Evasion/lime.JPG">
 </p>
-
 
 
 1) Self signed certificate
@@ -131,9 +127,15 @@ signtool sign /v /f SPC.pfx <executable>
 </p>
 
 
-## Add AES paylod Encryption
+## Add AES String Encryption
 
 2) `Add AES paylod Encryption`
+
+
+<p align="center">
+  <img src="/assets/posts/2021-03-01-Windows-Evasion/signedImplant.JPG">
+</p>
+
 
 
 ## Anti analysis defenses
@@ -150,6 +152,23 @@ DWORD numberOfProcessors = systemInfo.dwNumberOfProcessors;
 if (numberOfProcessors < 2) return 0;
 ```
 __IMG 1:__ Checking CPU
+
+```cpp
+	MEMORYSTATUSEX memoryStatus;
+	memoryStatus.dwLength = sizeof(memoryStatus);
+	GlobalMemoryStatusEx(&memoryStatus);
+	DWORD RAMMB = memoryStatus.ullTotalPhys / 1024 / 1024;
+	if (RAMMB < 2048) return 0;
+```
+
+__IMG 2:__ Checking RAM
+
+```cpp
+	ULONGLONG uptime = GetTickCount64() / 1000;
+	if (uptime < 1200) return 0; //20 minutes
+```
+__IMG 3:__ Checking RAM
+
 
 ## Conclusion
 
