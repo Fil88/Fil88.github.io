@@ -69,7 +69,7 @@ We can use helium to visualize file's entropy. This is important to remember whe
 In the vast majority of cases, all legitimate binaries on your computer will have some sort of item properties attached to them, let us take FireFox for example:
 
 <p align="center">
-  <img src="/assets/posts/2021-03-01-Windows-Evasion/firefox.JPG">
+  <img src="/assets/posts/2021-03-01-Windows-Evasion/chrome.JPG">
 </p>
 
 It should not come as a surprise that your own compiled payloads are pretty obviously standing out when checking them, and obviously they will also not be signed by default.
@@ -85,7 +85,7 @@ For C++ the workflow on visual studio is slightly different as we will need to a
 </p>
 
 You will land in a new Resource view browser where you can again right click -> add resource select version.
-From here you land in a new version file where you can start filling out stuff. 
+From here you land in a new version file where you can start filling out informations about your dropper. 
 
 
 
