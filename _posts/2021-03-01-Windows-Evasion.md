@@ -135,12 +135,8 @@ signtool sign /v /f SPC.pfx <executable>
 
 
 <p align="center">
-  <img src="/assets/posts/2021-03-01-Windows-Evasion/strcs.JPG">
+  <img src="/assets/posts/2021-03-01-Windows-Evasion/entropy.JPG">
 </p>
-
-
-__Note:__ A basic c# implementation and string b64 offuscation
-
 
 ## Anti analysis defenses
 
