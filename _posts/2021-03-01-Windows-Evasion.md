@@ -132,13 +132,12 @@ signtool sign /v /f SPC.pfx <executable>
 2) `Add AES paylod Encryption`
 
 
-
-
 <p align="center">
   <img src="/assets/posts/2021-03-01-Windows-Evasion/strcs.JPG">
 </p>
 
-__Note:__ A basic base64 string offuscation
+
+__Note:__ A basic c# base64 string obfuscation
 
 ## Anti analysis defenses
 
