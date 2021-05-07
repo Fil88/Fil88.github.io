@@ -135,7 +135,7 @@ signtool sign /v /f SPC.pfx <executable>
 
 
 <p align="center">
-  <img src="/assets/posts/2021-03-01-Windows-Evasion/scrcs.JPG">
+  <img src="/assets/posts/2021-03-01-Windows-Evasion/strcs.JPG">
 </p>
 
 
