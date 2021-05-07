@@ -138,6 +138,8 @@ signtool sign /v /f SPC.pfx <executable>
   <img src="/assets/posts/2021-03-01-Windows-Evasion/strcs.JPG">
 </p>
 
+__Note:__ A basic base64 string offuscation
+
 ## Anti analysis defenses
 
 3) `Anti analysis defenses`
