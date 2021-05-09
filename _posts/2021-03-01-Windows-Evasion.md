@@ -127,11 +127,9 @@ signtool sign /v /f SPC.pfx <executable>
 </p>
 
 
-## Add AES String Encryption
+## String and functions obfuscation
 
-## 1) AES String Encryption 
-
-`Add AES paylod Encryption`
+#### 1) AES String Encryption 
 
 First of all we need the c++ function to apply AES encryption/decryption 
 
@@ -192,7 +190,7 @@ payload[] = { 0x6, 0xea, 0x85, 0x3e, ..... };
 ```
 
 
-We will then decrypt the function pointer before injecting our malocious code. 
+We will then decrypt the function pointer before executing the WriteProcessMemory Win API function. 
 
 ```cpp
 AESDecrypt((char *) sWriteProcessMemory, sizeof(sWriteProcessMemory), key, sizeof(key));
