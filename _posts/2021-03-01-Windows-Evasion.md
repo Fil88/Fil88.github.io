@@ -228,8 +228,9 @@ string opdec = Encoding.UTF8.GetString(openc);
 var pointer = Generic.GetLibraryAddress("kernel32.dll", opdec);
 ```
 
-#### Full example 
+#### Full C# example 
 
+```cpp 
 using System;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -272,6 +273,7 @@ namespace testing D/Invoke
 
     }
 }
+```
 
 
 
