@@ -136,7 +136,6 @@ signtool sign /v /f SPC.pfx <executable>
 First of all we need the function to apply AES encryption/decryption 
 
 ```cpp
-
 //AES ENC
 int AESDecrypt(char * payload, unsigned int payload_len, char * key, size_t keylen) {
         HCRYPTPROV hProv;
