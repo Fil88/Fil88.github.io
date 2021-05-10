@@ -88,10 +88,7 @@ You will land in a new Resource view browser where you can again right click -> 
 From here you land in a new version file where you can start filling out informations about your dropper. 
 
 
-
-
 ## File and code binary Signing
-
 
 You can sign code using a code signing certificate. However, when doing this that would also mean that everything you sign, is immediately traced back to you. 
 So we can use fake code signing as well. The tool I like to use for this is https://github.com/Tylous/Limelighter
