@@ -10,6 +10,7 @@ Detection tecnology and endpoint security solutions aims to prevent, detect and 
 
 
 
+
 Security products among other things use static security analysis to detect malware at rest (file on disk) this is primarely based on searching for specific bytes pattenrs in the files. 
 This has been widely used and abused during the years so this is why to tend to say that signature detections is dead. It's not dead it's just an annoying aspect we have to deal to as red teamers.
 
