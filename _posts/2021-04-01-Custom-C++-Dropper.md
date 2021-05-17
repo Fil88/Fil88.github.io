@@ -43,7 +43,7 @@ Going back to our dropper we will implment the following:
 
 
 
-## Simple Process Injection
+## 1) Simple Process Injection
 
 In regards to CreateRemoteThread() process injection, there are really three (3) main objectives that need to happen:
 
@@ -90,9 +90,8 @@ Looking at our folder we can now see a favicon.ico file (which stored our shellc
   <img src="/assets/posts/2021-04-01-Custom-C++-Dropper/5.JPG">
 </p>
 
-## Add AES paylod Encryption
+## 2) Add AES paylod Encryption
 
-2) `AES paylod Encryption`
 
 One of the main problem with the current dropper is the utilization of well known WinAPI functions. 
 The combination of `Find/Load/LockResource`, `VirtualAlloc`, `RtlMoveMemory`, `VirtualProtect`, and `CreateThread` has been in countless malware for many, many years. 
@@ -158,7 +157,7 @@ As a result, those functions don't show in the import table of the PE file.
 
 
 
-## Anti analysis defenses
+## 3) Anti analysis defenses
 
 3) `Simple Anti analysis defenses`
 
@@ -202,7 +201,7 @@ In the code snipped above we are actually checking the computer uptime time. Thi
 
 
 
-## WrapUp - Final Code
+## 4) WrapUp - Final Code
 
 4) `Final Code`
 Below we can find the full c++ code written for this exercise. 
