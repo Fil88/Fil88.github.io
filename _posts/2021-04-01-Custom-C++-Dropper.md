@@ -123,7 +123,7 @@ First, create a struct of WINAPI function pointer with the name pWriteProcessMem
 ```
 
 Second, create a char array with the function name WriteProcessMemory AES encrypted with a specific key. 
-In this case, the key "yoyo" was used.
+In this case, the key "yoyo" was used. We can load our python script in interacting mode as follow: python -i .\aesCrypt.py
 
 ```cpp
 	c=aesenc("WriteProcessMemory\x00","yoyo")
@@ -153,9 +153,14 @@ Now every time `WriteProcessMemory` is used, we can simply call `pWriteProcessMe
 If we check out PEView or PEStudio and look at the import table, we can't find any of the obfuscated functions. 
 In this case, I obfuscated `WriteProcessMemory` and `LockResource`. 
 
-As a result, those functions don't show in the import table of the PE file.
+As a result, those functions don't show in the import table of the PE file. 
 
+__Note:__ This string encryption technique can be also be leveraged by XOR encryption. On top of that we can 
+one distinct key for each WIN-API. 
 
+<p align="center">
+  <img src="/assets/posts/2021-04-01-Custom-C++-Dropper/xor.JPG">
+</p>
 
 ## 3) Anti analysis defenses
 
