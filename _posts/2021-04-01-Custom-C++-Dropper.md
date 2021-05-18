@@ -43,7 +43,7 @@ Going back to our dropper we will implment the following:
 
 
 
-## 1) Simple Process Injection
+## 1) Introduction to simple Process Injection
 
 In regards to CreateRemoteThread() process injection, there are really three (3) main objectives that need to happen:
 
