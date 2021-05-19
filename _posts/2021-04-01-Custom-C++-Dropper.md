@@ -82,7 +82,7 @@ From the image below we can see all the files that we need to complete this proj
 
 First of all we need to generate our malicious shellcode and store it a raw/bin format as follow. For this example we will use 
 a simple calc.bin file. We will execute our python script agains the calc.bin file to generate the encrypted favicon.ico file levereging the
-hardocded AES key wich in this case will be "Filippo2021". 
+hardocded AES key wich in this case will be "yoyo". 
 
 Looking at our folder we can now see a favicon.ico file (which stored our shellcode from calc.bin)
 
