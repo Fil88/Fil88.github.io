@@ -107,14 +107,14 @@ So in order to accomplish this we will implement the following steps:
 
 2) Create a char array with the function's name AES encrypted
 
-3) Using GetProcAddress and GetModuleHandleA, get the function pointer of the export DLL
+3) Using `GetProcAddress` and `GetModuleHandleA`, get the function pointer of the export DLL
 
 4) Now, call the function pointer created in #1 instead of calling the actual function
 
 
-Let's go through an example. Let's say we want to obfuscate the function WriteProcessMemory.
+Let's go through an example. Let's say we want to obfuscate the function `WriteProcessMemory`.
 
-First, create a struct of WINAPI function pointer with the name pWriteProcessMemory.
+First, create a struct of `WINAPI` function pointer with the name pWriteProcessMemory.
 
 ```cpp
   BOOL (WINAPI * pWriteProcessMemory)(
@@ -126,7 +126,7 @@ First, create a struct of WINAPI function pointer with the name pWriteProcessMem
 );
 ```
 
-Second, create a char array with the function name WriteProcessMemory AES encrypted with a specific key. 
+Second, create a char array with the function name `WriteProcessMemory` AES encrypted with a specific key. 
 In this case, the key "yoyo" was used. We can load our python script in interacting mode as follow: python -i .\aesCrypt.py
 
 ```cpp
@@ -145,7 +145,7 @@ unsigned char sWriteProcessMemory[] = { 0xac, 0x3c, 0xa9, 0x7f, 0x9, 0x25, 0xe2,
 
 ```
 
-Fourth, decrypt and retrieve the function pointer indirectly from kernel32.dll, using `GetProcAddress`.
+Fourth, decrypt and retrieve the function pointer indirectly from `kernel32.dll`, using `GetProcAddress`.
 
 
 ```cpp
