@@ -103,11 +103,11 @@ Although, I had to sink some time researching how to do function obfuscation in 
 
 So in order to accomplish this we will implement the following steps: 
 
-1) Create a __WinAPI__ function pointer struct which has the same parameters as the function to be obfuscated
+- Create a __WinAPI__ function pointer struct which has the same parameters as the function to be obfuscated
 
-2) Create a char array with the function's name AES encrypted
+`Create a char array with the function's name AES encrypted`
 
-3) Using `GetProcAddress` and `GetModuleHandleA`, get the function pointer of the export DLL
+- `Using `GetProcAddress` and `GetModuleHandleA`, get the function pointer of the export DLL`
 
 4) Now, call the function pointer created in #1 instead of calling the actual function
 
@@ -166,7 +166,7 @@ one distinct key for each WIN-API.
   <img src="/assets/posts/2021-04-01-Custom-C++-Dropper/xor.JPG">
 </p>
 
-## 3 Anti analysis defenses
+## 3 Anti analysis defenses basic
 
 
 In order to protect our malware from being analyzed by security engenieer we will add some simple defenses tecniques used to protect our custom dropper. The objectives here, most of the time, is being able to detect if the malware is being opened in a __VirtualEnvironment__ like virtual box or any vistualization software. 
