@@ -103,13 +103,14 @@ Although, I had to sink some time researching how to do function obfuscation in 
 
 So in order to accomplish this we will implement the following steps: 
 
-1) Create a WinAPI function pointer struct which has the same parameters as the function to be obfuscated
+1) Create a __WinAPI__ function pointer struct which has the same parameters as the function to be obfuscated
 
 2) Create a char array with the function's name AES encrypted
 
 3) Using GetProcAddress and GetModuleHandleA, get the function pointer of the export DLL
 
 4) Now, call the function pointer created in #1 instead of calling the actual function
+
 
 Let's go through an example. Let's say we want to obfuscate the function WriteProcessMemory.
 
