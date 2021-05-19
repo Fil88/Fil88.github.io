@@ -105,9 +105,9 @@ So in order to accomplish this we will implement the following steps:
 
 - Create a __WinAPI__ function pointer struct which has the same parameters as the function to be obfuscated
 
-`Create a char array with the function's name AES encrypted`
+- Create a char array with the function's name AES encrypted
 
-- `Using `GetProcAddress` and `GetModuleHandleA`, get the function pointer of the export DLL`
+- Using `GetProcAddress` and `GetModuleHandleA`, get the function pointer of the export DLL
 
 4) Now, call the function pointer created in #1 instead of calling the actual function
 
