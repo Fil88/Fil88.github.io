@@ -3,7 +3,7 @@ title: "Custom C++ Dropper AES-256 ENC"
 layout: "post"
 ---
 
-In this blog post we will code our first curstom dropper written in pure __C++_ code. At the time of writing the custom dropper will not get flagged by Windows Defender and it should pass under the radar of most AV's. 
+In this blog post we will code our first curstom dropper written in pure __C++__ code. At the time of writing the custom dropper will not get flagged by Windows Defender and it should pass under the radar of most AV's. 
 There are other aspects to take into account when attempting to bypass signature based AV, we will try to discuss this briefly towards the end of the blog posts.
 
 
