@@ -43,7 +43,7 @@ Going back to our dropper we will implment the following:
 
 
 
-## 1) Introduction to simple Process Injection
+## 1) Introduction to Process Injection
 
 In regards to CreateRemoteThread() process injection, there are really three (3) main objectives that need to happen:
 
@@ -90,7 +90,7 @@ Looking at our folder we can now see a favicon.ico file (which stored our shellc
   <img src="/assets/posts/2021-04-01-Custom-C++-Dropper/5.JPG">
 </p>
 
-## 2) Add AES paylod Encryption
+## 2 AES paylod Encryption
 
 
 One of the main problem with the current dropper is the utilization of well known WinAPI functions. 
@@ -166,9 +166,8 @@ one distinct key for each WIN-API.
   <img src="/assets/posts/2021-04-01-Custom-C++-Dropper/xor.JPG">
 </p>
 
-## 3) Anti analysis defenses
+## 3 Anti analysis defenses
 
-3) `Simple Anti analysis defenses`
 
 In order to protect our malware from being analyzed by security engenieer we will add some simple defenses tecniques used to protect our custom dropper. The objectives here, most of the time, is being able to detect if the malware is being opened in a __VirtualEnvironment__ like virtual box or any vistualization software. 
 
