@@ -193,12 +193,12 @@ BypassUACCommand cmd.exe "/c powershell -enc [...snip...]"
 
 Just drop a binary in current user folder, will trigger when current user signs in:
 
-```cpp
+```py
 "C:\Users\[USERNAME]\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup"
 ```
 Or in the startup folder, requires administrative privileges but will trigger as SYSTEM on boot and when any user signs on:
 
-```cpp
+```py
 "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp"
 ```
 
