@@ -189,7 +189,7 @@ BypassUACCommand cmd.exe "/c powershell -enc [...snip...]"
 
 # Persistence
 
-###### Classic Startup folder
+##### Classic Startup folder
 
 Just drop a binary in current user folder, will trigger when current user signs in:
 
