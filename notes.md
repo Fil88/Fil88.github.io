@@ -490,5 +490,5 @@ Once the modified C# Monkstager has been downloaded it is possible to add furthe
 - [InvisibilityCloak](https://github.com/xforcered/InvisibilityCloak) Obfuscation toolkit for C# post-exploitation tools that perform basics actions for a C# visual studio project.
 
 
-1. Download the _InvisibilityCloak_ (`regedit.exe`) as an Administrator;
+- [NET-Obfuscate](https://github.com/BinaryScary/NET-Obfuscate) Obfuscate ECMA CIL (.NET IL) assemblies to evade Windows Defender
 
