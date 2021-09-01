@@ -485,8 +485,7 @@ dotnet run
 __Note:__ Please modify the script accordingly with your needs 🚩
 
 
-
-The new Covenant instance will generate the default Grunt using the __Monk__ word. Is up to the user to change the default Covenant Listener Profile. 
+The new Covenant00000000000000000000 instance will generate the default Grunt using the __Monk__ word. Is up to the user to change the default Covenant Listener Profile. 
 Once the modified C# Monkstager has been downloaded it is possible to add further obfuscation using a combination or both of the following tools: 
 
 ```cpp
