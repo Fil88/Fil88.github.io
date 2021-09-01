@@ -339,6 +339,147 @@ First of all we will clone the main Civenant repository into our local machine. 
 __Note:__ Please modify the script accordingly with your needs 🚩
  
 ```sh
+sudo git clone --recurse-submodules https://github.com/ZeroPointSecurity/Covenant.git /home/kali/Desktop/red/Covenant
 
+cd /home/kali/Desktop/red/Covenant/Covenant
+
+mv ./Data/AssemblyReferences/ ../AssemblyReferences/
+mv ./Data/ReferenceSourceLibraries/ ../ReferenceSourceLibraries/
+mv ./Data/EmbeddedResources/ ../EmbeddedResources/
+mv ./Models/Covenant/ ./Models/LazyMonkey/
+mv ./Components/CovenantUsers/ ./Components/LazyMonkUsers/
+mv ./Components/Grunts/ ./Components/Monks/
+mv ./Models/Grunts/ ./Models/Monks/
+mv ./Data/Grunt/GruntBridge/ ./Data/Grunt/MonkBridge/
+mv ./Data/Grunt/GruntHTTP/ ./Data/Grunt/MonkHTTP/
+mv ./Data/Grunt/GruntSMB/ ./Data/Grunt/MonkSMB/
+mv ./Components/GruntTaskings/ ./Components/MonkTaskings/
+mv ./Components/GruntTasks/ ./Components/MonkTasks/
+mv ./Data/Grunt/ ./Data/Monk/
+
+find ./ -type f -print0 | xargs -0 sed -i "s/Grunt/Monk/g"
+find ./ -type f -print0 | xargs -0 sed -i "s/GRUNT/MONK/g"
+find ./ -type f -print0 | xargs -0 sed -i "s/grunt/monk/g"
+#find ./ -type f -print0 | xargs -0 sed -i "s/covenant/lazymonk/g"
+find ./ -type f -print0 | xargs -0 sed -i "s/Covenant/LazyMonk/g"
+find ./ -type f -print0 | xargs -0 sed -i "s/COVENANT/LAZYMONK/g"
+find ./ -type f -print0 | xargs -0 sed -i "s/ExecuteStager/ExcLev1/g"
+#find ./ -type f -print0 | xargs -0 sed -i "s/REPLACE_PROFILE/REP_PROF/g"
+#find ./ -type f -print0 | xargs -0 sed -i "s/REPLACE_PIPE/REP_PIP/g"
+#find ./ -type f -print0 | xargs -0 sed -i "s/GUID/ANGID/g"
+find ./ -type f -print0 | xargs -0 sed -i "s/SetupAES/ConfAES/g"
+find ./ -type f -print0 | xargs -0 sed -i "s/SessionKey/Sekey/g"
+find ./ -type f -print0 | xargs -0 sed -i "s/EncryptedChallenge/EncChall/g"
+find ./ -type f -print0 | xargs -0 sed -i "s/DecryptedChallenges/decryptchall/g"
+find ./ -type f -print0 | xargs -0 sed -i "s/Stage0Body/Body1/g"
+find ./ -type f -print0 | xargs -0 sed -i "s/Stage0Response/Response1/g"
+find ./ -type f -print0 | xargs -0 sed -i "s/Stage0Bytes/Bytes1/g"
+find ./ -type f -print0 | xargs -0 sed -i "s/Stage1Body/Body2/g"
+find ./ -type f -print0 | xargs -0 sed -i "s/Stage1Response/Response2/g"
+find ./ -type f -print0 | xargs -0 sed -i "s/Stage1Bytes/Bytes2/g"
+find ./ -type f -print0 | xargs -0 sed -i "s/Stage2Body/Body3/g"
+find ./ -type f -print0 | xargs -0 sed -i "s/Stage2Response/Response3/g"
+find ./ -type f -print0 | xargs -0 sed -i "s/Stage2Bytes/Bytes3/g"
+find ./ -type f -print0 | xargs -0 sed -i "s/message64str/mesage64str/g"
+find ./ -type f -print0 | xargs -0 sed -i "s/messageBytes/messAgEbytes/g"
+find ./ -type f -print0 | xargs -0 sed -i "s/totalReadBytes/rebytes/g"
+#find ./ -type f -print0 | xargs -0 sed -i "s/inputStream/instr/g"
+#find ./ -type f -print0 | xargs -0 sed -i "s/outputStream/outstr/g"
+find ./ -type f -print0 | xargs -0 sed -i "s/deflateStream/deflatestream/g"
+find ./ -type f -print0 | xargs -0 sed -i "s/memoryStream/memorystream/g"
+find ./ -type f -print0 | xargs -0 sed -i "s/compressedBytes/packdbyt/g"
+find ./ -type f -name "*.cs" -print0 | xargs -0 sed -i "s/REPLACE_/REP_/g"
+find ./ -type f -name "*.cs" -print0 | xargs -0 sed -i "s/_PROFILE_/_PROF_/g"
+find ./ -type f -name "*.cs" -print0 | xargs -0 sed -i "s/_VALIDATE_/_VAL_/g"
+find ./ -type f -name "*.cs" -print0 | xargs -0 sed -i "s/GUID/USERID/g"
+find ./ -type f -name "*.razor" -print0 | xargs -0 sed -i "s/GUID/USERID/g"
+find ./ -type f -name "*.json" -print0 | xargs -0 sed -i "s/GUID/USERID/g"
+find ./ -type f -name "*.yaml" -print0 | xargs -0 sed -i "s/GUID/USERID/g"
+find ./ -type f -name "*.cs" -print0 | xargs -0 sed -i "s/guid/userid/g"
+find ./ -type f -name "*.razor" -print0 | xargs -0 sed -i "s/guid/userid/g"
+find ./ -type f -name "*.json" -print0 | xargs -0 sed -i "s/guid/userid/g"
+find ./ -type f -name "*.yaml" -print0 | xargs -0 sed -i "s/guid/userid/g"
+find ./ -type f -print0 | xargs -0 sed -i "s/ProfileHttp/prohttp/g"
+find ./ -type f -print0 | xargs -0 sed -i "s/baseMessenger/bAsemEsSenger/g"
+
+find ./ -type f -print0 | xargs -0 sed -i "s/PartiallyDecrypted/pdecry/g"
+find ./ -type f -print0 | xargs -0 sed -i "s/FullyDecrypted/fuldecry/g"
+find ./ -type f -print0 | xargs -0 sed -i "s/compressedBytes/packedbytes/g"
+
+find ./ -type f -print0 | xargs -0 sed -i "s/CookieWebClient/MonksWebClient/g"
+#find ./ -type f -print0 | xargs -0 sed -i "s/CookieContainer/KekseContains/g"
+#find ./ -type f -print0 | xargs -0 sed -i "s/GetWebRequest/webreq/g"
+find ./ -type f -print0 | xargs -0 sed -i "s/Jitter/JItter/g"
+find ./ -type f -print0 | xargs -0 sed -i "s/ConnectAttempts/tentativeconn/g"
+find ./ -type f -print0 | xargs -0 sed -i "s/RegisterBody/RegBody/g"
+find ./ -type f -name "*.cs" -print0 | xargs -0 sed -i "s/messenger/messaggio/g"
+find ./ -type f -print0 | xargs -0 sed -i "s/Hello World/Its me, Mario/g"
+find ./ -type f -print0 | xargs -0 sed -i "s/ValidateCert/valCer/g"
+find ./ -type f -print0 | xargs -0 sed -i "s/UseCertPinning/certpin/g"
+find ./ -type f -print0 | xargs -0 sed -i "s/EncryptedMessage/encmsg/g"
+find ./ -type f -print0 | xargs -0 sed -i "s/cookieWebClient/monkwebclient/g"
+find ./ -type f -name "*.cs" -print0 | xargs -0 sed -i "s/aes/cryva/g"
+find ./ -type f -name "*.cs" -print0 | xargs -0 sed -i "s/aes2/cryva2/g"
+find ./ -type f -name "*.cs" -print0 | xargs -0 sed -i "s/array5/ar5/g"
+find ./ -type f -name "*.cs" -print0 | xargs -0 sed -i "s/array6/ar6/g"
+find ./ -type f -name "*.cs" -print0 | xargs -0 sed -i "s/array4/ar4/g"
+find ./ -type f -name "*.cs" -print0 | xargs -0 sed -i "s/array7/ar7/g"
+find ./ -type f -name "*.cs" -print0 | xargs -0 sed -i "s/array1/ar1/g"
+find ./ -type f -name "*.cs" -print0 | xargs -0 sed -i "s/array2/ar2/g"
+find ./ -type f -name "*.cs" -print0 | xargs -0 sed -i "s/array3/ar3/g"
+find ./ -type f -name "*.cs" -print0 | xargs -0 sed -i "s/list1/l1/g"
+find ./ -type f -name "*.cs" -print0 | xargs -0 sed -i "s/list2/l2/g"
+find ./ -type f -name "*.cs" -print0 | xargs -0 sed -i "s/list3/l3/g"
+find ./ -type f -name "*.cs" -print0 | xargs -0 sed -i "s/list4/l4/g"
+find ./ -type f -name "*.cs" -print0 | xargs -0 sed -i "s/list5/l5/g"
+find ./ -type f -name "*.cs" -print0 | xargs -0 sed -i "s/group0/g0/g"
+find ./ -type f -name "*.cs" -print0 | xargs -0 sed -i "s/group1/g1/g"
+find ./ -type f -name "*.cs" -print0 | xargs -0 sed -i "s/group2/g2/g"
+find ./ -type f -name "*.cs" -print0 | xargs -0 sed -i "s/group3/g3/g"
+find ./ -type f -name "*.cs" -print0 | xargs -0 sed -i "s/group4/g4/g"
+find ./ -type f -name "*.cs" -print0 | xargs -0 sed -i "s/group5/g5/g"
+find ./ -type f -name "*.cs" -print0 | xargs -0 sed -i "s/group6/g6/g"
+find ./ -type f -name "*.cs" -print0 | xargs -0 sed -i "s/group7/g7/g"
+find ./ -type f -name "*.cs" -print0 | xargs -0 sed -i "s/group8/g8/g"
+
+
+
+find ./ -type f -name "*Grunt*" | while read FILE ; do
+	newfile="$(echo ${FILE} |sed -e "s/Grunt/Monk/g")";
+	mv "${FILE}" "${newfile}";
+done
+find ./ -type f -name "*GRUNT*" | while read FILE ; do
+	newfile="$(echo ${FILE} |sed -e "s/GRUNT/MONK/g")";
+	mv "${FILE}" "${newfile}";
+done
+
+find ./ -type f -name "*grunt*" | while read FILE ; do
+	newfile="$(echo ${FILE} |sed -e "s/grunt/monk/g")";
+	mv "${FILE}" "${newfile}";
+done
+
+find ./ -type f -name "*Covenant*" | while read FILE ; do
+	newfile="$(echo ${FILE} |sed -e "s/Covenant/LazyMonk/g")";
+	mv "${FILE}" "${newfile}";
+done
+
+find ./ -type f -name "*COVENANT*" | while read FILE ; do
+	newfile="$(echo ${FILE} |sed -e "s/COVENANT/LAZYMONK/g")";
+	mv "${FILE}" "${newfile}";
+done
+
+#find ./ -type f -name "*covenant*" | while read FILE ; do
+#	newfile="$(echo ${FILE} |sed -e "s/covenant/monkcommand/g")";
+#	mv "${FILE}" "${newfile}";
+#done
+
+mv ../AssemblyReferences/ ./Data/ 
+
+mv ../ReferenceSourceLibraries/ ./Data/ 
+
+mv ../EmbeddedResources/ ./Data/ 
+
+dotnet build
+dotnet run
 
 ```
