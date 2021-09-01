@@ -488,7 +488,8 @@ __Note:__ Please modify the script accordingly with your needs 🚩
 The new Covenant instance will generate the default Grunt using the __Monk__ word. Is up to the user to change the default Covenant Listener Profile. 
 Once the modified C# Monkstager has been downloaded it is possible to add further obfuscation using a combination or both of the following tools: 
 
-```py
+```cpp
+Just another way to declare modified strings 
 {""GUID"":""{0}"",""Type"":{1},""Meta"":""{2}"",""IV"":""{3}"",""EncryptedMessage"":""{4}"",""HMAC"":""{5}""}";'
 {""---G-U-I-----D"":""{0}"",""T----y-p-----e"":{1},""---M-e-t----a"":""{2}"",""---I---V---"":""{3}"",""---E--n---cry---pt-e-d-M-e---ss---a-g-e"":""{4}"",""---H-----M--A--C"":""{5}""}".Replace("-","");'
 ```
