@@ -489,6 +489,8 @@ Once the modified C# Monkstager has been downloaded it is possible to add furthe
 
 - [InvisibilityCloak](https://github.com/xforcered/InvisibilityCloak)  
 
+1. Download the _InvisibilityCloak_ (`regedit.exe`) as an Administrator;
+
 
 
 
