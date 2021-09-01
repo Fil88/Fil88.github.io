@@ -487,10 +487,8 @@ __Note:__ Please modify the script accordingly with your needs 🚩
 The new Covenant instance will generate the default Grunt using the __Monk__ word. Is up to the user to change the default Covenant Listener Profile. 
 Once the modified C# Monkstager has been downloaded it is possible to add further obfuscation using a combination or both of the following tools: 
 
-- [InvisibilityCloak](https://github.com/xforcered/InvisibilityCloak)  
+- [InvisibilityCloak](https://github.com/xforcered/InvisibilityCloak) Obfuscation toolkit for C# post-exploitation tools that perform basics actions for a C# visual studio project.
+
 
 1. Download the _InvisibilityCloak_ (`regedit.exe`) as an Administrator;
-
-
-
 
