@@ -336,7 +336,6 @@ proxychains python3 /usr/share/doc/python3-impacket/examples/wmiexec.py -hashes 
 First of all we will clone the main Civenant repository into our local machine. Furthermore we will modifiy some of the default word used by Covenat 
 (Grunt, Jitter, Stage0, etc) in order to alter AV signature scanning capabilities. The bash script to automate this process is presented below:
 
-
 ```sh
 sudo git clone --recurse-submodules https://github.com/ZeroPointSecurity/Covenant.git /home/kali/Desktop/red/Covenant
 
@@ -486,4 +485,10 @@ dotnet run
 __Note:__ Please modify the script accordingly with your needs 🚩
 
 The new Covenant instance will generate the default Grunt using the __Monk__ word. Is up to the user to change the default Covenant Listener Profile. 
+Once the modified C# Monkstager has been downloaded it is possible to add further obfuscation using a combination or both of the following tools: 
+
+- [InvisibilityCloak](https://github.com/xforcered/InvisibilityCloak)  
+
+
+
 
