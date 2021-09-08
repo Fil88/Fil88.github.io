@@ -234,7 +234,7 @@ To execute this PowerShell script on the target, go to the Interact CLI, import 
 schtasks /create /ru "SYSTEM" /tn "update" /tr "cmd /c c:\windows\temp\update.bat" /sc once /f /st 06:59:00
 ```
 
-#### 2) COM Hijacks
+##### 3) COM Hijacks
 
 Instead of hijacking COM objects that are in-use and breaking applications that rely on them, a safer strategy is to find instances of applications trying to load objects that don't actually exist (so-called "abandoned" keys).
 
@@ -243,6 +243,32 @@ Process Monitor is part of the excellent Sysinternals Suite from Microsoft. It s
 <p align="center">
   <img src="/assets/posts/2021-03-01-Windows-Evasion/procmon.JPG">
 </p>
+
+Another great place to look for hijackable COM components is in the Task Scheduler.  Rather than executing binaries on disk, many of the default Windows Tasks actually use Custom Triggers to call COM objects.  
+And because they're executed via the Task Scheduler, it's easier to predict when they're going to be triggered.
+
+This simple powershell script can be used to achieve this operation. 
+
+```powershell
+$Tasks = Get-ScheduledTask
+
+foreach ($Task in $Tasks)
+{
+    if ($Task.Actions.ClassId -ne $null)
+    {
+        if ($Task.Triggers.Enabled -eq $true)
+        {
+            if ($Task.Principal.GroupId -eq "Users")
+            {
+                Write-Host "Task Name: " $Task.TaskName
+                Write-Host "Task Path: " $Task.TaskPath
+                Write-Host "CLSID: " $Task.Actions.ClassId
+                Write-Host
+            }
+        }
+    }
+}
+```
 
 # Lateral Movement
 
@@ -511,7 +537,7 @@ Just another way to declare modified strings
 
 From Covenant we can create a Grunt DLL that has an export compatible with rundll32. In Covenant, select the Binary Launcher and Generate a new Grunt. Then click the Code tab and copy the StagerCode.
 
-Open Visual Studio and create a new Class Library (.NET Framework) project. Delete everything in Class1.cs and paste the StagerCode.
+- Open Visual Studio and create a new __Class__ __Library__ __(.NET __Framework)__ project. Delete everything in Class1.cs and paste the StagerCode.
 
 - Go to Project > Manage NuGet Packages. Click Browse and search for UnmanagedExports. Install the package by Robert Giesecke.
 
