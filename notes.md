@@ -234,7 +234,15 @@ To execute this PowerShell script on the target, go to the Interact CLI, import 
 schtasks /create /ru "SYSTEM" /tn "update" /tr "cmd /c c:\windows\temp\update.bat" /sc once /f /st 06:59:00
 ```
 
+#### 2) COM Hijacks
 
+Instead of hijacking COM objects that are in-use and breaking applications that rely on them, a safer strategy is to find instances of applications trying to load objects that don't actually exist (so-called "abandoned" keys).
+
+Process Monitor is part of the excellent Sysinternals Suite from Microsoft. It shows real-time file system, registry and process activity and is very useful in finding different types of privilege escalation primitives. Launch procmon64.exe on attacker-windows.
+
+<p align="center">
+  <img src="/assets/posts/2021-03-01-Windows-Evasion/procmon.JPG">
+</p>
 
 # Lateral Movement
 
