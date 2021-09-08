@@ -533,7 +533,7 @@ Just another way to declare modified strings
  
 
 
-### Covenant DLL Export
+### 2) Covenant DLL Export
 
 From Covenant we can create a Grunt DLL that has an export compatible with rundll32. 
 
@@ -570,4 +570,6 @@ Now build the proect then copy the DLL to the target machine and execute with __
 rundll32.exe GruntDll.dll,GruntEntry
 ```
 
-Now you should have your shell
+Now you should have your shell.
+
+### 3) Covenant Custom C2C Profile
