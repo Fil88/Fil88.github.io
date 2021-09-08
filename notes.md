@@ -535,13 +535,15 @@ Just another way to declare modified strings
 
 ### Covenant DLL Export
 
-From Covenant we can create a Grunt DLL that has an export compatible with rundll32. In Covenant, select the Binary Launcher and Generate a new Grunt. Then click the Code tab and copy the StagerCode.
+From Covenant we can create a Grunt DLL that has an export compatible with rundll32. 
 
-- Open Visual Studio and create a new __Class__ __Library__ __(.NET __Framework)__ project. Delete everything in Class1.cs and paste the StagerCode.
+- In Covenant, select the Binary Launcher and Generate a new __Grunt__. Then click the Code tab and copy the __StagerCode__.
 
-- Go to Project > Manage NuGet Packages. Click Browse and search for UnmanagedExports. Install the package by Robert Giesecke.
+- Open Visual Studio and create a new __Class__ __Library__ __(.NET __Framework)__ project. Delete everything in Class1.cs and paste the __StagerCode__.
 
-- Collapse the GruntStager class and add the following Export class underneath.
+- Go to Project > Manage NuGet Packages. Click Browse and search for __UnmanagedExports__. Install the package by Robert Giesecke.
+
+- Collapse the __GruntStager__ class and add the following Export class underneath.
 
 ```cpp
 public class Exports
@@ -558,11 +560,11 @@ public class Exports
 
 ```
 
-Add using statements for System.Runtime.InteropServices and RGiesecke.DllExport. 
+Add using statements for __System.Runtime.InteropServices__ and __RGiesecke.DllExport__. 
 
-Open the Configuration Manager and create a New Solution Platform for x64 (and x86 if you require).
+Open the __Configuration__ __Manager__ and create a New Solution Platform for __x64__ (and x86 if you require).
 
-Now build the proect then copy the DLL to the target machine and execute with rundll32 as follow
+Now build the proect then copy the DLL to the target machine and execute with __rundll32__ as follow
 
 ```sh
 rundll32.exe GruntDll.dll,GruntEntry
