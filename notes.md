@@ -554,12 +554,29 @@ Just another way to declare modified strings
 
 
 - [NET-Obfuscate:](https://github.com/BinaryScary/NET-Obfuscate) Obfuscate ECMA CIL (.NET IL) assemblies to evade Windows Defender
- 
-
-
 
 
 ### 2) Covenant Custom C2C Profile
+
+Whenever we download an offensive tool from the Internet, it comes as no surprise when it gets snapped up by an anti-virus solution. 
+AV vendors are certainly keeping a keen eye on tools posted publicly (insert conspiracy theory about Microsoft owning GitHub) and are reacting relatively quickly to push signatures for those tools. 
+However, it’s probably fair to say that these signatures are not particularly robust, and only really serve to catch those that don’t have the skills or knowledge to make the necesary modifications.
+
+This holds true for Covenant’s Windows implant - Grunts.
+
+Covenant does provide various means of changing the default Grunt behaviour, which can be leveraged in such a way as to remove the indicators that a particular security product is finding.
+This post will look at Traffic Profiles and Grunt Templates.
+
+Instead of making modifications willy-nilly, we need to know (with a reasonable degree of accuracy) which part(s) of the Grunt Stager get detected. 
+For that I use ThreatCheck, which will split a sample into multiple chunks and submit them either to AMSI or Defender’s MpCmdRun utility.
+
+From a default Covenant installation we can generate a standard binary Grunt then examine the file with ThreatCheck. Executing ThreatCheck will highlight the following malicious bytes:
+
+<p align="center">
+  <img src="/assets/posts/2021-03-01-Windows-Evasion/cov1.JPG">
+</p>
+
+
 
 ### 3) Grunt DLL with rundll32.
 
