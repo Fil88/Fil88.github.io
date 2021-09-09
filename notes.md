@@ -556,7 +556,7 @@ Just another way to declare modified strings
 - [NET-Obfuscate:](https://github.com/BinaryScary/NET-Obfuscate) Obfuscate ECMA CIL (.NET IL) assemblies to evade Windows Defender
 
 
-### 2) Covenant Custom C2C Profile
+### 2) Covenant Custom C2C Profile 
 
 Whenever we download an offensive tool from the Internet, it comes as no surprise when it gets snapped up by an anti-virus solution. 
 AV vendors are certainly keeping a keen eye on tools posted publicly (insert conspiracy theory about Microsoft owning GitHub) and are reacting relatively quickly to push signatures for those tools. 
@@ -576,9 +576,30 @@ From a default Covenant installation we can generate a standard binary Grunt the
   <img src="/assets/posts/2021-03-01-Windows-Evasion/cov1.JPG">
 </p>
 
+ThreatCheck dumps a 256-byte hex view up from the end of the offending bytes, so the “interesting” bytes are always at the bottom. 
+In any case, we see here the connect address for the listener, followed by the base64 encoded string VXNlci1BZ2VudA== with is User-Agent.
+
+These request headers are part of the default traffic profile used by the default listener. 
+However if we go into the profile editor, we’re free to add, remove, change these as we see fit. An example follow below:
 
 
-### 3) Grunt DLL with rundll32.
+<p align="center">
+  <img src="/assets/posts/2021-03-01-Windows-Evasion/cov2.JPG">
+</p>
+
+- Inserted an additional header at the top so that the base64 encoded string for User-Agent was not appearing directly after the connect URL.
+
+- Modified User-Agent String
+
+
+Now when we regenerate the Binary Launcher and scan it with ThreatCheck, that particular detection is gone, but we get another one. 
+ThreatCheck will only show one detection at a time, so this is certainly an iterative process. You obviously need to reiterate this process few times in order to find 
+all the malicious bytes the flag the Defender signature.  
+
+
+
+
+### 3) Grunt DLL with rundll32 - AvBypass
 
 From Covenant we can create a Grunt DLL that has an export compatible with rundll32. 
 
@@ -593,14 +614,14 @@ From Covenant we can create a Grunt DLL that has an export compatible with rundl
 ```cpp
 public class Exports
 {
-  [DllExport("GruntEntry", CallingConvention = CallingConvention.Cdecl)]
-  public static void GruntEntry(IntPtr hwnd,
-  IntPtr hinst,
-  string lpszCmdLine,
-  int nCmdShow)
-  {
-    new GruntStager();
-  }
+    [DllExport("MonkEntry", CallingConvention = CallingConvention.Cdecl)]
+    public static void MonkEntry(IntPtr hwnd,
+    IntPtr hinst,
+    string lpszCmdLine,
+    int nCmdShow)
+    {
+        new MonkStager.MonkStager();
+    }
 }
 
 ```
@@ -616,3 +637,4 @@ rundll32.exe GruntDll.dll,GruntEntry
 ```
 
 Now you should have your shell.
+
