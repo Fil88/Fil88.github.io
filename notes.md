@@ -630,11 +630,21 @@ Add using statements for __System.Runtime.InteropServices__ and __RGiesecke.DllE
 
 Open the __Configuration__ __Manager__ and create a New Solution Platform for __x64__ (and x86 if you require).
 
-Now build the proect then copy the DLL to the target machine and execute with __rundll32__ as follow
+Now build the project then copy the DLL to the target machine and execute with __rundll32__ as follow
 
 ```sh
-rundll32.exe GruntDll.dll,GruntEntry
+rundll32.exe GruntDllName.dll,GruntEntry
 ```
 
 Now you should have your shell.
 
+<p align="center">
+  <img src="/assets/posts/2021-03-01-Windows-Evasion/cov2.JPG">
+</p>
+
+__Note:__ 🚩 Alternatively you can use this reflection technique to download and run a GruntStager EXE directly from memory, without having it touch disk.  For example:
+
+
+<p align="center">
+  <img src="/assets/posts/2021-03-01-Windows-Evasion/cov3.JPG">
+</p>
