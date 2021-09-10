@@ -642,6 +642,8 @@ Now you should have your Grunt checking in on Covenant.
   <img src="/assets/posts/2021-03-01-Windows-Evasion/cov3.JPG">
 </p> 
 
+
+
 __Note:__ 🚩 The most basic (although not very interesting) method of loading and running this code, is from disk using PowerShell:
 
 
@@ -675,3 +677,11 @@ PS > [System.Reflection.Assembly]::Load($dll)
 PS > [MonkStager.MonkStager]::Execute()
 ```
 
+### 4) Initial delivery 
+
+We can try to simulate a campaign conducted by foreign APT adversaries. We will leverage the [NET-Obfuscate:](https://github.com/BinaryScary/NET-Obfuscate project to weaponize our custom DLL.
+ 
+
+<p align="center">
+  <img src="/assets/posts/2021-03-01-Windows-Evasion/cov4.JPG">
+</p>
