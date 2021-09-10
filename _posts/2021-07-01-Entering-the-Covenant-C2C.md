@@ -1,5 +1,5 @@
 ---
-title: "Entering the Covenant C2C " 
+title: "Customized C2C for Av evasion " 
 layout: "post"
 ---
 
@@ -9,7 +9,7 @@ In the meantime, content for AV-Evasion has been added in the course materials, 
 
 
 
-### 1) Covenant use case - modified default dropper
+### 1) Entering the Covenant C2C use case 
 
 
 
