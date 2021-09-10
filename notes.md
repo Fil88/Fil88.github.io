@@ -171,7 +171,7 @@ The constraints posed by CLM will block many of your exploitations attempts. One
 ```
 
 #### LAPS 
-We can use LAPSToolkit.ps1 to identify which machines in the domain use LAPS, and which domain groups are allowed to read LAPS passwords. If we are in this group, we can get the current LAPS passwords using this tool as well.
+We can use `LAPSToolkit.ps1` to identify which machines in the domain use LAPS, and which domain groups are allowed to read LAPS passwords. If we are in this group, we can get the current LAPS passwords using this tool as well.
 
 ```powershell
 #Get computers running LAPS, along with their passwords if we're allowed to read those
@@ -576,7 +576,7 @@ From a default Covenant installation we can generate a standard binary Grunt the
   <img src="/assets/posts/2021-03-01-Windows-Evasion/cov1.JPG">
 </p>
 
-ThreatCheck dumps a 256-byte hex view up from the end of the offending bytes, so the “interesting” bytes are always at the bottom. 
+ThreatCheck dumps a `256-byte` hex view up from the end of the offending bytes, so the “interesting” bytes are always at the bottom. 
 In any case, we see here the connect address for the listener, followed by the base64 encoded string VXNlci1BZ2VudA== with is User-Agent.
 
 These request headers are part of the default traffic profile used by the default listener. 
