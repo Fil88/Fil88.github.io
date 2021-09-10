@@ -11,6 +11,14 @@ In the meantime, content for AV-Evasion has been added in the course materials, 
 First of all we will clone the main Covenant repository into our local machine. Furthermore we will modifiy some of the default word used by Covenat 
 (Grunt, Jitter, Stage0, etc) in order to alter AV signature scanning capabilities. The bash script to automate this process is presented below:
 
+
+
+
+
+
+
+
+
 ```sh
 sudo git clone --recurse-submodules https://github.com/ZeroPointSecurity/Covenant.git /home/kali/Desktop/red/Covenant
 
