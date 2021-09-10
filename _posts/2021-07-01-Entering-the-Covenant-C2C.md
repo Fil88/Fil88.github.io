@@ -331,19 +331,44 @@ We can try to simulate a campaign conducted by foreign APT adversaries. We will 
 Our DLL is not perfect, but it works. However, it's quite hard to deliver one to a target user since no default actions are associated with that file type (double clicking it doesn't do much!). 
 Not to mention that most corporate web proxies and mail filters block the DLL file type regardless of being malicious or benign! 
 What is needed is an additional component that will write our DLL on disk and then load it to trigger the execution. 
-HTA format can be used to facilitate this scenario, but the same concept could be applied with other languages such as VBS and VBA, commonly used for initial access as well since they can be saved as office enable macro document.
+HTA format can be used to facilitate this scenario, but the same concept could be applied with other languages such as VBS and VBA, commonly used for initial enterprise access. This is still the first attack vector used by APT to attack enterprise considering the wide deployment of the Windows office suite.
 For this reason we will implement a malicious office with macro enabled. For this simulation we are going to use a simple MessageBox as our payload.
 
-Before digging into the scenario let's us generate a simple non encrypted __msfvenom__ __shellcode__: 
+For our basic scenario we will implement the following:
+
+- Generate a non encrypted shellcode with msfvenom 
+
+- Store shellcode inside our payload that will perform APC (Asynchronous Procedure Calls) queue code injection
+
+- Convert our payload to a compatible vba/vbs file 
+
+- Execute the payload leveraging "Enable Macro" from office
+
+
+
+Without esitation let's dig into the scenario and let's start by generating a simple non encrypted __msfvenom__ __shellcode__: 
 
 ```powershell
 msfvenom -a x64 -p windows/x64/messagebox Text="Hello from shellcode"  -f csharp
 ```
 
-Moving forward for we now need some code that will carry out shellcode injection into specific process. 
+Moving forward we now need  to store our shellcode into a payload that when executed it will carry out shellcode injection into specific process. 
 
-I decided to use the [QueueUserAPC injection using D/invoke](https://gist.github.com/jfmaes/944991c40fb34625cf72fd33df1682c0) for the process injection part. 
-Create a default console application in VS, delete the code and past the code from the gist path. 
+I decided to use the [QueueUserAPC injection using D/invoke](https://gist.github.com/jfmaes/944991c40fb34625cf72fd33df1682c0) for the process injection part.
+
+This will essentially perform the following: 
+
+- Write a C++ program DInjectQueuerAPC.exe that will:
+- Find explorer.exe process ID
+- Allocate memory in explorer.exe process memory space
+- Write shellcode to that memory location
+- Find all threads in explorer.exe
+- Queue an APC to all those threads. APC points to the shellcode
+- Execute the above program
+
+
+ 
+Create a default console application in Visual Studio, delete the code and past the code from the gist path. 
 Bear in mind you need to import __D\Invoke__ __package__ from [The Wower](https://twitter.com/therealwover?lang=en). Paste the shellcode from __msfvenom__ and declare
 the path of the process which will be used for process injection. In our case we are going to inject into __notepad.exe__
 
@@ -372,7 +397,7 @@ The parameters are as follow:
 - `r = registration-free activation of .NET based COM`
                                
 
-Once we have our malicious __.js__ file we can execute the file using the Windows build in script engine __cscript__ as follow:
+Once we have generated our malicious __.js__ file we can execute the file using the __Windows__ __Script__ __Host__ __(WSH)__ engine leveraging __cscript__ or __wscript__ as follow:
 
 <p align="center">
   <img src="/assets/posts/2021-07-01-Entering-the-Covenant-C2C/cov7.JPG">
@@ -384,7 +409,7 @@ If everything went file you should now have your new cscript __Grunt__ checking 
   <img src="/assets/posts/2021-07-01-Entering-the-Covenant-C2C/cov8.JPG">
 </p>
  
-__Note:__ Please note that we can still generate our malicious vba script to be stored inside a office enable macro document as follow below 🚩
+__Note:__ Please note that we can also generate our malicious vba script to be stored inside an office macro enable document as follow below 🚩
 
 <p align="center">
   <img src="/assets/posts/2021-07-01-Entering-the-Covenant-C2C/cov9.JPG">
