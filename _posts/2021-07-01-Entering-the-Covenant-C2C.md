@@ -225,11 +225,11 @@ You obviously need to reiterate this process few times in order to find  all the
 
 ### 3) Grunt DLL with rundll32 - AvBypass
 
-From __Covenant__ we can create a __Grunt__ DLL that has an export compatible with rundll32. 
+From __Covenant__ we can create a __Grunt__ DLL that has an export compatible with __rundll32__. 
 
 - In __Covenant__, select the Binary Launcher and Generate a new __Grunt__. Then click the Code tab and copy the __StagerCode__.
 
-- Open Visual Studio and create a new __Class__ __Library__ __(.NET __Framework)__ project. Delete everything in Class1.cs and paste the __StagerCode__.
+- Open Visual Studio and create a new __Class__ __Library__ __(.NET__ __Framework)__ project. Delete everything in Class1.cs and paste the __StagerCode__.
 
 - Go to Project > Manage NuGet Packages. Click Browse and search for __UnmanagedExports__. Install the package by Robert Giesecke.
 
@@ -300,14 +300,39 @@ PS > [System.Reflection.Assembly]::Load($dll)
 PS > [MonkStager.MonkStager]::Execute()
 ```
 
-This DLL technique can be particulary useful when dealing with __AppLocker__ bypass as it is common occurrence that the DLL __AppLocker__ rules are not enabled or enforced 🚩.
+This DLL technique can be particulary useful when dealing with __AppLocker__ bypass as it is common occurrence that the DLL __AppLocker__ rules are not enabled or enforced 🚩. 
+However we are not going to dig further around this topic, or at least not for now. 
 
 ### 4) Initial delivery 
 
 We can try to simulate a campaign conducted by foreign APT adversaries. We will try to leverage the amazing [GadgetToJScript:](https://github.com/med0x2e/GadgetToJScript) project to weaponize our custom .NET assembly.
-Our DLL is not perfect, but it works. However, it's quite hard to deliver one to a target user since no default actions are associated with that file type (double clicking it doesn't do much!). Not to mention that most corporate web proxies and mail filters block the DLL file type regardless of being malicious or benign! What is needed is an additional component that will write our DLL on disk and then load it to trigger the execution. 
-Javascript format was chosen for this example task, but the same concept could be applied with other languages such as VBS and VBA, commonly used for initial access as well since they can be saved as office enable macro document.
+Our DLL is not perfect, but it works. However, it's quite hard to deliver one to a target user since no default actions are associated with that file type (double clicking it doesn't do much!). 
+Not to mention that most corporate web proxies and mail filters block the DLL file type regardless of being malicious or benign! 
+What is needed is an additional component that will write our DLL on disk and then load it to trigger the execution. 
+HTA format can be used to facilitate this scenario, but the same concept could be applied with other languages such as VBS and VBA, commonly used for initial access as well since they can be saved as office enable macro document.
+For this reason we will implement a malicious office with macro enabled. For this simulation we are going to use a simple MessageBox as our payload.
 
+Before digging into the scenario let's us generate a simple non encrypted __msfvenom__ __shellcode__: 
+
+```powershell
+msfvenom -a x64 -p windows/x64/messagebox Text="Hello from shellcode"  -f csharp
+```
+
+Moving forward for we now need some code that will carry out shellcode injection into specific process. 
+
+I decided to use the [QueueUserAPC injection using D/invoke](https://gist.github.com/jfmaes/944991c40fb34625cf72fd33df1682c0). 
+Create a default console application in VS, delete the code and past the code from the gist path. 
+Bear in mind you need to import D\Invoke package from [The Wower](https://twitter.com/therealwover?lang=en). Paste the shellcode from __msfvenom__ and declare
+the path of the process which will be used for process injection. In our case we are going to inject into __notepad.exe__
+
+ <p align="center">
+  <img src="/assets/posts/2021-07-01-Entering-the-Covenant-C2C/cov14.JPG">
+</p>
+
+
+
+
+Now that we have our malicious __.exe__ file we can move on and leverage the __GadgetToJScript__ project. 
 
 First of all we need to build __GadgetToJScript__ in __VisualStudio__. Once the __GadgetToJScript__ binary has been build we can launch the program to generate a malicious __.js__ file that will spawn our custom __Covenant__ __Grunt__.
 
@@ -559,8 +584,14 @@ End Sub
 Save the VBA code and now, in order for this to work, we must save our document in a Macro-Enabled format such as .doc or  .docm; Unfortunately, the newer .docx will not store macros.
 
 Now that the document is saved, we can try opening it again. However, we are presented with a security warning banner.
-If we press the Enable Content button, the macro will execute and the message box will appear as illustrated below. 
 
 <p align="center">
   <img src="/assets/posts/2021-07-01-Entering-the-Covenant-C2C/cov12.JPG">
+</p>
+
+
+If we press the Enable Content button, the macro will execute and the message box will appear as illustrated below. 
+
+<p align="center">
+  <img src="/assets/posts/2021-07-01-Entering-the-Covenant-C2C/cov13.JPG">
 </p>
