@@ -332,8 +332,8 @@ Our DLL is not perfect, but it works. However, it's quite hard to deliver one to
 Not to mention that most corporate web proxies and mail filters block the DLL file type regardless of being malicious or benign! 
 
 
-Ideallly, what is needed is an additional component that for example will write our DLL on disk and then load it to trigger the execution. 
-HTA format can be used to facilitate this scenario, but the same concept could be applied with other languages such as VBS and VBA, commonly used for initial enterprise access. 
+Ideallly, what is needed is an additional component that for example will write our __DLL__ on disk and then load it to trigger the execution. 
+`HTA` format can be used to facilitate this scenario, but the same concept could be applied with other languages such as `VBS` and `VBA`, commonly used for initial enterprise access. 
 Besides phishing campaign this is still the first attack vector used by APT to attack enterprise network considering the wide deployment of the `Windows Office Suite`.
 For this reason we will implement a malicious office with macro enabled. For this simulation we are going to use a simple MessageBox as our payload.
 
@@ -359,9 +359,8 @@ Moving forward, we now need to store our shellcode into a payload that when exec
 
 I decided to use the [QueueUserAPC injection using D/invoke](https://gist.github.com/jfmaes/944991c40fb34625cf72fd33df1682c0) for the process injection part.
 
-This will essentially perform the following: 
+Our payload will essentially perform the following activities: 
 
-- Write a C++ program DInjectQueuerAPC.exe that will:
 - Find explorer.exe process ID
 - Allocate memory in explorer.exe process memory space
 - Write shellcode to that memory location
@@ -369,7 +368,7 @@ This will essentially perform the following:
 - Queue an APC to all those threads. APC points to the shellcode
 
 
-Create a default __C#__ console application in Visual Studio, delete the code and past the code from the gist path. 
+From whithin VisualStudio create a default __C#__ console application, delete the default code and past the code from the gist path. 
 Bear in mind you need to import __D\Invoke__ __package__ from [The Wower](https://twitter.com/therealwover?lang=en) before compiling the code. Paste the shellcode from __msfvenom__ and declare
 the path of the process which will be used for process injection. In our case we are going to inject into __notepad.exe__
 
