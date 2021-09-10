@@ -5,12 +5,11 @@ layout: "post"
 
 In modern Windows enterprise environment we often encounter lots of obstacles, which try to detect and stop our sneaky tools and techniques. 
 Endpoint protection agents (AV, IDS/IPS, EDR, etc.) are getting better and better at this, so this requires an extended effort in finding a way into the system and staying undetected during post-exploitation activities.
+
+
+
+
 Detection tecnology and endpoint security solutions aims to prevent, detect and stop our malware from being either stored on disk or executed directly from memory. 
-
-
-
-
-
 Security products among other things use static security analysis to detect malware at rest (file on disk) this is primarely based on searching for specific bytes pattenrs in the files. 
 This has been widely used and abused during the years so this is why to tend to say that signature detections is dead. It's not dead it's just an annoying aspect we have to deal to as red teamers.
 
