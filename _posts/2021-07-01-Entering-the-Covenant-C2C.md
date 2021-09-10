@@ -256,21 +256,30 @@ Now build the project and copy the DLL to the target machine. We can now execute
 rundll32 covenant-DLL-noAmsi.dll,MonkEntry
 ```
 
-Now you should have your __Grunt__ checking in on __Covenant__.
+If everything goes fine now you should have your __Grunt__ checking in on __Covenant__.
 
 <p align="center">
   <img src="/assets/posts/2021-07-01-Entering-the-Covenant-C2C/cov3.JPG">
 </p> 
 
-Once the modified C# Monkstager has been downloaded and imported into Visual Studio it is possible to add further obfuscation using a combination or both of the following tools: 
+
+__Note:__ Windows Defender real time protection is enabled 🚩
+
+
+Once the modified C# Monkstager has been downloaded and imported into Visual Studio it is possible to add further obfuscation using the following tool from IBM XForce-Red
 
 - [InvisibilityCloak:](https://github.com/xforcered/InvisibilityCloak) Obfuscation toolkit for C# post-exploitation tools that perform basics actions for a C# visual studio project.
+
+Alternatively, on the final __.exe__ payload is possible to apply futher string obfuscation using the following tool:
 
 
 - [NET-Obfuscate:](https://github.com/BinaryScary/NET-Obfuscate) Obfuscate ECMA CIL (.NET IL) assemblies to evade Windows Defender
 
+Since our project, both for the DLL and for the EXE are stored and managed in Visual Studio we could also take advantages of [ConfuserEx](https://github.com/mkaring/ConfuserEx) than can also be installed from the Visual Studio marketplace. 
 
-We can go an extra mile here and we can perform some .NET reflection to execute or __Grunt__ stager.
+
+We can go an extra mile here and we can perform some .NET reflection to execute or __Grunt__ stager. Altought not very realistic at this stage we can use this approach at different stage of our engagement. 
+
 
 
 __Note:__ The most basic (although not very interesting) method of loading and running this code, is from disk using PowerShell🚩:
