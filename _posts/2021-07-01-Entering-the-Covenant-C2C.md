@@ -330,9 +330,9 @@ msfvenom -a x64 -p windows/x64/messagebox Text="Hello from shellcode"  -f csharp
 
 Moving forward for we now need some code that will carry out shellcode injection into specific process. 
 
-I decided to use the [QueueUserAPC injection using D/invoke](https://gist.github.com/jfmaes/944991c40fb34625cf72fd33df1682c0). 
+I decided to use the [QueueUserAPC injection using D/invoke](https://gist.github.com/jfmaes/944991c40fb34625cf72fd33df1682c0) for the process injection part. 
 Create a default console application in VS, delete the code and past the code from the gist path. 
-Bear in mind you need to import D\Invoke package from [The Wower](https://twitter.com/therealwover?lang=en). Paste the shellcode from __msfvenom__ and declare
+Bear in mind you need to import __D\Invoke__ __package__ from [The Wower](https://twitter.com/therealwover?lang=en). Paste the shellcode from __msfvenom__ and declare
 the path of the process which will be used for process injection. In our case we are going to inject into __notepad.exe__
 
  <p align="center">
