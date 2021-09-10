@@ -562,13 +562,13 @@ Whenever we download an offensive tool from the Internet, it comes as no surpris
 AV vendors are certainly keeping a keen eye on tools posted publicly (insert conspiracy theory about Microsoft owning GitHub) and are reacting relatively quickly to push signatures for those tools. 
 However, it’s probably fair to say that these signatures are not particularly robust, and only really serve to catch those that don’t have the skills or knowledge to make the necesary modifications.
 
-This holds true for Covenant’s Windows implant - Grunts.
+This holds true for __Covenant’s__ Windows __implant__ - Grunts.
 
 Covenant does provide various means of changing the default Grunt behaviour, which can be leveraged in such a way as to remove the indicators that a particular security product is finding.
 This post will look at Traffic Profiles and Grunt Templates.
 
-Instead of making modifications willy-nilly, we need to know (with a reasonable degree of accuracy) which part(s) of the Grunt Stager get detected. 
-For that I use ThreatCheck, which will split a sample into multiple chunks and submit them either to AMSI or Defender’s MpCmdRun utility.
+Instead of making modifications willy-nilly, we need to know (with a reasonable degree of accuracy) which part(s) of the __Grunt__ __Stager__ get detected. 
+For that I use __ThreatCheck__, which will split a sample into multiple chunks and submit them either to AMSI or Defender’s MpCmdRun utility.
 
 From a default Covenant installation we can generate a standard binary Grunt then examine the file with ThreatCheck. Executing ThreatCheck will highlight the following malicious bytes:
 
@@ -592,9 +592,9 @@ However if we go into the profile editor, we’re free to add, remove, change th
 - Modified User-Agent String
 
 
-Now when we regenerate the Binary Launcher and scan it with ThreatCheck, that particular detection is gone, but we get another one. 
-ThreatCheck will only show one detection at a time, so this is certainly an iterative process. You obviously need to reiterate this process few times in order to find 
-all the malicious bytes the flag the Defender signature.  
+Now when we regenerate the __Binary__ __Launcher__ and scan it with ThreatCheck, that particular detection is gone, but we get another one. 
+ThreatCheck will only show one detection at a time, so this is certainly an iterative process. 
+You obviously need to reiterate this process few times in order to find  all the malicious bytes the flag the Defender's signature.  
 
 
 
