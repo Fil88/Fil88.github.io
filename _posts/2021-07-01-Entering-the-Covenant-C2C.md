@@ -2,21 +2,19 @@
 title: "Entering the Covenant C2C " 
 layout: "post"
 ---
-### 1) Covenant use case - modified default dropper
 
 In the last weeks i did the Red Team Operator course and made some new experiences with the open source C2-Framework Covenant which is used in the course materials. 
 When i began the course, there was no content for AV-Evasion and C2-Customization, so i did that with Covenant for myself. 
 In the meantime, content for AV-Evasion has been added in the course materials, a part of that material has been released by Rastamouse here.
 
+
+
+### 1) Covenant use case - modified default dropper
+
+
+
 First of all we will clone the main Covenant repository into our local machine. Furthermore we will modifiy some of the default word used by Covenat 
 (Grunt, Jitter, Stage0, etc) in order to alter AV signature scanning capabilities. The bash script to automate this process is presented below:
-
-
-
-
-
-
-
 
 
 ```sh
