@@ -266,7 +266,7 @@ rundll32 covenant-DLL-noAmsi.dll,MonkEntry
 Now you should have your Grunt checking in on Covenant.
 
 <p align="center">
-  <img src=""/assets/posts/2021-07-01-Entering-the-Covenant-C2C/cov3.JPG">
+  <img src="/assets/posts/2021-07-01-Entering-the-Covenant-C2C/cov3.JPG">
 </p> 
 
 
@@ -284,14 +284,14 @@ PS > [MonkStager.MonkStager]::Execute()
 
 ```
 <p align="center">
-  <img src=""/assets/posts/2021-07-01-Entering-the-Covenant-C2C/cov4.JPG">
+  <img src="/assets/posts/2021-07-01-Entering-the-Covenant-C2C/cov4.JPG">
 </p>
 
 And note your new powershell Grunt checking in on Covenant.
 
 
 <p align="center">
-  <img src=""/assets/posts/2021-07-01-Entering-the-Covenant-C2C/cov5.JPG">
+  <img src="/assets/posts/2021-07-01-Entering-the-Covenant-C2C/cov5.JPG">
 </p>
 
 
@@ -313,7 +313,7 @@ First of all we need to build GadgetToJScript in __VisualStudio__. Once the Gadg
 The code is illustrate below: 
 
 <p align="center">
-  <img src=""/assets/posts/2021-07-01-Entering-the-Covenant-C2C/cov6.JPG">
+  <img src="/assets/posts/2021-07-01-Entering-the-Covenant-C2C/cov6.JPG">
 </p>
 
 The parameters are as follow: 
