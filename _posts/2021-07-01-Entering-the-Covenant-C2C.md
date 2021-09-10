@@ -12,8 +12,8 @@ It is an open-source framework that enables developers to create their own __AV-
 
 Whenever we download an offensive tool from the Internet, it comes as no surprise when it gets snapped up by an anti-virus solution. 
 AV vendors are certainly keeping a keen eye on tools posted publicly (insert conspiracy theory about Microsoft owning GitHub) and are reacting relatively quickly to push signatures for those tools. 
-However, it’s probably fair to say that these signatures are not particularly robust, and only really serve to catch those that don’t have the skills or knowledge to make the necesary modifications.
 
+However, it’s probably fair to say that these signatures are not particularly robust, and only really serve to catch those that don’t have the skills or knowledge to make the necesary modifications.
 This holds true for __Covenant’s__ Windows __implant__ - Grunts. Therefore, we will try to alter the Covenant default installation. 
 
 After cloning the main repository of Covenant, we will modify some of its default words(Grunt, Jitter, Stage0, etc) to improve AV signature scanning capabilities.
@@ -155,9 +155,7 @@ done
 #done
 
 mv ../AssemblyReferences/ ./Data/ 
-
 mv ../ReferenceSourceLibraries/ ./Data/ 
-
 mv ../EmbeddedResources/ ./Data/ 
 
 dotnet build
@@ -168,9 +166,9 @@ dotnet run
 __Note:__ Please modify the script accordingly with your needs 🚩
 
  
-The new Covenant instance will generate the default Grunt using the __Monk__ word. Is up to the user to change the default __Covenant__ Listener Profile. 
+The new __Covenant__ instance will generate the default Grunt using the __Monk__ word. Is up to the user to change the default __Covenant__ Listener Profile. 
 
-There might be more than one way to accomplish this. Another example of string concatenation follow below: 
+There might be more than one way to accomplish this string concatenation; another way is proposed below: 
 ```cpp
 Just another way to declare modified strings 
 {""GUID"":""{0}"",""Type"":{1},""Meta"":""{2}"",""IV"":""{3}"",""EncryptedMessage"":""{4}"",""HMAC"":""{5}""}";'
@@ -182,13 +180,13 @@ Just another way to declare modified strings
 ### 2) Covenant Custom C2C Profile 
 
 
-Covenant does provide various means of changing the default Grunt behaviour, which can be leveraged in such a way as to remove the indicators that a particular security product is finding.
+__Covenant__ does provide various means of changing the default Grunt behaviour, which can be leveraged in such a way as to remove the indicators that a particular security product is finding.
 This post will look at Traffic Profiles and Grunt Templates.
 
 Instead of making modifications willy-nilly, we need to know (with a reasonable degree of accuracy) which part(s) of the __Grunt__ __Stager__ get detected. 
 For that I use __ThreatCheck__, which will split a sample into multiple chunks and submit them either to AMSI or Defender’s MpCmdRun utility.
 
-From a default Covenant installation we can generate a standard binary Grunt then examine the file with ThreatCheck. Executing ThreatCheck will highlight the following malicious bytes:
+From a default __Covenant__ installation we can generate a standard binary Grunt then examine the file with ThreatCheck. Executing ThreatCheck will highlight the following malicious bytes:
 
 <p align="center">
   <img src="/assets/posts/2021-07-01-Entering-the-Covenant-C2C/cov1.JPG">
@@ -205,9 +203,9 @@ However if we go into the profile editor, we’re free to add, remove, change th
   <img src="/assets/posts/2021-07-01-Entering-the-Covenant-C2C/cov2.JPG">
 </p>
 
-- Inserted an additional header at the top so that the base64 encoded string for User-Agent was not appearing directly after the connect URL.
+- Inserted an additional header at the top so that the base64 encoded string for `User-Agent` was not appearing directly after the connect URL.
 
-- Modified User-Agent String
+- Modified `User-Agent` string
 
 
 Now when we regenerate the __Binary__ __Launcher__ and scan it with __ThreatCheck__, that particular detection is gone, but we get another one. 
@@ -223,13 +221,13 @@ Some people might have different opinions, but a well crafted payload can be dro
 For this reason we now going to convert the grunt binary stage to a custom DLL that can be executed on the target machine or it could be used for __lateral__ __movement__ at different stage. 
 File write operations are so common that it's extremely hard for security products to alert just on that.
 
-From __Covenant__ we can create a __Grunt__ DLL that has an export compatible with __rundll32__. 
+From __Covenant__ we can create a __Grunt__ DLL that has an export compatible with __rundll32__.
 
 - In __Covenant__, select the Binary Launcher and Generate a new __Grunt__. Then click the Code tab and copy the __StagerCode__.
 
-- Open Visual Studio and create a new __Class__ __Library__ __(.NET__ __Framework)__ project. Delete everything in Class1.cs and paste the __StagerCode__.
+- Open __Visual__ __Studio__ and create a new __Class__ __Library__ __(.NET__ __Framework)__ project. Delete everything in Class1.cs and paste the __StagerCode__.
 
-- Go to Project > Manage NuGet Packages. Click Browse and search for __UnmanagedExports__. Install the package by Robert Giesecke.
+- Go to Project > Manage NuGet Packages. Click browse and search for __UnmanagedExports__. Install the package by Robert Giesecke.
 
 - Collapse the __GruntStager__ class and add the following Export class underneath.
 
@@ -250,9 +248,9 @@ public class Exports
 
 - Add using statements for __System.Runtime.InteropServices__ and __RGiesecke.DllExport__. 
 
-- Open the __Configuration__ __Manager__ and create a "New Solution Platform for __x64__" (and x86 if you require).
+- Open the __Configuration__ __Manager__ and create a `"New Solution Platform for x64"` (and x86 if you require).
 
-Now build the project then copy the DLL to the target machine and execute with __rundll32__ as follow
+Now build the project and copy the DLL to the target machine. We can now execute the DLL with __rundll32__ taking advantage of the exports funcion. 
 
 ```sh
 rundll32 covenant-DLL-noAmsi.dll,MonkEntry
