@@ -317,12 +317,12 @@ The parameters are as follow:
 Once we have our malicious __.js__ file we can execute the file using the Windows build in script engine __cscript__ as follow:
 
 <p align="center">
-  <img src=""/assets/posts/2021-07-01-Entering-the-Covenant-C2C/cov7.JPG">
+  <img src="/assets/posts/2021-07-01-Entering-the-Covenant-C2C/cov7.JPG">
 </p>
 
 If everything went file you should now have your new cscript Grunt checking in on Covenant.
 
 <p align="center">
-  <img src=""/assets/posts/2021-07-01-Entering-the-Covenant-C2C/cov8.JPG">
+  <img src="/assets/posts/2021-07-01-Entering-the-Covenant-C2C/cov8.JPG">
 </p>
  
