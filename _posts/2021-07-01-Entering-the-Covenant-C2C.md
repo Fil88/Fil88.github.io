@@ -3,7 +3,7 @@ title: "Entering the Covenant C2C"
 layout: "post"
 ---
 
-In the last few weeks, i have had the opportunity to experience using the __C2-Framework__ __Covenant__ during the Red Team Operator course by __Rastamouse__. 
+In the last few weeks, I have had the opportunity to experience using the __C2-Framework__ __Covenant__ during the Red Team Operator course by __Rastamouse__. 
 It is an open-source framework that enables developers to create their own __AV-Evasion__ and __C2-Customization__ projects.
 
 
@@ -13,7 +13,7 @@ It is an open-source framework that enables developers to create their own __AV-
 Whenever we download an offensive tool from the Internet, it comes as no surprise when it gets snapped up by an anti-virus solution. 
 AV vendors are certainly keeping a keen eye on tools posted publicly (insert conspiracy theory about Microsoft owning GitHub) and are reacting relatively quickly to push signatures for those tools. 
 
-However, it’s probably fair to say that these signatures are not particularly robust, and only really serve to catch those that don’t have the skills or knowledge to make the necesary modifications.
+However, it’s probably fair to say that these signatures are not particularly robust, and only really serve to catch those that don’t have time, skills or knowledge to make the necesary modifications.
 This holds true for __Covenant’s__ Windows __implant__ - Grunts. Therefore, we will try to alter the Covenant default installation. 
 
 After cloning the main repository of Covenant, we will modify some of its default words(Grunt, Jitter, Stage0, etc) to improve AV signature scanning capabilities.
@@ -163,7 +163,6 @@ dotnet run
 
 ```
 
-__Note:__ Please modify the script accordingly with your needs 🚩
 
  
 The new __Covenant__ instance will generate the default Grunt using the __Monk__ word. Is up to the user to change the default __Covenant__ Listener Profile. 
@@ -180,10 +179,10 @@ Just another way to declare modified strings
 ### 2) Covenant Custom C2C Profile 
 
 
-__Covenant__ does provide various means of changing the default Grunt behaviour, which can be leveraged in such a way as to remove the indicators that a particular security product is finding.
+__Covenant__ does provide various means of changing the default __Grunt__ behaviour, which can be leveraged in such a way as to remove the indicators that a particular security product is finding.
 This post will look at Traffic Profiles and Grunt Templates.
 
-Instead of making modifications willy-nilly, we need to know (with a reasonable degree of accuracy) which part(s) of the __Grunt__ __Stager__ get detected. 
+Instead of making modifications guessing around, we need to know (with a reasonable degree of accuracy) which part(s) of the __Grunt__ __Stager__ get detected. 
 For that I use __ThreatCheck__, which will split a sample into multiple chunks and submit them either to AMSI or Defender’s MpCmdRun utility.
 
 From a default __Covenant__ installation we can generate a standard binary Grunt then examine the file with ThreatCheck. Executing ThreatCheck will highlight the following malicious bytes:
@@ -196,14 +195,15 @@ __ThreatCheck__ dumps a `256-byte` hex view up from the end of the offending byt
 In any case, we see here the connect address for the listener, followed by the base64 encoded string `VXNlci1BZ2VudA==` with is `User-Agent`.
 
 These request headers are part of the default traffic profile used by the default listener. 
-However if we go into the profile editor, we’re free to add, remove, change these as we see fit. An example follow below:
+However if we go into the profile editor, we’re free to add, remove, change these as we see fit. An example for a custom profile follow below:
 
 
 <p align="center">
   <img src="/assets/posts/2021-07-01-Entering-the-Covenant-C2C/cov2.JPG">
 </p>
 
-- Inserted an additional header at the top so that the base64 encoded string for `User-Agent` was not appearing directly after the connect URL.
+- Inserted an additional header at the top so that the base64 encoded string for `User-Agent` was not appearing directly after the connect URL. 
+Get them from [here](https://en.wikipedia.org/wiki/List_of_HTTP_header_fields) 
 
 - Modified `User-Agent` string
 
@@ -252,9 +252,9 @@ public class Exports
 
 Now build the project and copy the DLL to the target machine. We can now execute the DLL with __rundll32__ taking advantage of the exports funcion. 
 
-```sh
-rundll32 covenant-DLL-noAmsi.dll,MonkEntry
-```
+<p align="center">
+  <img src="/assets/posts/2021-07-01-Entering-the-Covenant-C2C/cov00.JPG">
+</p> 
 
 If everything goes fine now you should have your __Grunt__ checking in on __Covenant__.
 
