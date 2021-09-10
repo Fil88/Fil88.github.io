@@ -1,20 +1,19 @@
 ---
-title: "Customized C2C for Av evasion " 
+title: "Customized C2C for AV evasion " 
 layout: "post"
 ---
 
-In the last weeks i did the Red Team Operator course and made some new experiences with the open source C2-Framework Covenant which is used in the course materials. 
-When i began the course, there was no content for AV-Evasion and C2-Customization, so i did that with Covenant for myself. 
-In the meantime, content for AV-Evasion has been added in the course materials, a part of that material has been released by Rastamouse here.
+In the last few weeks, i have had the opportunity to experience using the C2-Framework Covenant during the Red Team Operator course by Rastamouse. 
+It is an open-source framework that enables developers to create their own AV-Evasion and C2-Customization projects.
 
 
 
 ### 1) Entering the Covenant C2C use case 
 
 
+After cloning the main repository of Covenant, we will modify some of its default words (Grunt, Jitter, Stage0, etc) to improve AV signature scanning capabilities.
+The bash script to automate this process is presented below:
 
-First of all we will clone the main Covenant repository into our local machine. Furthermore we will modifiy some of the default word used by Covenat 
-(Grunt, Jitter, Stage0, etc) in order to alter AV signature scanning capabilities. The bash script to automate this process is presented below:
 
 
 ```sh
@@ -336,3 +335,4 @@ If everything went file you should now have your new cscript Grunt checking in o
   <img src="/assets/posts/2021-07-01-Entering-the-Covenant-C2C/cov8.JPG">
 </p>
  
+__Note:__ Please note that we can still generate our malicious vba script to be stored inside a office enable macro document.🚩
