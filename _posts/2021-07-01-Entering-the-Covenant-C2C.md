@@ -603,3 +603,5 @@ If we press the Enable Content button, the macro will execute and the message bo
 <p align="center">
   <img src="/assets/posts/2021-07-01-Entering-the-Covenant-C2C/cov13.JPG">
 </p>
+
+## Conclusion
