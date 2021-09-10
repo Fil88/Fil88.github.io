@@ -691,12 +691,13 @@ The code is illustrate below:
 
 The parameters are as follow: 
 
-- a
-- w
-- e 
-- o 
-- b 
-- r
+- `a = .NET Assembly`
+- `w = Script type js, vbs, vba or hta`
+- `e = Encode type`
+- `o = output file`
+- `b = Bypass type check controls`
+- `r = registration-free activation of .NET based COM`
+                               
 
 Once we have our malicious __.js__ file we can execute the file using the Windows build in script engine __cscript__ as follow:
 
