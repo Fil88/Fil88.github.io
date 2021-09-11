@@ -497,8 +497,9 @@ End Function
 ```
 
 Furthermore, we can now craft our dedicated word/excel document to be used during our simulated phishing campaign. Bear in mind the this is a huge part as a Red Team Operator
-considering the user's training and the security monitoring deployed across the perimeter of the enterprise network. Sometimes, HR office can be a good candidate for 
-phishing document since they need to open and access possible employeer curriculum. In the following scenario we will present a custom word with a "fake" encryption aplied to the document.
+considering the user's training and the security monitoring deployed across the perimeter of the enterprise network. 
+
+Sometimes, HR office can be a good candidate for phishing document since they need to open and access possible employeer curriculum. In the following scenario we will present a custom word with a "fake" encryption aplied to the document.
 Leveraging GDPR principles we will try to encrypt our document and force the HR individual to click to "Enable content" button.   
 
 Below the custom word document that we will deliver to the HR office as part of our phishing campaing
@@ -610,7 +611,7 @@ Sub AutoOpen()
 End Sub
 ```
 
-Save the VBA code and now, in order for this to work, we must save our document in a Macro-Enabled format such as .doc or  .docm; Unfortunately, the newer .docx will not store macros.
+Save the `VBA` code and now, in order for this to work, we must save our document in a Macro-Enabled format such as `.doc` or  `.docm`; Unfortunately, the newer `.docx` will not store macros.
 
 Now that the document is saved, we can try opening it again. However, we are presented with a security warning banner.
 
@@ -629,12 +630,12 @@ If we press the Enable Content button, the macro will execute and the message bo
 
 Future implementation will attemp something along these lines below:
 
-1) Generate an HTA dropper that will perform the following 
+1) Generate an `HTA` dropper that will perform the following 
 
-2) The HTA will define an XML manifest, that will be dropped in the same folder as our DLL
+2) The `HTA` will define an `XML` manifest, that will be dropped in the same folder as our DLL
 
-3) Using registration free COM, we will load the DLL into the mshta.exe process
+3) Using registration free `COM`, we will load the `DLL` into the mshta.exe process
 
-4) The DLL will perform process injection against notepad.exe
+4) The `DLL` will perform process injection against notepad.exe
 
 5) Notepad will spawn a Covenant's Grunt

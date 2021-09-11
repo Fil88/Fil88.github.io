@@ -354,7 +354,10 @@ powershell -Sta -Nop -Window Hidden -EncodedCommand <encodedCommand>
 ##### Powershell to base64
 
 ```cpp
-[System.Convert]::ToBase64String([System.IO.File]::ReadAllBytes("C:\Users\IEUser\Desktop\golden.kirbi")) 
+[System.Convert]::ToBase64String([System.IO.File]::ReadAllBytes("C:\Users\IEUser\Desktop\golden.kirbi"))
+
+$filename = "C:\Users\&&&&&\Desktop\exclusion\showPidx64.bin"
+[Convert]::ToBase64String([IO.File]::ReadAllBytes($filename)) | clip
 ``` 
 
 ##### Hex Encode 
