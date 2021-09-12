@@ -699,15 +699,12 @@ Set sh = Nothing
 </html>
 
 ```
+This `.HTA` will perform the following: 
 
-
-
-
-
-
-
-
-
+- Download our `Grunt DLL` from the internet
+- Save the `.DLL` to `C:\tmp` 
+- Execute the `.DLL` with `rundll32` 
+- Delete stored `.DLL` from `C:\tmp\
 
 ## Conclusion
 
