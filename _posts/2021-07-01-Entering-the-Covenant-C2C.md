@@ -717,7 +717,5 @@ Future implementation will attemp more complicated scenarios along the lines pre
 - 1) Generate an `HTA` dropper that will perform the following
 - 2) The `HTA` will define an `XML` manifest, that will be dropped in the same folder as our DLL
 - 3) Using registration free `COM`, we will load the `DLL` into the mshta.exe process
-
 - 4) The `DLL` will perform process injection against notepad.exe
-
 - 5) `Notepad` will spawn a `Covenant's Grunt`
