@@ -311,7 +311,7 @@ And note your new `powershell` __Grunt__ checking in on __Covenant__.
 
 
 
-On the other hand we can keep our stager entirely in memory by downloading the DLL reflectively from a remote location as follow below:
+On the other hand we can keep our stager entirely in memory by downloading and executing the __DLL__ __reflectively__ from a remote location as follow below:
 
 ```powershell 
 # Patch Amsi
@@ -611,7 +611,7 @@ Sub AutoOpen()
 End Sub
 ```
 
-Save the `VBA` code and now, in order for this to work, we must save our document in a Macro-Enabled format such as `.doc` or  `.docm`; Unfortunately, the newer `.docx` will not store macros.
+Save the `VBA` code and now, in order for this to work, we must save our document in a `Macro-Enabled` format such as `.doc` or  `.docm`; Unfortunately, the newer `.docx` will not store macros.
 
 Now that the document is saved, we can try opening it again. However, we are presented with a security warning banner.
 
@@ -620,7 +620,7 @@ Now that the document is saved, we can try opening it again. However, we are pre
 </p>
 
 
-If we press the Enable Content button, the macro will execute and the message box will appear as illustrated below. 
+If we press the `Enable Content` button, the macro will execute and the message box will appear as illustrated below. 
 
 <p align="center">
   <img src="/assets/posts/2021-07-01-Entering-the-Covenant-C2C/cov13.JPG">
@@ -628,9 +628,9 @@ If we press the Enable Content button, the macro will execute and the message bo
 
  
 
-### 4) Weaponize HTA DLL delivery
+### 5) Weaponize HTA DLL delivery
 
-First of all we need to craft our HTA (first stage) file that will deliver our Grunt payload (Second stage. An example follow below: 
+First of all we need to craft our `HTA` (First stage) file that will deliver our `Grunt payload` (Second stage). An example follow below: 
 
 ```html
 <!DOCTYPE html>
