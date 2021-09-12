@@ -710,6 +710,8 @@ This `.HTA` will perform the following:
 - Execute the `.DLL` with `rundll32` 
 - Delete stored `.DLL` from `C:\Windows\Tasks`
 
+__Note:__ In the next scenario we will try to load and execute the `.DLL` reflectively in memory without touching disk file system🚩
+
 ## Conclusion
 
 Future implementation will attemp more complicated scenarios along the lines presented below:
