@@ -328,11 +328,11 @@ However we are not going to dig further around this topic, or at least not for n
 
 #### Patching ETW 
 
-Event Tracing for Windows (ETW) provides a mechanism to trace and log events that are raised by user-mode applications and kernel-mode drivers. 
-ETW is implemented in the Windows operating system and provides developers a fast, reliable, and versatile set of event tracing features.
-ETW was originally introduced for debugging and performance monitoring, but has evolved into a tool used by security products and  threat hunters to expose potential indicators of compromise.
+__Event__ __Tracing__ __for__ __Windows__ (ETW) provides a mechanism to trace and log events that are raised by user-mode applications and kernel-mode drivers. 
+`ETW` is implemented in the Windows operating system and provides developers a fast, reliable, and versatile set of event tracing features.
+`ETW` was originally introduced for debugging and performance monitoring, but has evolved into a tool used by security products and  threat hunters to expose potential indicators of compromise.
 
-Below we can see an example when executing the default `monk stager`. From the image below you can clearly see the that ETW events are loaded successfully.
+Below we can see an example when executing the default `monk stager`. From the image below you can clearly see the that `ETW` events are loaded successfully.
 
 
 <p align="center">
@@ -346,7 +346,7 @@ Furthermore, after applying our etw patch we can see that the events are not dis
   <img src="/assets/posts/2021-07-01-Entering-the-Covenant-C2C/cov16.JPG">
 </p>
 
-This technique can be used the hide loading of `.NET assemblies` by disabling `.NET ETW telemetry`.
+This technique can be used to hide loading of `.NET assemblies` by disabling `.NET ETW telemetry` and the relative logging capabilitis.  
 
 ### 4) Initial delivery 
 
