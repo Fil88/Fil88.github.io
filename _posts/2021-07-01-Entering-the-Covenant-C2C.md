@@ -215,6 +215,7 @@ You obviously need to reiterate this process few times in order to find  all the
 
 
 
+
 ### 3) Grunt DLL with rundll32 - AvBypass
 
 Some people might have different opinions, but a well crafted payload can be dropped on disk safely in certain situations. 
@@ -324,6 +325,28 @@ PS > [MonkStager.MonkStager]::Execute()
 
 The usage of DLL execution can be particulary useful when dealing with __AppLocker__ bypass as it is common occurrence that the DLL __AppLocker__ rules are not enabled or enforced 🚩. 
 However we are not going to dig further around this topic, or at least not for now. 
+
+#### Patching ETW 
+
+Event Tracing for Windows (ETW) provides a mechanism to trace and log events that are raised by user-mode applications and kernel-mode drivers. 
+ETW is implemented in the Windows operating system and provides developers a fast, reliable, and versatile set of event tracing features.
+Event Tracing for Windows (ETW), which was originally introduced for debugging and performance monitoring, but has evolved into a tool used by security products and  threat hunters to expose potential indicators of compromise.
+
+Below we can see an example when executing the default `monk stager`. From the image below you can clearly see the that ETW events are loaded successfully.
+
+
+<p align="center">
+  <img src="/assets/posts/2021-07-01-Entering-the-Covenant-C2C/cov15.JPG">
+</p>
+
+Furthermore, after applying our etw patch we can see that the events are not displayed. 
+
+
+<p align="center">
+  <img src="/assets/posts/2021-07-01-Entering-the-Covenant-C2C/cov16.JPG">
+</p>
+
+
 
 ### 4) Initial delivery 
 
