@@ -3,23 +3,25 @@ title: "Hunting for Evil"
 layout: "post"
 ---
 
-__Threat__ __hunting__ - the act of aggressively intercepting, tracking and eliminating cyber adversaries as early as possible in the Cyber Kill Chain.
-To prevent, detect and resolve an APT, you must recognize its characteristics. 
+__Threat__ __hunting__ - the act of aggressively intercepting, tracking and eliminating cyber adversaries as early as possible in the __Cyber__ __Kill__ __Chain__.
+To prevent, detect and resolve an __APT__, you must recognize its characteristics. 
 Most APTs follow the same basic life cycle of infiltrating a network, expanding access and achieving the goal of the attack, which is most commonly stealing data by extracting it from the network.
 
 
 
 
-1) In the first phase, usually referred to "Initial Access", advanced persistent threats often gain access through social engineering techniques. One indication of an APT is a phishing email that selectively targets high-level individuals like senior executives or technology leaders, often using information obtained from other team members that have already been compromised. Email attacks that target specific individuals are called “spear-phishing.”
-2) In the second phase, usually referred to "Lateral Movement" attackers insert malware into an organization’s network to move to the second phase, expansion. They move laterally to map the network and gather credentials such as account names and passwords in order to access critical business information.
+1) In the first phase, usually referred to __"Initial__ __Access"__, advanced persistent threats often gain access through social engineering techniques. One indication of an APT is a phishing email that selectively targets high-level individuals like senior executives or technology leaders, often using information obtained from other team members that have already been compromised. Email attacks that target specific individuals are called “spear-phishing.”
+
+2) In the second phase, usually referred to __"Lateral__ __Movement"__ attackers insert malware into an organization’s network to move to the second phase, expansion. They move laterally to map the network and gather credentials such as account names and passwords in order to access critical business information.
 Additional entry points are often established to ensure that the attack can continue if a compromised point is discovered and closed.
-3) In the third phase, usually referred to "Exfiltration", cybercriminals typically store stolen information in a secure location within the network until enough data has been collected. They then extract, or “exfiltrate” it without detection. 
+
+3) In the third phase, usually referred to __"Exfiltration"__, cybercriminals typically store stolen information in a secure location within the network until enough data has been collected. They then extract, or “exfiltrate” it without detection. 
 
 Threats are human. Focused and funded adversaries will not be countered by security boxes on the network alone. Threat hunters are actively searching for threats to prevent or minimize damage before it happens.
 
 
-The ThreatHunting concept can be easily summarized with the __Locard's__ __Exchange__ __Principle__, which says that: "Every Contact leave a trace". Thinking about 
-our attacker this makes perfect sense.  
+The Threat Hunting concept can be easily summarized with the __Locard's__ __Exchange__ __Principle__, which says that: "Every Contact leave a trace". 
+Thinking about our attacker this makes perfect sense.  
 
 <p align="center">
   <img src="/assets/posts/2021-11-01-Hunting-for-Evil/pyramidofpain.JPG">
@@ -44,31 +46,33 @@ As a baseline the following steps are needed to perform hunting activities:
 Most of the threat hunting platforms uses `“Attack MITRE” adversary model. MITRE ATT&CK™` is a globally-accessible knowledge base of adversary tactics and
 techniques based on real-world observations. 
 
-The Mitre team has listed down all those adversary behaviors and attack vectors carries out by an adversary on a victim machine. 
+The `Mitre` team has listed down all those adversary behaviors and attack vectors carries out by an adversary on a victim machine. 
 It provides you with description as well as some references regarding the threats, based on historical outbreak. 
-It uses TTP’s Tactics, Techniques and Procedures and maps it to Cyber Kill chain.
+It uses `TTP’s Tactics, Techniques and Procedures` and maps it to __Cyber__ __Kill__ __chain__.
 
 
 
 
 Below some basic example of practical threat hunting approach based on hypothesis.
 
-- 1 Word or excel file opening powershell which runs mimikatz command for hash dumping – To check this hypothesis, first look for data, do we have
+- `Word.exe` or `excel.exe` file opening powershell which runs `mimikatz` command for hash dumping – To check this hypothesis, first look for data, do we have
 proper data to hunt for this hypothesis, then hunt for __winword.exe__ __execl.exe__ process creating __powershell.exe__, and command line containing (
-mimikatz ).
+`mimikatz`).
 
-- 2 Downloading files from internet (Other than browser) – Look out for process which are used to download files from internet other than browser,
-certutil.exe , hh.exe can be used for the same.
+- Downloading files from internet (Other than browser) – Look out for process which are used to download files from internet other than browser,
+`certutil.exe` , `hh.exe` can be used for the same.
 
-- 3 Powershell download cradles event_data.CommandLine:(*powershell* *pwsh* *SyncAppvPublishingServer*) AND event_data.CommandLine:(*BitsTransfer* *webclient* *DownloadFile* *downloadstring* *wget* *curl* *WebRequest* *WinHttpRequest* iwr irm "*internetExplorer.Application*" "*Msxml2.XMLHTTP*" "*MsXml2.ServerXmlHttp*")
+- `Powershell download cradles` event_data.CommandLine:(*powershell* *pwsh* *SyncAppvPublishingServer*) AND event_data.CommandLine:(*BitsTransfer* *webclient* *DownloadFile* *downloadstring* *wget* *curl* *WebRequest* *WinHttpRequest* iwr irm "*internetExplorer.Application*" "*Msxml2.XMLHTTP*" "*MsXml2.ServerXmlHttp*")
 
-- 4 Using certutil for downloading event_data.CommandLine:(*certutil*) AND event_data.CommandLine:(*urlcach* *url* *ping*) AND event_data.CommandLine:(*http* *ftp*)
+- Using `certutil,exe` for downloading event_data.CommandLine:(*certutil*) AND event_data.CommandLine:(*urlcach* *url* *ping*) AND event_data.CommandLine:(*http* *ftp*)
 
 
 __Note:__ Testing 
 
 
-## 2) Basic LOLBAL Hunting with Splunk 
+## 2) Basic LOLBAS Hunting with Splunk 
+
+The goal of the LOLBAS project is to document every binary, script, and library that can be used for Living Off The Land techniques.
 
 - General term used when an attacker abuses built-in binaries and scripts of an OS install or common application installation
 - These techniques may be harder to detect, evade controls, blend in with normal use etc.
