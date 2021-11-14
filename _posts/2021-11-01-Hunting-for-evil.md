@@ -5,6 +5,12 @@ layout: "post"
 
 __Threat__ __hunting__ - the act of aggressively intercepting, tracking and eliminating cyber adversaries as early as possible in the Cyber Kill Chain.
 
+
+
+
+
+
+
 To prevent, detect and resolve an APT, you must recognize its characteristics. 
 Most APTs follow the same basic life cycle of infiltrating a network, expanding access and achieving the goal of the attack, which is most commonly stealing data by extracting it from the network.
 
