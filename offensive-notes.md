@@ -1,5 +1,5 @@
 ---
-title: "Notes" 
+title: "Offensive Notes" 
 layout: "post"
 ---
 
