@@ -1,5 +1,5 @@
 ---
-title: "Windows Evasion " 
+title: "Basic Windows Evasion " 
 layout: "post"
 ---
 

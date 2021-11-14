@@ -10,10 +10,10 @@ Most APTs follow the same basic life cycle of infiltrating a network, expanding 
 
 
 
-- 1 In the first phase, usually referred to "Initial Access", advanced persistent threats often gain access through social engineering techniques. One indication of an APT is a phishing email that selectively targets high-level individuals like senior executives or technology leaders, often using information obtained from other team members that have already been compromised. Email attacks that target specific individuals are called “spear-phishing.”
-- 2 In the second phase, usually referred to "Lateral Movement" attackers insert malware into an organization’s network to move to the second phase, expansion. They move laterally to map the network and gather credentials such as account names and passwords in order to access critical business information.
+1) In the first phase, usually referred to "Initial Access", advanced persistent threats often gain access through social engineering techniques. One indication of an APT is a phishing email that selectively targets high-level individuals like senior executives or technology leaders, often using information obtained from other team members that have already been compromised. Email attacks that target specific individuals are called “spear-phishing.”
+2) In the second phase, usually referred to "Lateral Movement" attackers insert malware into an organization’s network to move to the second phase, expansion. They move laterally to map the network and gather credentials such as account names and passwords in order to access critical business information.
 Additional entry points are often established to ensure that the attack can continue if a compromised point is discovered and closed.
-- 3 In the third phase, usually referred to "Exfiltration", cybercriminals typically store stolen information in a secure location within the network until enough data has been collected. They then extract, or “exfiltrate” it without detection. 
+3) In the third phase, usually referred to "Exfiltration", cybercriminals typically store stolen information in a secure location within the network until enough data has been collected. They then extract, or “exfiltrate” it without detection. 
 
 Threats are human. Focused and funded adversaries will not be countered by security boxes on the network alone. Threat hunters are actively searching for threats to prevent or minimize damage before it happens.
 
