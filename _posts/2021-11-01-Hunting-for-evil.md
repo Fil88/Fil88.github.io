@@ -6,9 +6,9 @@ layout: "post"
 __Threat__ __hunting__ - the act of aggressively intercepting, tracking and eliminating cyber adversaries as early as possible in the Cyber Kill Chain.
 Threats are human. Focused and funded adversaries will not be countered by security boxes on the network alone. Threat hunters are actively searching for threats to prevent or minimize damage before it happens.
 
-This concept can be easily summarized with the Locard's Exchange Principle, which stand for: 
+This concept can be easily summarized with the Locard's Exchange Principle, which says that: "Every Contact leave a trace"
 
-`Every Contact with a trace`
+
 
 
 
@@ -16,7 +16,7 @@ This concept can be easily summarized with the Locard's Exchange Principle, whic
 
 
 <p align="center">
-  <img src="/assets/posts/2021-11-01-Hunting-for-Evil/pyramidofpain.jpg">
+  <img src="/assets/posts/2021-11-01-Hunting-for-Evil/pyramidofpain.JPG">
 </p>
 
 
