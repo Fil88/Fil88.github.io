@@ -151,6 +151,16 @@ Write-Output ($_.FileHashRule) | ForEach-Object -Process { Write-Output "=== Fil
 Write-Output ($_.FilePublisherRule | Where-Object {$_.Name -NotLike "(Default Rule)*"}) | ForEach-Object -Process {Write-Output "=== File Publisher Rule ===`n`n Rule Name : $($_.Name) `n PublisherName : $($_.Conditions.FilePublisherCondition.PublisherName) `n ProductName : $($_.Conditions.FilePublisherCondition.ProductName) `n BinaryName : $($_.Conditions.FilePublisherCondition.BinaryName) `n BinaryVersion Min. : $($_.Conditions.FilePublisherCondition.BinaryVersionRange.LowSection) `n BinaryVersion Max. : $($_.Conditions.FilePublisherCondition.BinaryVersionRange.HighSection) `n Description: $($_.Description) `n Group/SID : $($_.UserOrGroupSid)`n`n"}
 }
 
+Get-AppLockerPolicy -Effective | select -ExpandProperty RuleCollections
+$ExecutionContext.SessionState.LanguageMode
+Get-AppLockerPolicy -Effective | select -ExpandProperty RuleCollections	
+Get-AppLockerPolicy -Local).RuleCollections
+Get-ChildItem -Path HKLM:Software\Policies\Microsoft\Windows\SrpV2 -Recurse
+reg query HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows\SrpV2\Exe\
+Get-ChildItem 'HKLM:\SOFTWARE\Microsoft\NET Framework Setup\NDP' -Recurse | Get-ItemProperty -Name version -EA 0 | Where { $_.PSChildName -Match '^(?!S)\p{L}'} | Select PSChildName, version
+reg query "HKLM\SOFTWARE\Microsoft\Net Framework Setup\NDP" /s
+reg query "HKLM\SOFTWARE\Microsoft\Net Framework Setup\NDP\v4" /s
+
 ```
 The script will try to find all the AppLocker rules that don’t have the Default Rule in their name and then output the FilePath,FilePublisher and FileHash rules.
 

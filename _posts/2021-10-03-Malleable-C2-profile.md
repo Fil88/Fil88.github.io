@@ -24,7 +24,7 @@ This is just a simple list
 
 
 <p align="center">
-  <img src="/assets/posts/2022-11-01-Malleable-C2-profile/1.JPG">
+  <img src="/assets/posts/2022-10-03-Malleable-C2-profile/1.JPG">
 </p>
 
 __Note:__ This is just a note that remind me to set up references links like this one, https://reconshell.com/list-of-awesome-cobaltstrike-resources/
