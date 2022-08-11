@@ -27,9 +27,6 @@ This is just a simple list
   <img src="/assets/posts/2021-10-03-Malleable-C2-profile/1.JPG">
 </p>
 
-<p align="center">
-  <img src="/assets/posts/2021-10-03-Malleable-C2-profile/2.jpg">
-</p>
 
 __Note:__ This is just a note that remind me to set up references links like this one, https://reconshell.com/list-of-awesome-cobaltstrike-resources/
 
@@ -46,7 +43,7 @@ __Note:__ This is just a note that remind me to set up references links like thi
 ## 1) Hunting CobaltStrike Sacrifical process
 
 
-In regards to `CreateRemoteThread()` process injection, there are really three (3) main objectives that need to happen:
+In regards to `CreateRemoteThread()` process injection, there are really three main objectives that need to happen:
 
 
 
