@@ -16,7 +16,19 @@ The following query identifies Microsoft Background Intelligent Transfer Service
 In addition, look for download or upload on the command-line, the switches are not required to perform a transfer.
 
 ```powershell 
-| tstats `security_content_summariesonly` count min(_time) as firstTime max(_time) as lastTime from datamodel=Endpoint.Processes where `process_bitsadmin` Processes.process=*transfer* by Processes.dest Processes.user Processes.parent_process Processes.original_file_name Processes.process_name Processes.process Processes.process_id Processes.parent_process_id | `drop_dm_object_name(Processes)` | `security_content_ctime(firstTime)` | `security_content_ctime(lastTime)` | `bitsadmin_download_file_filter`
+bitsadmin download activity:
+
+	DeviceProcessEvents
+	| where ProcessVersionInfoOriginalFileName == "bitsadmin.exe"
+	| where ProcessCommandLine contains "/addfile" or "transfer"
+	
+bitsadmin create a persistent job activity:
+
+	DeviceProcessEvents
+	| where ProcessVersionInfoOriginalFileName == "bitsadmin.exe"
+	| where ProcessCommandLine contains "/SetNotifyCmdLine"
+
+
 ```
 
 # 1) powershell

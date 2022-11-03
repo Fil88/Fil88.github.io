@@ -94,6 +94,8 @@ Below some example of typical `LOLBAS` software abused by APT.
 - csc.exe
 - regsvr32.exe
 
+__Note:__ The detections rules listed below are specific to out environment. Always adapt the query according to your needs
+
 In the case study presented below the threat actor uses `Cobalt Strike` beacon for their post-exploitation activities with a __PowerShell__ stager generated from the Cobalt Strike framework.
 The telemetry shows this attack launched by abusing `rundll32.exe` and the command line invoking __JScript__ code to download a web page and launch the initial __PowerShell__ stager.
 
@@ -102,3 +104,46 @@ rundll32.exe javascript:\\..\\mshtml,RunHTMLApplication ;document.write();new%20
 ```
 
 The first PowerShell stage, webax.js decompresses the second-stage PowerShell code that loads the first shellcode stage into memory and creates a specific request to download what seems like a standard jQuery library.
+
+
+### 1) Bitsadmin Download File
+
+The following query identifies Microsoft Background Intelligent Transfer Service utility bitsadmin.exe using the transfer parameter to download a remote object. 
+In addition, look for download or upload on the command-line, the switches are not required to perform a transfer.
+
+```powershell 
+bitsadmin download activity:
+
+	DeviceProcessEvents
+	| where ProcessVersionInfoOriginalFileName == "bitsadmin.exe"
+	| where ProcessCommandLine contains "/addfile" or "transfer"
+	
+bitsadmin create a persistent job activity:
+
+	DeviceProcessEvents
+	| where ProcessVersionInfoOriginalFileName == "bitsadmin.exe"
+	| where ProcessCommandLine contains "/SetNotifyCmdLine"
+
+
+```
+
+# 1) powershell
+
+# 2) rundll32
+
+# 3) mshta
+
+The following analytic identifies "mshta.exe" execution with inline protocol handlers. "JavaScript", "VBScript", and "About" are the only supported options when invoking HTA content directly on the command-line.
+
+```powershell
+| tstats `security_content_summariesonly` count values(Processes.process) as process values(Processes.parent_process) as parent_process min(_time) as firstTime max(_time) as lastTime from datamodel=Endpoint.Processes where `process_mshta` (Processes.process=*vbscript* OR Processes.process=*javascript* OR Processes.process=*about*) by Processes.user Processes.process_name Processes.original_file_name Processes.parent_process_name Processes.dest  | `drop_dm_object_name(Processes)` | `security_content_ctime(firstTime)`| `security_content_ctime(lastTime)` | `detect_mshta_inline_hta_execution_filter`
+```
+
+
+# 4) Certutil Download With Urlcache And Split Arguments
+
+Certutil.exe may download a file from a remote destination using -urlcache. This behavior does require a URL to be passed on the command-line. In addition, -f (force) and -split (Split embedded ASN.1 elements, and save to files) will be used.
+
+```powershell
+| tstats `security_content_summariesonly` count min(_time) as firstTime max(_time) as lastTime from datamodel=Endpoint.Processes where `process_certutil` Processes.process=*urlcache* Processes.process=*split* by Processes.dest Processes.user Processes.parent_process Processes.process_name Processes.process Processes.process_id Processes.original_file_name Processes.parent_process_id | `drop_dm_object_name(Processes)` | `security_content_ctime(firstTime)` | `security_content_ctime(lastTime)` | `certutil_download_with_urlcache_and_split_arguments_filter`
+```
