@@ -190,7 +190,9 @@ During experiments, the following Windows binaries were found to be using anonym
 - `splunkd.exe`
 - `firefox.exe`
 
-The same applies to custom reflective DLLs that are executed via Cobalt Strike's dllspawn API, as the underlying mechanism for communication is the same. An example of such is the Outflank's Ps-Tools repository. Ps-Tools is a collection of rDLL fully compatible with Cobalt Strike that allow operators to monitor process activity. Let's execute the "psw" module, used to enumerate the active Windows, as shown below:
+The same applies to custom reflective DLLs that are executed via Cobalt Strike's dllspawn API, as the underlying mechanism for communication is the same. 
+An example of such is the Outflank's Ps-Tools repository. Ps-Tools is a collection of rDLL fully compatible with Cobalt Strike that allow operators to monitor process activity. 
+Let's execute the "psw" module, used to enumerate the active Windows, as shown below:
 
 <p align="center">
   <img src="/assets/posts/2021-10-03-Malleable-C2-profile/execAss.png">
@@ -199,7 +201,7 @@ The same applies to custom reflective DLLs that are executed via Cobalt Strike's
 Executing this module, we can identify the same anonymous pipe behaviour we've seen in our previous example:
 
 <p align="center">
-  <img src="/assets/posts/2021-10-03-Malleable-C2-profile/anonPipes.png">
+  <img src="/assets/posts/2021-10-03-Malleable-C2-profile/anon.png">
 </p>
 
 
