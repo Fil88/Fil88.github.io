@@ -42,27 +42,24 @@ Certutil.exe may download a file from a remote destination using -urlcache. This
 
 # 5) wmic
 
-
 __Note:__ This is not an exaustive list of LOLBAS to monitor but rather a baseline. Your environment define your tailor made detection rules.
 
 https://docs.splunksecurityessentials.com/content-detail/certutil_download_with_urlcache_and_split_arguments/
 
 
+# 6) Notepad cache
 
-
-# Notepad cache
-
-[lazy]People like me use Notepad++ as a note-taking thing. We create a 'new', then never get around to saving them.
+[lazy]People like me use __Notepad++__ as a note-taking thing. We create a 'new', then never get around to saving them.
 
 They get cached here:
-C:\Users\{username}\AppData\Roaming\Notepad++\backup
+`C:\Users\{username}\AppData\Roaming\Notepad++\backup`
 
-# Procdump.exe 
+# 7) Procdump.exe 
 
 If you rename __procdump.exe to __dump64.exe__ and place it in the "C:\Program Files (x86)\Microsoft Visual Studio\*" folder, you can bypass Defender and dump __LSASS__.
 
 
-# Disable Defender 
+# 8) Disable Defender 
 
 ```powershell
 shell Set-MpPreference -DisableRealtimeMonitoring $true 
@@ -77,7 +74,7 @@ Set-MpPreference -DisableCatchupFullScan $True
 Set-MpPreference -DisableCatchupQuickScan $True
 ```
 
-# SQldumper LSASS
+# 9) SQldumper LSASS
 
 0x01100:40 flag will create a Mimikatz compatible dump file.
 
