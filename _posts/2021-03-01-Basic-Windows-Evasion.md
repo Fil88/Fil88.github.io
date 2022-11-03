@@ -53,7 +53,7 @@ Lastly these logs are stored and analyzed either in house or in the cloud; monit
 We as security operator we can do a lot to evade these controls as we can target hooks in our process we can evade signature, we can attack userland & kernel components and so on.
 
 
-## File Entropy & properties 
+## 1) File Entropy & properties 
 
 Remember the importance of obfuscation & encryption to our malware to hide from security products such as AV/EDR's. the drowback of this technique is that we are going to change our binary's entropy! 
 
@@ -91,7 +91,15 @@ You will land in a new Resource view browser where you can again right click -> 
 From here you land in a new version file where you can start filling out informations about your dropper. 
 
 
-## File and code binary Signing
+# 2) Escaping the (local) AV sandbox
+
+Many EDR solutions will run the binary in a local sandbox for a few seconds to inspect its behaviour. 
+To avoid compromising on the end user experience, they cannot afford to inspect the binary for longer than a few seconds (Avast taking up to 30 seconds in the past, but that was an exception). 
+We can abuse this limitation by delaying the execution of our shellcode. Simply calculating a large prime number is my personal favourite. 
+You can go a bit further and deterministically calculate a prime number and use that number as (a part of) the key to your encrypted shellcode. Sleep() functions are your friends in this case, even adding a small sleep() delay will increse the chance to bypass defenses. 
+
+
+## 3) File and code binary Signing
 
 You can sign code using a code signing certificate. However, when doing this that would also mean that everything you sign, is immediately traced back to you. 
 So we can use fake code signing as well. The tool I like to use for this is https://github.com/Tylous/Limelighter
