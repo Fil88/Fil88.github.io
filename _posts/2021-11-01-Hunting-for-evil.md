@@ -109,7 +109,18 @@ The first PowerShell stage, webax.js decompresses the second-stage PowerShell co
 
 ### 1) Powershell
 
-
+```powershell 
+// PowerShell execution events that could involve downloads
+DeviceProcessEvents
+| where Timestamp > ago(1d)
+| where FileName in~ ("powershell.exe", "powershell_ise.exe")
+| where ProcessCommandLine has "Net.WebClient"
+or ProcessCommandLine has "DownloadFile"
+   or ProcessCommandLine has "Invoke-WebRequest"
+   or ProcessCommandLine has "Invoke-Shellcode"
+   or ProcessCommandLine contains "http:"
+| top 100 by ProcessCommandLine
+```
 
 
 ### 2) Bitsadmin Download File
@@ -120,15 +131,15 @@ In addition, look for download or upload on the command-line, the switches are n
 ```powershell 
 bitsadmin download activity:
 
-	DeviceProcessEvents
-	| where ProcessVersionInfoOriginalFileName == "bitsadmin.exe"
-	| where ProcessCommandLine contains "/addfile" or "transfer"
+DeviceProcessEvents
+| where ProcessVersionInfoOriginalFileName == "bitsadmin.exe"
+| where ProcessCommandLine contains "/addfile" or "transfer"
 	
 bitsadmin create a persistent job activity:
 
-	DeviceProcessEvents
-	| where ProcessVersionInfoOriginalFileName == "bitsadmin.exe"
-	| where ProcessCommandLine contains "/SetNotifyCmdLine"
+DeviceProcessEvents
+| where ProcessVersionInfoOriginalFileName == "bitsadmin.exe"
+| where ProcessCommandLine contains "/SetNotifyCmdLine"
 ```
 
 ### 3) Certutil Download With Urlcache And Split Arguments
@@ -136,28 +147,100 @@ bitsadmin create a persistent job activity:
 Certutil.exe may download a file from a remote destination using -urlcache. This behavior does require a URL to be passed on the command-line. In addition, -f (force) and -split (Split embedded ASN.1 elements, and save to files) will be used.
 Certutil.exe is a Windows binary used for handeling certificates; the query detects download and encode/decode operations
 ```powershell
-
-	DeviceProcessEvents
-	| where ProcessVersionInfoOriginalFileName == "CertUtil.exe"
-	| where ProcessCommandLine contains "://" or ProcessCommandLine contains "-encode" or ProcessCommandLine contains "-decode" or ProcessCommandLine contains "-urlcache"
+DeviceProcessEvents
+| where ProcessVersionInfoOriginalFileName == "CertUtil.exe"
+| where ProcessCommandLine contains "://" or ProcessCommandLine contains "-encode" or ProcessCommandLine contains "-decode" or ProcessCommandLine contains "-urlcache"
 ```
 
-
-
-### 4) rundll32
-
-### 5) msiexec
-
-
-### 5) mshta
+### 4) Mshta
 
 The following analytic identifies "mshta.exe" execution with inline protocol handlers. "JavaScript", "VBScript", and "About" are the only supported options when invoking HTA content directly on the command-line.
 
 ```powershell
-| tstats `security_content_summariesonly` count values(Processes.process) as process values(Processes.parent_process) as parent_process min(_time) as firstTime max(_time) as lastTime from datamodel=Endpoint.Processes where `process_mshta` (Processes.process=*vbscript* OR Processes.process=*javascript* OR Processes.process=*about*) by Processes.user Processes.process_name Processes.original_file_name Processes.parent_process_name Processes.dest  | `drop_dm_object_name(Processes)` | `security_content_ctime(firstTime)`| `security_content_ctime(lastTime)` | `detect_mshta_inline_hta_execution_filter`
+// mshta.exe script launching processes
+DeviceProcessEvents 
+where Timestamp > ago(7d)
+and InitiatingProcessFileName =~ 'mshta.exe'
+and InitiatingProcessCommandLine contains '<script>'
 ```
 
-### 6) wscript & cscript
 
 
-### 7) regsvr32
+### 5) Spearphishing Attachment: ISO Images + Lnk
+
+```powershell
+let lookback = 10d;
+// Get ISO mount events
+DeviceFileEvents
+| where Timestamp > ago(lookback)
+| where FileName endswith ".iso" or FileName endswith ".img" or FileName endswith ".lnk"
+//| where FileOriginReferrerUrl has ".zip";
+// Exclude servers and workstation used by IT admins if needed.
+
+
+// We can also detect possible network connection from a process created under a mounted image:
+
+// Query parameters:
+let lookback = 10d;
+// Get mounted devices and extract the folder name
+DeviceRegistryEvents
+| where Timestamp > ago(lookback)
+| where ActionType == "RegistryValueSet" and RegistryKey == @"HKEY_LOCAL_MACHINE\SYSTEM\MountedDevices" and RegistryValueName startswith @"\DosDevices\"
+| extend Folder = toupper(replace(@'\\DosDevices\\(\w:)',@'\1',RegistryValueName)) // Extract the folder name
+// Get network connections of processes that have the mounted image as the InitiatingProcessFolderPath
+| join kind=inner 
+    (
+    DeviceNetworkEvents
+    | where Timestamp > ago(lookback)
+    | extend Folder = toupper(replace(@'(\w:)\\.*',@'\1',InitiatingProcessFolderPath))
+    ) on DeviceId, Folder
+// If needed, exclude the legitimate activity and servers
+| where InitiatingProcessFileName != "ntoskrnl.exe"
+```
+
+
+### 6) Regsvr32 command line execution
+
+```powershell
+// Finds regsvr32.exe command line executions that loads scriptlet files from remote sites.
+// This technique could be used to avoid application whitelisting and antimalware protection.
+DeviceNetworkEvents
+| where Timestamp > ago(7d)
+| where InitiatingProcessFileName =~ "regsvr32.exe" and InitiatingProcessCommandLine contains "/i:http" 
+| project Timestamp, DeviceName, RemoteUrl, RemoteIP, InitiatingProcessCommandLine, InitiatingProcessParentFileName 
+| top 100 by Timestamp
+
+```
+
+### x7) ASR Rare and Untrusted Executables
+
+```powershell
+// Query parameters:
+DeviceEvents
+| where Timestamp > ago(20d)
+| where ActionType in ("AsrUntrustedExecutableAudited","AsrUntrustedExecutableBlocked")
+| summarize arg_min(Timestamp,*), LocalPrevalence = dcount(DeviceId) by SHA1, FileName
+| where Timestamp > ago(1d)
+| where LocalPrevalence <= 5
+// there might be files without signature info, perform leftouter join
+| join kind=leftouter (
+    DeviceFileCertificateInfo
+    | where Timestamp > ago(30d)
+    | summarize arg_max(Timestamp,*) by SHA1
+    )
+    on SHA1
+// Get GlobalPrevalence info, etc.
+| invoke FileProfile(SHA1, 1000)
+// GlobalFirstSeen can be used for filtering the results further
+// If you want to list only the files that have invalid signatures uncomment the below line
+// there might be files without signature info, don't exclude them
+// | where IsTrusted <> 1
+```
+
+### x) Template
+
+```powershell
+
+```
+
+

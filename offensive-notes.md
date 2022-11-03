@@ -94,7 +94,7 @@ PS > [MonkStager.MonkStager]::Execute()
 
 __Note:__ .NET 4.8, Assembly.Load is AMSI-aware 🚩
 
-### Load remote .NET assembly with PowerShell
+### Load remote .NET assembly with PowerShell and XOR Key
 
 ```powershell 
 
