@@ -249,6 +249,8 @@ __IMG 2:__ Checking RAM
 __IMG 3:__ Checking UpTime
 
 
+### Import table obfuscation
+
 You want to avoid suspicious Windows API (WINAPI) from ending up in our IAT (import address table). 
 This table consists of an overview of all the Windows APIs that your binary imports from other system libraries. 
 A list of suspicious (oftentimes therefore inspected by EDR solutions) APIs can be found here. 
@@ -273,6 +275,31 @@ fnVirtualProtect(address, dwSize, PAGE_READWRITE, &oldProt);
 Obfuscating strings using a character array cuts the string up in smaller pieces making them more difficult to extract from a binary.
 
 The call will still be to an ntdll.dll WINAPI, and will not bypass any hooks in WINAPIs in ntdll.dll, but is purely to remove suspicious functions from the IAT.
+
+
+### Removing hooks in ntdll.dll
+
+Another nice technique to evade EDR hooks in ntdll.dll is to overwrite the loaded ntdll.dll that is loaded by default (and hooked by the EDR) with a fresh copy from ntdll.dll. ntdll.dll is the first DLL that gets loaded by any Windows process. 
+EDR solutions make sure their DLL is loaded shortly after, which puts all the hooks in place in the loaded ntdll.dll before our own code will execute. 
+If our code loads a fresh copy of ntdll.dll in memory afterwards, those EDR hooks will be overwritten. 
+RefleXXion is a C++ library that implements the research done for this technique by MDSec. 
+RelfeXXion uses direct system calls NtOpenSection and NtMapViewOfSection to get a handle to a clean ntdll.dll in \KnownDlls\ntdll.dll (registry path with previously loaded DLLs). 
+It then overwrites the .TEXT section of the loaded ntdll.dll, which flushes out the EDR hooks.
+
+
+### OpSec configurations in your Malleable profile
+
+In your Malleable C2 profile, make sure the following options are configured, which limit the use of RWX marked memory (suspicious and easily detected) and clean up the shellcode after beacon has started.
+
+```powershell
+	set startrwx        "false";
+    set userwx          "false";
+    set cleanup         "true";
+    set stomppe         "true";
+    set obfuscate       "true";
+    set sleep_mask      "true";
+    set smartinject     "true";
+	```
 
 ## Conclusion
 

