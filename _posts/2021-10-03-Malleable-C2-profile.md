@@ -2,7 +2,7 @@
 title: "Understanding CobaltStrike Malleable C2C profile" 
 layout: "post"
 ---
-
+Cobalt Strike is a commercial penetration testing platform which is used by many red teams and, unfortunately, also by many criminal threat actors
 One of the great and popular features of cobalt strike is the ability to create profiles  to shape and mask traffic, 
 essentially a profile is used to tell the CS `teamserver` how traffic is going to look and how to respond to the data the beacon sends it.
 
