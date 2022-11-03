@@ -6,12 +6,16 @@ layout: "post"
 One of the great and popular features of cobalt strike is the ability to create profiles  to shape and mask traffic, 
 essentially a profile is used to tell the CS `teamserver` how traffic is going to look and how to respond to the data the beacon sends it.
 
+<p align="center">
+  <img src="/assets/posts/2021-10-03-Malleable-C2-profile/1.PNG">
+</p>
+
 
 
 ## 1) Hunting CobaltStrike Sacrifical process
 
 <p align="center">
-  <img src="/assets/posts/2021-10-03-Malleable-C2-profile/huntSacr.png">
+  <img src="/assets/posts/2021-10-03-Malleable-C2-profile/dodgeCob.png">
 </p>
 
 
@@ -25,7 +29,7 @@ Most of the Cobalt Strike features are implemented as Windows DLLs, meaning that
 
 
 <p align="center">
-  <img src="/assets/posts/2021-10-03-Malleable-C2-profile/sacrifical1.JPG">
+  <img src="/assets/posts/2021-10-03-Malleable-C2-profile/sacrifical1.png">
 </p>
 
 Is important to underline that not all Cobalt Strike features require a sacrificial process to be executed. Beacon Object Files   for Cobalt Strike for example load everything via the beacon payload.
@@ -82,7 +86,7 @@ Hunting the Cobalt Strike Sacrificial Process pattern, it's not an easy task for
 
 2.	Cobalt Strike leverage the usage of system processes to hide and assimilate as much as possible with normal activities and processes running on the victim's machine. 
 
-Collaborating with Intesa Sanpaolo Threat Intelligence team we have been able to collect 9174 Cobalt Strike Malleable C2 profile used “in to the wild”. Analysing and parsing them we can extract some very interesting information:
+During a recent investigaction activity we have been able to collect 9174 Cobalt Strike Malleable C2 profile used “in to the wild”. Analysing and parsing them we can extract some very interesting information:
 
 -	The executable `rundll32.exe` is by far the most used `spawnto` configuration
 -	In the majority of `spawnto` configuration the process is expected to be spawned without any arguments
@@ -106,7 +110,7 @@ Two different approach will be used in order to identify the sacrificial process
 
 The techniques that have been identified have been summarized in the following table and mapped based on __MITRE__ __ATT&CK__ knowledge base: 
 
-```cpp
+```py
 Execution	T1059.001 – Command and Scripting Interpreter: PowerShell
 Defence Evasion	T1055.002 – Process Injection: Portable Executable Injection
 ```
@@ -165,7 +169,7 @@ DeviceEvents
 Not every Cobalt Strike command creates a named pipe, some of them will use anonymous (unnamed) pipes to achieve the same result. The image below shows an instance of a pipe created after issuing the "execute-assembly" command:
 
 <p align="center">
-  <img src="/assets/posts/2021-10-03-Malleable-C2-profile/anonimousPipe.png">
+  <img src="/assets/posts/2021-10-03-Malleable-C2-profile/anonymousPipe.png">
 </p>
 
 In theory, we could baseline processes that use anonymous pipes. The interesting result is that native Windows processes do not use anonymous pipes that often. So we could look for Windows processes that connect to an anonymous pipe and investigate from there.
