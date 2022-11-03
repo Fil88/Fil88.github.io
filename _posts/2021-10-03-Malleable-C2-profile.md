@@ -7,7 +7,7 @@ One of the great and popular features of cobalt strike is the ability to create 
 essentially a profile is used to tell the CS `teamserver` how traffic is going to look and how to respond to the data the beacon sends it.
 
 <p align="center">
-  <img src="/assets/posts/2021-10-03-Malleable-C2-profile/1.PNG">
+  <img src="/assets/posts/2021-10-03-Malleable-C2-profile/1.JPG">
 </p>
 
 
