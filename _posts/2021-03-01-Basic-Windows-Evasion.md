@@ -249,6 +249,31 @@ __IMG 2:__ Checking RAM
 __IMG 3:__ Checking UpTime
 
 
+You want to avoid suspicious Windows API (WINAPI) from ending up in our IAT (import address table). 
+This table consists of an overview of all the Windows APIs that your binary imports from other system libraries. 
+A list of suspicious (oftentimes therefore inspected by EDR solutions) APIs can be found here. 
+Typically, these are `VirtualAlloc, VirtualProtect, WriteProcessMemory, CreateRemoteThread, SetThreadContext` etc. 
+Running dumpbin /exports <binary.exe> will list all the imports. 
+For the most part, we’ll use Direct System calls to bypass both EDR hooks of suspicious WINAPI calls, but for less suspicious API calls this method works just fine.
+
+We add the function signature of the WINAPI call, get the address of the WINAPI in ntdll.dll and then create a function pointer to that address:
+
+```powershell
+typedef BOOL (WINAPI * pVirtualProtect)(LPVOID lpAddress, SIZE_T dwSize, DWORD  flNewProtect, PDWORD lpflOldProtect);
+pVirtualProtect fnVirtualProtect;
+
+unsigned char sVirtualProtect[] = { 'V','i','r','t','u','a','l','P','r','o','t','e','c','t', 0x0 };
+unsigned char sKernel32[] = { 'k','e','r','n','e','l','3','2','.','d','l','l', 0x0 };
+
+fnVirtualProtect = (pVirtualProtect) GetProcAddress(GetModuleHandle((LPCSTR) sKernel32), (LPCSTR)sVirtualProtect);
+// call VirtualProtect
+fnVirtualProtect(address, dwSize, PAGE_READWRITE, &oldProt);
+```
+
+Obfuscating strings using a character array cuts the string up in smaller pieces making them more difficult to extract from a binary.
+
+The call will still be to an ntdll.dll WINAPI, and will not bypass any hooks in WINAPIs in ntdll.dll, but is purely to remove suspicious functions from the IAT.
+
 ## Conclusion
 
 I hope this blogpost gives you a bit of an understanding that simply compiling stuff and dropping to disk, hoping for the best, is not really the best approach from a red team perspective.
