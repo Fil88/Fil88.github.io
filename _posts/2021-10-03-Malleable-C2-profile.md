@@ -166,7 +166,8 @@ DeviceEvents
 
 ### Anonymous Pipes
 
-Not every Cobalt Strike command creates a named pipe, some of them will use anonymous (unnamed) pipes to achieve the same result. The image below shows an instance of a pipe created after issuing the "execute-assembly" command:
+Not every Cobalt Strike command creates a named pipe, some of them will use anonymous (unnamed) pipes to achieve the same result. 
+The image below shows an instance of a pipe created after issuing the "execute-assembly" command:
 
 <p align="center">
   <img src="/assets/posts/2021-10-03-Malleable-C2-profile/anonymousPipe.png">
@@ -214,8 +215,8 @@ An example of a "post-ex" block is shown below:
 ```cpp
 post-ex {
     
-    set spawnto_x86 "%windir%\\syswow64\\dllhost.exe";
-    set spawnto_x64 "%windir%\\sysnative\\dllhost.exe";
+    set spawnto_x86 "%windir%\\syswow64\\wusa.exe";
+    set spawnto_x64 "%windir%\\sysnative\\wusa.exe";
 
     set obfuscate "true";
     set smartinject "true";
