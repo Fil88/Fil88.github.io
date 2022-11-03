@@ -2,7 +2,7 @@
 title: "Understanding CobaltStrike Malleable C2C profile" 
 layout: "post"
 ---
-Cobalt Strike is a commercial penetration testing platform which is used by many red teams and, unfortunately, also by many criminal threat actors
+Cobalt Strike is a commercial penetration testing platform which is used by many red teams and, unfortunately, also by many criminal threat actors. 
 One of the great and popular features of cobalt strike is the ability to create profiles  to shape and mask traffic, 
 essentially a profile is used to tell the CS `teamserver` how traffic is going to look and how to respond to the data the beacon sends it.
 
@@ -10,7 +10,8 @@ essentially a profile is used to tell the CS `teamserver` how traffic is going t
   <img src="/assets/posts/2021-10-03-Malleable-C2-profile/1.JPG">
 </p>
 
-
+Cobalt Strike is a threat emulation tool which simulates adversarial post-exploitation scenarios and supports Red Team operations. 
+Replicate the tactics of a long-term embedded threat actor using a post-exploitation agent, Beacon, and Malleable C2, a command and control program that enables modification of network indicators to blend in with traffic and look like different malware. 
 
 ## 1) Hunting CobaltStrike Sacrifical process
 
@@ -87,7 +88,7 @@ Hunting the Cobalt Strike Sacrificial Process pattern, it's not an easy task for
 
 2.	Cobalt Strike leverage the usage of system processes to hide and assimilate as much as possible with normal activities and processes running on the victim's machine. 
 
-During a recent investigaction activity we have been able to collect 9174 Cobalt Strike Malleable C2 profile used “in to the wild”. Analysing and parsing them we can extract some very interesting information:
+During a recent investigaction activity we have been able to collect 9174 Cobalt Strike Malleable C2 profile used “in to the wild”.  Analysing and parsing them we can extract some very interesting information:
 
 -	The executable `rundll32.exe` is by far the most used `spawnto` configuration
 -	In the majority of `spawnto` configuration the process is expected to be spawned without any arguments
@@ -125,7 +126,7 @@ One of the most common and simple detection method which can be used in order to
 By tracking down the Process Creation events from Microsoft Defender for Endpoint it was possible to identify, after filtering events that can be assimilated to normal activity, some interesting matches to analyze:
 
 <p align="center">
-  <img src="/assets/posts/2021-10-03-Malleable-C2-profile/huntSacr.png">
+  <img src="/assets/posts/2021-10-03-Malleable-C2-profile/huntSacri.png">
 </p>
 
 ## 3) Hunting CobaltStrike Named Pipe
