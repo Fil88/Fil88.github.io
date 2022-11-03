@@ -70,13 +70,17 @@ Sacrificial Process pattern or Target Explicit Process
 
 The sacrificial processes that have to be used from the Cobalt Strike beacon can be modified directly from the post-ex section of Cobalt Strike Malleable C2 profile:
 
+```cpp
 post-ex {
+
 	# control the temporary process we spawn to
+	
 	set spawnto_x86 "%windir%\\syswow64\\rundll32.exe";
 	
 	set spawnto_x64 "%windir%\\sysnative\\rundll32.exe";
 	…
 }
+```
 
 The default configuration uses `rundll32.exe`.
 
@@ -84,9 +88,9 @@ The default configuration uses `rundll32.exe`.
 
 Hunting the Cobalt Strike Sacrificial Process pattern, it's not an easy task for several reasons:
 
-1.	Cobalt Strike is well known as a flexible, stealthy, and compatible framework. It can be configured and customized in different ways, starting from modifying the Malleable C2 profile up to using custom techniques in in others hide the beacon and make it as silent as possible.
+1.	`Cobalt Strike` is well known as a flexible, stealthy, and compatible framework. It can be configured and customized in different ways, starting from modifying the Malleable C2 profile up to using custom techniques in in others hide the beacon and make it as silent as possible.
 
-2.	Cobalt Strike leverage the usage of system processes to hide and assimilate as much as possible with normal activities and processes running on the victim's machine. 
+2.	`Cobalt Strike` leverage the usage of system processes to hide and assimilate as much as possible with normal activities and processes running on the victim's machine. 
 
 During a recent investigaction activity we have been able to collect 9174 Cobalt Strike Malleable C2 profile used “in to the wild”.  Analysing and parsing them we can extract some very interesting information:
 
@@ -119,7 +123,7 @@ Defence Evasion	T1055.002 – Process Injection: Portable Executable Injection
 
 ### Abnormal system process creation events
 
-T1055.002 – Process Injection: Portable Executable Injection - Sacrificial Processes spawned without any arguments
+```T1055.002 – Process Injection: Portable Executable Injection - Sacrificial Processes spawned without any arguments```
 
 One of the most common and simple detection method which can be used in order to highlight an abnormal system process creation events related to Cobalt Strike is related to the command line used in order to execute the sacrificial process. Specifically, Cobalt Strike beacon spawn the sacrificial process without any arguments. 
 
@@ -139,9 +143,9 @@ Considerable efforts have been made to build robust signatures for Cobalt Strike
 
 Pipes are shared memory used for processes to communicate between each other. Fundamentally there are two types of pipe: named and unnamed.
 
-- Named pipes, as the name implies, have a name and can be accessed by referencing this. 
+- ```Named pipes```, as the name implies, have a name and can be accessed by referencing this. 
 
-- Unnamed pipes, that need their handle to be passed to the other communicating process in order to exchange data. This can be done in a number of ways. 
+- ```Unnamed pipes```, that need their handle to be passed to the other communicating process in order to exchange data. This can be done in a number of ways. 
 
 Cobalt Strike uses both named and unnamed pipes to exchange data between the beacon and its sacrificial processes.
 
@@ -177,7 +181,9 @@ The image below shows an instance of a pipe created after issuing the "execute-a
 
 In theory, we could baseline processes that use anonymous pipes. The interesting result is that native Windows processes do not use anonymous pipes that often. So we could look for Windows processes that connect to an anonymous pipe and investigate from there.
 
-We mention "Windows processes" because, more often than not, attackers use native Windows binaries as sacrificial processes within their malleable profiles. Examples of such are the binaries listed in the C2Concealer repository, a project used to create randomised malleable profiles. We can see the executables from the C2Concealer default configuration below:
+We mention "Windows processes" because, more often than not, attackers use native Windows binaries as sacrificial processes within their malleable profiles. 
+Examples of such are the binaries listed in the __C2Concealer__ repository, a project used to create randomised malleable profiles. 
+We can see the executables from the __C2Concealer__ default configuration below:
 
 <p align="center">
   <img src="/assets/posts/2021-10-03-Malleable-C2-profile/concealer.png">
@@ -228,11 +234,11 @@ post-ex {
 }
 ```
 
-Additionally, choosing binaries that legitimately use anonymous pipes in the "spawnto_x86" and "spawnto_x64" parameters will decrease the chances of being detected.
+Additionally, choosing binaries that legitimately use anonymous pipes in the `"spawnto_x86"` and `"spawnto_x64"` parameters will decrease the chances of being detected.
 
 The official malleable command reference and ThreatExpress' jQuery example profile are great resources for learning more about Cobalt Strike's malleable profile options.
 
-Altought these are good practice for defender there are many resources that can generate random CobaltStrike Malleable profile making hunting activities hard to implement. Below some project used to generate random Cobalt Strike profile: 
+Altought these are good practice for defender there are many resources that can generate random `CobaltStrike Malleable profile` making hunting activities hard to implement. Below some project used to generate random Cobalt Strike profile: 
 
 - [random_c2_profile] (https://github.com/threatexpress/random_c2_profile) Cobalt Strike random C2 Profile generator
 
