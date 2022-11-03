@@ -23,7 +23,7 @@ Cobalt Strike is a commercial post-exploitation framework used by various malwar
 
 Threat actors frequently chose Cobalt Strike since it provides enhanced post-exploitation capabilities (e.g. privilege escalation functionalities) and it is quite straightforward to use. The built-in features in Cobalt Strike support all phases of an attack, from reconnaissance and initial access to credential dumping and data exfiltration.
 
-Moreover, Cobalt Strike has the feature to personalize the configuration of the backdoors, also called “beacons”. Therefore, threat actors can change parameters such as URI, user agent, protocol from the network communication to individual post-exploitation functions such as process injection and payload obfuscation capabilities.
+Cobalt Strike has the feature to personalize the configuration of the backdoors, also called “beacons”. Therefore, threat actors can change parameters such as URI, user agent, protocol from the network communication to individual post-exploitation functions such as process injection and payload obfuscation capabilities.
 
 Most of the Cobalt Strike features are implemented as Windows DLLs, meaning that every time a threat actor runs the built-in functionalities, Cobalt Strike spawns a temporary process to inject malicious code into it, and communicates the results back to the beacon. Those temporary processes are called __sacrificial__ __processes__.  
 
@@ -72,6 +72,7 @@ The sacrificial processes that have to be used from the Cobalt Strike beacon can
 post-ex {
 	# control the temporary process we spawn to
 	set spawnto_x86 "%windir%\\syswow64\\rundll32.exe";
+	
 	set spawnto_x64 "%windir%\\sysnative\\rundll32.exe";
 	…
 }
