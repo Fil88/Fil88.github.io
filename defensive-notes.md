@@ -3,11 +3,7 @@ title: "Defensive Notes"
 layout: "post"
 ---
 
-# 1) wmic
-
-__Note:__ This is not an exaustive list of LOLBAS to monitor but rather a baseline. Your environment define your tailor made detection rules.
-
-https://docs.splunksecurityessentials.com/content-detail/certutil_download_with_urlcache_and_split_arguments/
+Some notes and tricks that helped me during engagement
 
 
 # 2) Notepad cache
@@ -15,7 +11,7 @@ https://docs.splunksecurityessentials.com/content-detail/certutil_download_with_
 [lazy]People like me use __Notepad++__ as a note-taking thing. We create a 'new', then never get around to saving them.
 
 They get cached here:
-`C:\Users\{username}\AppData\Roaming\Notepad++\backup`
+C:\Users\{username}\AppData\Roaming\Notepad++\backup
 ```
 
 # 3) Procdump.exe 
@@ -43,9 +39,9 @@ These files had macros enabled
 ```powershell
 0x01100:40 flag will create a Mimikatz compatible dump file.
 
-__sqldumper.exe__ 540 0 0x01100:40
+sqldumper.exe 540 0 0x01100:40
 
-Usecase: Dump __LSASS.exe__ to Mimikatz compatible dump using PID.
+Usecase: Dump LSASS.exe to Mimikatz compatible dump using PID.
 ```
 
 # 6) Powershell domain control enumerations
