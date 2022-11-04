@@ -59,7 +59,7 @@ Target Explicit Process Only:
 1.	browserpivot
 2.	psinject
 
-Sacrificial Process pattern or Target Explicit Process
+Sacrificial Process pattern or Target Explicit Process:
 1.	chromedump
 2.	dcsync
 3.	desktop

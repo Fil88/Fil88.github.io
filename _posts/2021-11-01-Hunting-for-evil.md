@@ -70,7 +70,7 @@ proper data to hunt for this hypothesis, then hunt for __winword.exe__ __execl.e
 __Note:__ Testing 
 
 
-## 2) Basic LOLBAS Hunting with Splunk 
+## 2) Basic LOLBAS Hunting  
 
 The goal of the LOLBAS project is to document every binary, script, and library that can be used for Living Off The Land techniques.
 
