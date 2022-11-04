@@ -259,9 +259,9 @@ __Note:__ CobaltStrike can be customized in many different ways (Artifact Kit, R
 
 ## References 
 
-1.	https://hstechdocs.helpsystems.com/manuals/cobaltstrike/current/userguide/content/topics/malleable-c2-extend_controll-post-exploitation.htm#_Toc65482859
-2.	https://hstechdocs.helpsystems.com/manuals/cobaltstrike/current/userguide/content/topics/beacon-object-files_main.htm 
-3.	https://thedfirreport.com/2021/08/29/cobalt-strike-a-defenders-guide/ 
+1. https://hstechdocs.helpsystems.com/manuals/cobaltstrike/current/userguide/content/topics/malleable-c2-extend_controll-post-exploitation.htm#_Toc65482859
+2. https://hstechdocs.helpsystems.com/manuals/cobaltstrike/current/userguide/content/topics/beacon-object-files_main.htm 
+3. https://thedfirreport.com/2021/08/29/cobalt-strike-a-defenders-guide/ 
 4. https://svch0st.medium.com/stats-from-hunting-cobalt-strike-beacons-c17e56255f9b
 5. https://blog.securehat.co.uk/cobaltstrike/extracting-config-from-cobaltstrike-stager-shellcode
 6. https://blog.zsec.uk/cobalt-strike-profiles/
