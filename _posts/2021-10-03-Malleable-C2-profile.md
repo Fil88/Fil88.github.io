@@ -248,11 +248,11 @@ The official malleable command reference and ThreatExpress' jQuery example profi
 
 Altought these are good practice for defender there are many resources that can generate random `CobaltStrike Malleable profile` making hunting activities hard to implement. Below some project used to generate random Cobalt Strike profile: 
 
-- [random_c2_profile] (https://github.com/threatexpress/random_c2_profile) Cobalt Strike random C2 Profile generator
+- [random_c2_profile](https://github.com/threatexpress/random_c2_profile) Cobalt Strike random C2 Profile generator
 
-- [C2concealer] (https://github.com/FortyNorthSecurity/C2concealer) C2concealer is a command line tool that generates randomized C2 malleable profiles for use in Cobalt Strike
+- [C2concealer](https://github.com/FortyNorthSecurity/C2concealer) C2concealer is a command line tool that generates randomized C2 malleable profiles for use in Cobalt Strike
 
-- [SourcePoint] (https://github.com/Tylous/SourcePoint) SourcePoint is a polymorphic C2 profile generator for Cobalt Strike C2s, written in Go
+- [SourcePoint](https://github.com/Tylous/SourcePoint) SourcePoint is a polymorphic C2 profile generator for Cobalt Strike C2s, written in Go
 
 __Note:__ CobaltStrike can be customized in many different ways (Artifact Kit, Resource Kit, BOF, etc) Be creative in your hunting scenarios and attributes 🚩:
 
