@@ -21,7 +21,7 @@ essentially a profile is used to tell the CS `teamserver` how traffic is going t
 Cobalt Strike is a threat emulation tool which simulates adversarial post-exploitation scenarios and supports Red Team operations. 
 Replicate the tactics of a long-term embedded threat actor using a post-exploitation agent, Beacon, and Malleable C2, a command and control program that enables modification of network indicators to blend in with traffic and look like different malware. 
 
-## 1) Hunting CobaltStrike Sacrifical process
+### 1) Hunting CobaltStrike Sacrifical process
 
 <p align="center">
   <img src="/assets/posts/2021-10-03-Malleable-C2-profile/dodgeCob.png">
@@ -92,7 +92,7 @@ post-ex {
 
 The default configuration uses `rundll32.exe`.
 
-## 2) Hunting Sacrifical Process 
+### 2) Hunting Sacrifical Process 
 
 Hunting the Cobalt Strike Sacrificial Process pattern, it's not an easy task for several reasons:
 
@@ -141,7 +141,7 @@ By tracking down the Process Creation events from Microsoft Defender for Endpoin
   <img src="/assets/posts/2021-10-03-Malleable-C2-profile/huntSacri.png">
 </p>
 
-## 3) Hunting CobaltStrike Named Pipe
+### 3) Hunting CobaltStrike Named Pipe
 
 A named pipe is a logical connection, similar to a TCP session, between a client and server that are involved in a Common Internet File System (CIFS)/SMB/SMB Version 2 and Version 3 connection. The name of the pipe serves as the endpoint for communication in the same way that a port number serves as the endpoint for TCP sessions. This is called a named pipe endpoint.
 
@@ -257,7 +257,7 @@ Altought these are good practice for defender there are many resources that can 
 __Note:__ CobaltStrike can be customized in many different ways (Artifact Kit, Resource Kit, BOF, etc) Be creative in your hunting scenarios and attributes 🚩:
 
 
-## References 
+### References 
 
 1. https://hstechdocs.helpsystems.com/manuals/cobaltstrike/current/userguide/content/topics/malleable-c2-extend_controll-post-exploitation.htm#_Toc65482859
 2. https://hstechdocs.helpsystems.com/manuals/cobaltstrike/current/userguide/content/topics/beacon-object-files_main.htm 

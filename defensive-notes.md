@@ -6,7 +6,7 @@ layout: "post"
 Some notes and tricks that helped me during engagement
 
 
-## 1) Notepad cache
+### 1) Notepad cache
 
 ```powershell
 [lazy]People like me use __Notepad++__ as a note-taking thing. We create a 'new', then never get around to saving them.
