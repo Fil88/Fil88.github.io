@@ -54,7 +54,7 @@ $F = [system.directoryservices.activedirectory.Forest]::GetCurrentForest();$F.do
 
 ## 6) Document all tasks in task scheduler
 
-	```powershell
+```powershell
 $outcsv = "c:\temp\taskdef.csv" ; Get-ScheduledTask | ForEach-Object { [pscustomobject]@{ Name = $_.TaskName; Path = $_.TaskPath;LastResult = $(($_ | Get-ScheduledTaskInfo).LastTaskResult);NextRun = $(($_ | Get-ScheduledTaskInfo).NextRunTime);Status = $_.State;Command = $_.Actions.execute;Arguments = $_.Actions.Arguments }} |Export-Csv -Path $outcsv -NoTypeInformation -Force
 	
 	
@@ -82,8 +82,11 @@ $task= Get-ScheduledTask -TaskName Task1
 ForEach ($action in $task.Actions) { Select $action.Execute}
 
 #As a low privilege user we have to check if we can overwrite this file. Using icacls or accesschk64.exe
+#If we have write permission, we can replace the original ".exe" binary with the malicious payload.
 ```
 	
 ## 7) Unquoted Service Path 
 
+```powershell
 wmic service get name,displayname,startmode,pathname | findstr /i /v "C:\Windows\\" |findstr /i /v """
+```
