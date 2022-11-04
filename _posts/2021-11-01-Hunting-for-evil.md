@@ -212,7 +212,7 @@ DeviceNetworkEvents
 
 ```
 
-### x7) ASR Rare and Untrusted Executables
+### 7) ASR Rare and Untrusted Executables
 
 ```powershell
 // Query parameters:
@@ -235,6 +235,25 @@ DeviceEvents
 // If you want to list only the files that have invalid signatures uncomment the below line
 // there might be files without signature info, don't exclude them
 // | where IsTrusted <> 1
+```
+
+### 8) Suspicious process injection with QueueUserApcRemoteApiCall
+
+```powershell
+// Identify suspicious process injection with QueueUserApcRemoteApiCall
+//can be integrated with | where ActionType in~ ("CreateRemoteThreadApiCall", "QueueUserApcRemoteApiCall", "SetThreadContextRemoteApiCall", "WriteProcessMemoryRemoteApiCall", "QueueUserApc", "NtAllocateVirtualMemoryRemoteApiCall" )
+let timeframe = (10d);
+let QueueUserApcRemote = DeviceEvents
+| where Timestamp > ago(timeframe)
+| where ActionType == "QueueUserApcRemoteApiCall"
+| distinct InitiatingProcessSHA1
+| invoke FileProfile(InitiatingProcessSHA1, 1000)
+| where GlobalPrevalence < 1000 or isempty(GlobalPrevalence) or SoftwareName startswith "Microsoft Office";
+DeviceEvents
+| where Timestamp > ago(timeframe)
+| where InitiatingProcessSHA1 in~ ((QueueUserApcRemote | project InitiatingProcessSHA1))
+| join kind=leftouter QueueUserApcRemote on InitiatingProcessSHA1
+| sort by Timestamp desc 
 ```
 
 ### x) Template
