@@ -81,8 +81,6 @@ https://shodan.io/search?query=http.html_hash%3A-1957161625
 
 __Note:__ Ideally, for these kind of query a commercial API key is required🚩:
 
-
-
 ### 8) Creepy
 
 [Creepy:](https://www.geocreepy.com/)is a geolocation OSINT tool that can get complete geolocation data from any post on social networking platforms like Twitter, Flickr, Facebook, etc.
