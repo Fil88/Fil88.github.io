@@ -32,9 +32,9 @@ It focuses on bringing the links of OSINT resources. Some of the tools included 
 
 ### 2) CheckUserNames
 
-Checkusernames is a website searching for usernames for the most popular Social Media and Social Networking sites. Check for your brand, trademark, product or user name. By doing so, you can find the websites where usernames exist, and you can search their profiles on those websites.
+[CheckUserNames:](https://checkusernames.com) is a website searching for usernames for the most popular Social Media and Social Networking sites. Check for your brand, trademark, product or user name. By doing so, you can find the websites where usernames exist, and you can search their profiles on those websites.
 
-[CheckUserNames:](http://checkusernames.com/)
+
 
 ### 3) HaveIbeenPwned
 
