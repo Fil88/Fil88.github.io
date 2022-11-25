@@ -59,22 +59,17 @@ Shodan is a deep web & internet of things search engine and network security mon
 
 [Shodan:](https://www.shodan.io/) can also be used to hunt for C2/Adversarial Infrastructure. Below some basic example of common C2C framework: 
 
-- Cobaltstrike: `https://shodan.io/search?query=product%3A%22Cobalt+Strike+Beacon%22`
-- Covenant: `https://shodan.io/search?query=ssl%3A%E2%80%9DCovenant%E2%80%9D%20http.component%3A%E2%80%9DBlazor%E2%80%9D`
-- Brute Ratel C4: `https://shodan.io/search?query=http.html_hash%3A-1957161625`
-
-
-```powershell
+```python
 # Cobaltstrike
 https://shodan.io/search?query=product%3A%22Cobalt+Strike+Beacon%22
 ```
 
-```powershell
+```python
 # Covenant
 https://shodan.io/search?query=ssl%3A%E2%80%9DCovenant%E2%80%9D%20http.component%3A%E2%80%9DBlazor%E2%80%9D
 ```
 
-```powershell
+```python
 # Brute Ratel C4
 https://shodan.io/search?query=http.html_hash%3A-1957161625
 ```
