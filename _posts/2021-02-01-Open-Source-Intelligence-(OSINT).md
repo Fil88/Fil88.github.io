@@ -35,14 +35,13 @@ It focuses on bringing the links of OSINT resources. Some of the tools included 
 [CheckUserNames:](https://checkusernames.com) is a website searching for usernames for the most popular Social Media and Social Networking sites. Check for your brand, trademark, product or user name. By doing so, you can find the websites where usernames exist, and you can search their profiles on those websites.
 
 
-
 ### 3) HaveIbeenPwned
 
-This website is one of my favourite intelligence websites because of its precise and valuable information and user-friendly UI. Pwned means “owned” or “being compromised”, a popular term for online gamers. You can search your e-mail address and phone number to see if your mail or phone number is in any data breach and which ones.
+[HaveIBeenPwned:](https://haveibeenpwned.com) website is one of my favourite intelligence websites because of its precise and valuable information and user-friendly UI. Pwned means “owned” or “being compromised”, a popular term for online gamers. You can search your e-mail address and phone number to see if your mail or phone number is in any data breach and which ones.
 
 ### 4) Censys
 
-Censys is a pioneer search engine for Internet-connected device attack surfaces. It helps to companies understand their risk. 
+[Censys:](https://censys.io) is a pioneer search engine for Internet-connected device attack surfaces. It helps to companies understand their risk. 
 According to its website, Censys continuously scans the Internet to find new services and update information.
 
 ### 5) Wappalyzer
