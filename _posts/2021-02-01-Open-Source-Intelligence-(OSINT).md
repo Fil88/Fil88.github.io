@@ -34,6 +34,8 @@ It focuses on bringing the links of OSINT resources. Some of the tools included 
 
 Checkusernames is a website searching for usernames for the most popular Social Media and Social Networking sites. Check for your brand, trademark, product or user name. By doing so, you can find the websites where usernames exist, and you can search their profiles on those websites.
 
+[CheckUserNames:](http://checkusernames.com/)
+
 ### 3) HaveIbeenPwned
 
 This website is one of my favourite intelligence websites because of its precise and valuable information and user-friendly UI. Pwned means “owned” or “being compromised”, a popular term for online gamers. You can search your e-mail address and phone number to see if your mail or phone number is in any data breach and which ones.
@@ -54,6 +56,13 @@ TheHarvester is a Linux tool to find information about a company’s DNS servers
 ### 7) Shodan
 
 Shodan is a deep web & internet of things search engine and network security monitor for hackers. John Matherly created it in 2009 to keep track of publicly accessible computers inside any network.
+
+[Shodan:](https://www.shodan.io/) can also be used to hunt for C2/Adversarial Infrastructure. Below some basic example of common C2C framework: 
+
+- Cobaltstrike: `https://shodan.io/search?query=product%3A%22Cobalt+Strike+Beacon%22`
+- Covenant: `https://shodan.io/search?query=ssl%3A%E2%80%9DCovenant%E2%80%9D%20http.component%3A%E2%80%9DBlazor%E2%80%9D`
+- Brute Ratel C4: `https://shodan.io/search?query=http.html_hash%3A-1957161625`
+
 
 ### 8) Creepy
 
