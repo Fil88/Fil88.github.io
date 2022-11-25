@@ -51,7 +51,7 @@ Wappalyzer is a technology profiler that identifies technologies on websites. It
 
 TheHarvester is a Linux tool to find information about a company’s DNS servers, Public IP addresses, E-mails, subdomains etc. It uses public search engines to gather information like Google, Baidu, Bing, Yandex etc. It mostly uses passive reconnaissance methods. Next codes should be written sequentially as an example;
 
-### 7) theHarvester
+### 7) Shodan
 
 Shodan is a deep web & internet of things search engine and network security monitor for hackers. John Matherly created it in 2009 to keep track of publicly accessible computers inside any network.
 
