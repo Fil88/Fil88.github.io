@@ -64,6 +64,27 @@ Shodan is a deep web & internet of things search engine and network security mon
 - Brute Ratel C4: `https://shodan.io/search?query=http.html_hash%3A-1957161625`
 
 
+```powershell
+# Cobaltstrike
+https://shodan.io/search?query=product%3A%22Cobalt+Strike+Beacon%22
+```
+
+```powershell
+# Covenant
+https://shodan.io/search?query=ssl%3A%E2%80%9DCovenant%E2%80%9D%20http.component%3A%E2%80%9DBlazor%E2%80%9D
+```
+
+```powershell
+# Brute Ratel C4
+https://shodan.io/search?query=http.html_hash%3A-1957161625
+```
+
+
+
+__Note:__ Ideally, for these kind of query a commercial API key is required🚩:
+
+
+
 ### 8) Creepy
 
 Creepy is a geolocation OSINT tool that can get complete geolocation data from any post on social networking platforms like Twitter, Flickr, Facebook, etc.
