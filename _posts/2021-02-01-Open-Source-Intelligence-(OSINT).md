@@ -113,6 +113,25 @@ This recon tool can help you to launch queries over 100 public data sources to g
 [FOCA:](https://github.com/ElevenPaths/FOCA)(Fingerprinting Organizations with Collected Archives) is a tool written by ElevenPaths that can be used to scan, analyze, extract and classify information from remote web servers and their hidden information.
 Foca has the ability to analyze and collect valuable data from MS Office suite, OpenOffice, PDF, as well as Adobe InDesign and SVG and GIF files. This security tool also works actively with Google, Bing and DuckDuckGo search engines to collect additional data from those files. Once you have the full file list, it starts extracting information to attempt to identify more valuable data from the files.
 
+### 2) OSINT Websites & Blogs 
+
+These OSINT websites and blogs are useful to learn about new OSINT trends, tools, case studies, and what is happening in the OSINT world:
+
+- [Hatless1der by Griffin:](http://hatless1der.com) An active contributor to the OSINT community, Griffin shares real-life OSINT and GEOINT investigations as well as a useful list of tools and resources.
+
+- [Lorand Bodo:](https://lorandbodo.com) A multilingual analyst with a strong background in open source intelligence (OSINT), Lorand Bodo specializes in monitoring/analysing terrorist entities online, developing unique research methodologies for intelligence gathering, and finally, providing in-depth analysis on issues that matter.
+
+- [Offensive OSINT by Wojciech:](https://www.offensiveosint.io) Experienced systems engineer, pentester, and OSINT researcher, Wojciech writes specifically about offensive OSINT investigations, tools, methodologies, and analysis.
+
+- [OSINT Techniques:](https://www.osinttechniques.com) This site provides numerous free open source resources for researching and analyzing information. Although the information on this website is for anyone to use, it would be most helpful to those in investigative roles such as analysts and researchers.
+
+- [Secjuice:](https://www.secjuice.com) Secjuice features hundreds of articles on cybersecurity, OSINT guides and tutorials, interesting investigations, and many more technical and educational infosec topics written by individual contributors who are experts or enthusiasts in these fields.
+
+- [Week in OSINT Newsletter by Sector035:](https://sector035.nl) The Sector035 Newsletter, published every Monday, is a curated collection of #OSINT related talks, tips, tools, and handy websites for you to discover.
+
+- [Wondersmith Rae by Rae Baker:](https://wondersmithrae.medium.com) A well-known OSINT practitioner, author, and speaker, Rae Baker shares her insights, opinions, analysis, and investigations on interesting OSINT and infosec topics.
+
+
 
 
 ### References 
