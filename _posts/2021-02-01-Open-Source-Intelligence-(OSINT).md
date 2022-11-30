@@ -119,6 +119,8 @@ Foca has the ability to analyze and collect valuable data from MS Office suite, 
 
 1. https://medium.com/block-magnates/open-source-intelligence-osint-996c8d2db362
 2. https://medium.com/codex/what-is-open-source-intelligence-osint-43e56eb113b4
+3. https://github.com/johnjohnsp1/osint_stuff_tool_collection
+
 
 
 
