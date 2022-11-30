@@ -5,6 +5,9 @@ layout: "post"
 
 In this simple and humble post, I am going to cover the fundamentals of open source intelligence, including how it’s used and the tools and techniques that can be leveraged to gather and analyze it. 
 
+
+
+
 Open-source intelligence (OSINT) is collecting and analysing data from open sources to get intelligence about that source. 
 According to CIA, OSINT is intelligence “drawn from publicly available material”.
 Open-source doesn’t mean the open-source software movement. It refers to describing the data being analysed as publicly available over open sources (eg. Internet, Social, etc)
