@@ -82,7 +82,7 @@ https://shodan.io/search?query=ssl%3A%E2%80%9DCovenant%E2%80%9D%20http.component
 https://shodan.io/search?query=http.html_hash%3A-1957161625
 ```
 
-__Note:__ Ideally, for these kind of query a commercial API key is required🚩:
+__Note:__ for these kind of query a commercial API key is required🚩:
 
 ### 8) Creepy
 
