@@ -261,16 +261,20 @@ __Note:__ CobaltStrike can be customized in many different ways (Artifact Kit, R
 
 Cobalt Strike uses the Artifact Kit to generate its executables and DLLs. The Artifact Kit is part of the Arsenal Kit, which contains a collection of kits—a source code framework to build executables and DLLs that evade some anti-virus products. 
 
-Cobalt Strike’s default Artifact Kit EXEs and DLLs use named pipes to launder shellcode in a way that defeats antivirus binary emulation circa 2014. It’s still the default. When you see __\\.\pipe\MSSE-###-server__ that’s likely the default Cobalt Strike Artifact Kit binaries. You can change this via the Artifact Kit. Look at __src-common/bypass-pipe.c__ in the Artifact Kit to see the implementation.
+Cobalt Strike’s default Artifact Kit EXEs and DLLs use named pipes to launder shellcode in a way that defeats antivirus binary emulation circa 2014. It’s still the default. When you see __"\\.\pipe\MSSE-###-server"__ that’s likely the default Cobalt Strike Artifact Kit binaries. You can change this via the Artifact Kit. Look at __"src-common/bypass-pipe.c"__ in the Artifact Kit to see the implementation.
 
-Cobalt Strike also uses named pipes for its payload staging in the __jump__ __psexec_psh__ module for lateral movement. This pipename is __\\.\pipe\status_##__. You can change the pipe via Malleable C2 (set pipename_stager).
+ The Artifact Kit is designed to facilitate the development of AV-safe variants of these payloads based on the premise of loading said shellcode in a manner in which AV engines cannot emulate.  It works on a system of "bypass templates" which allow you to change existing bypass strategies for reading shellcode, or implement entirely new ones.
 
-Cobalt Strike uses named pipes in its SMB Beacon communication. The product has had this feature since 2013. It’s pretty cool. You can change the pipename via your profile and when you configure an SMB Beacon payload. I’m also aware of a few detections that target the content of the SMB Beacon feature too. The SMB Beacon uses a [length][data] pattern and these IOCs target predictable [length] values at the beginning of the traffic. The __smb_frame_header__ Malleable C2 option pushes back on this. The default pipe is __\\[target]\pipe\msagent_##__.
+The kit can be found in __"C:\Tools\cobaltstrike\arsenal-kit\kits\artifact"__.
+
+Cobalt Strike also uses named pipes for its payload staging in the __jump__ __psexec_psh__ module for lateral movement. This pipename is __"\\.\pipe\status_##"__. You can change the pipe via Malleable C2 (set pipename_stager).
+
+Cobalt Strike uses named pipes in its SMB Beacon communication. The product has had this feature since 2013. It’s pretty cool. You can change the pipename via your profile and when you configure an SMB Beacon payload. I’m also aware of a few detections that target the content of the SMB Beacon feature too. The SMB Beacon uses a [length][data] pattern and these IOCs target predictable [length] values at the beginning of the traffic. The __smb_frame_header__ Malleable C2 option pushes back on this. The default pipe is __"\\[target]\pipe\msagent_##"__.
 
 ### Resource Kit  
 
 The Resource Kit is Cobalt Strike’s means to change the HTA, PowerShell, Python, VBA, and VBS script templates Cobalt Strike uses in its workflows. The Resource Kit is part of the Arsenal Kit, which contains a collection of kits and is available to licensed users in the Cobalt Strike arsenal. Go to Help -> Arsenal to download the Arsenal Kit. The README.md supplied with the Resource Kit documents the included scripts and which features use them. To evade a product, consider changing strings or behaviors in these scripts.
-To make Cobalt Strike use your script templates over the built-in script templates, load either the __dist/arsenal_kit.cna__ or __dist/resource/resources.cna__ script. See the Arsenal Kit README.md file for more information.
+To make Cobalt Strike use your script templates over the built-in script templates, load either the __"dist/arsenal_kit.cna"__ or __"dist/resource/resources.cna"__ script. See the Arsenal Kit README.md file for more information.
 
 
 ### References 
