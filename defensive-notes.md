@@ -9,7 +9,7 @@ Some notes and tricks that helped me during engagement
 ### 1) Notepad cache
 
 ```powershell
-[lazy]People like me use __Notepad++__ as a note-taking thing. We create a 'new', then never get around to saving them.
+[lazy]People like me use Notepad++ as a note-taking thing. We create a 'new', then never get around to saving them.
 
 They get cached here:
 C:\Users\{username}\AppData\Roaming\Notepad++\backup
@@ -18,7 +18,7 @@ C:\Users\{username}\AppData\Roaming\Notepad++\backup
 ### 2) Procdump.exe 
 
 ```powershell
-If you rename __procdump.exe to __dump64.exe__ and place it in the "C:\Program Files (x86)\Microsoft Visual Studio\*" folder, you can bypass Defender and dump __LSASS__.
+If you rename __procdump.exe to dump64.exe and place it in the "C:\Program Files (x86)\Microsoft Visual Studio\*" folder, you can bypass Defender and dump LSASS.
 ```
 
 ### 3) Malicious Macro Enabled
