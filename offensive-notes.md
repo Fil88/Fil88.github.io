@@ -17,17 +17,12 @@ It should be useful in a lot of cases when dealing with Windows / AD exploitatio
 
 #Build LDAP filters to look for domain controller
 $ldapFilter = "(primaryGroupID=516)"
-
 $domain = New-Object System.DirectoryServices.DirectoryEntry
-
 $search = New-Object System.DirectoryServices.DirectorySearcher
-
 $search.SearchRoot = $domain
 $search.Filter = $ldapFilter
 $search.SearchScope = "Subtree"
-
 $results = $search.FindAll()
-
 foreach ($result in $results)
 {
 	$object = $result.GetDirectoryEntry()
