@@ -10,6 +10,9 @@ In this specific scenario we will try to experiment and simulate a malware paylo
 - DLL Execution 
 - Havoc C2C comunications
 
+
+
+
 In normal red team campain it is paramount to find a way to deliver the malicious payload and force the user to interact with our files. For this reason, in this particular scenario, we will try to simulate a .zip delivery containing two distinct file. The firs file inside the `.zip` will be an encrypted PDF document (sign contract, legal document, CV, just use your immagination), the second one will be a `.lnk` shortcut file masquerade as a text file (`readme.txt`). The idea here is the following: the user receive the files (could be via email or via MS Teams) and try to open up the encrypted pdf, which will ask the user to specify a password and then the user will open up the fake notepad file to recover the original PDF's password. By doint so the `.lnk` shortcut file in the background will execute the tasks necessary to deliver and execute our malicious DLL.  
 
 <p align="center">
