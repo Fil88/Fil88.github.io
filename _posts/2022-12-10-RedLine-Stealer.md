@@ -1,4 +1,4 @@
----
+﻿---
 title: "Lapsus$ - RedLine Stealer Investigations" 
 layout: "post"
 ---
@@ -21,20 +21,20 @@ According to the threat actors who have developed RedLine Stealer, the malware h
 The following image shows a RedLine sales thread on the dark web. 
 
 <p align="center">
-  <img src="/assets/posts/2022-06-01-Initial-Access-Simulation/1.PNG">
+  <img src="/assets/posts/2022-06-01-Initial-Access-Simulation/1.JPG">
 </p>
 
 The following image shows a RedLine Stealer build settings panel.
 
 <p align="center">
-  <img src="/assets/posts/2022-06-01-Initial-Access-Simulation/2.PNG">
+  <img src="/assets/posts/2022-06-01-Initial-Access-Simulation/2.JPG">
 </p>
 
 The 24th of January 2022, the well-known online sandbox “ANY.RUN” published the list of the most uploaded cyber threats and RedLine Stealer was on top of this list.
 
 
 <p align="center">
-  <img src="/assets/posts/2022-06-01-Initial-Access-Simulation/3.PNG">
+  <img src="/assets/posts/2022-06-01-Initial-Access-Simulation/3.JPG">
 </p>
 
 ## Hunting
@@ -64,7 +64,7 @@ DeviceNetworkEvents
 The above-mentioned query – executed on the last 30 days – has not produced any results
 
 <p align="center">
-  <img src="/assets/posts/2022-06-01-Initial-Access-Simulation/4.PNG">
+  <img src="/assets/posts/2022-06-01-Initial-Access-Simulation/4.JPG">
 </p>
 
 The malware achieves persistence on the compromised endpoint by adding a key called “sys_w4” on the following registry:
@@ -72,13 +72,13 @@ The malware achieves persistence on the compromised endpoint by adding a key cal
 • HKCU\Software\Microsoft\Windows\CurrentVersion\Run
 
 <p align="center">
-  <img src="/assets/posts/2022-06-01-Initial-Access-Simulation/5.PNG">
+  <img src="/assets/posts/2022-06-01-Initial-Access-Simulation/5.JPG">
 </p>
 
 By searching for the following query, it is possible to identify run registry keys which are named “sys_w4”.
 
 <p align="center">
-  <img src="/assets/posts/2022-06-01-Initial-Access-Simulation/6.PNG">
+  <img src="/assets/posts/2022-06-01-Initial-Access-Simulation/6.JPG">
 </p>
 
 ```powershell 
@@ -90,13 +90,13 @@ DeviceRegistryEvents
 The above-mentioned query – executed on the last 30 days – has not produced any results.
 
 <p align="center">
-  <img src="/assets/posts/2022-06-01-Initial-Access-Simulation/8.PNG">
+  <img src="/assets/posts/2022-06-01-Initial-Access-Simulation/8.JPG">
 </p>
 
 Finally, it has been performed various queries to identify the IoCs described on CERT-AGID report. The queries – performed on the last 30 days – has not identified any match with the reported IoCs.
 
 <p align="center">
-  <img src="/assets/posts/2022-06-01-Initial-Access-Simulation/9.PNG">
+  <img src="/assets/posts/2022-06-01-Initial-Access-Simulation/9.JPG">
 </p>
 
 
@@ -119,7 +119,7 @@ DeviceProcessEvents
 The above-mentioned query – executed on the last 30 days – has not produced any results.
 
 <p align="center">
-  <img src="/assets/posts/2022-06-01-Initial-Access-Simulation/10.PNG">
+  <img src="/assets/posts/2022-06-01-Initial-Access-Simulation/10.JPG">
 </p>
 
 
@@ -141,7 +141,7 @@ In some cases, threat actors have created fake websites to host malicious Excel 
 
 
 <p align="center">
-  <img src="/assets/posts/2022-06-01-Initial-Access-Simulation/12.PNG">
+  <img src="/assets/posts/2022-06-01-Initial-Access-Simulation/12.JPG">
 </p>
 
 
@@ -163,7 +163,7 @@ During the threat hunting activities, the last RedLine Stealer samples uploaded 
 •	Evasion: RedLine Stealer tries to disable Windows Defender real-time protection via PowerShell.
 
 <p align="center">
-  <img src="/assets/posts/2022-06-01-Initial-Access-Simulation/12.PNG">
+  <img src="/assets/posts/2022-06-01-Initial-Access-Simulation/12.JPG">
 </p>
 
 By searching for the following query, it is possible to identify potential malicious processes that are trying to disable Windows Defender.
@@ -180,7 +180,7 @@ The above-mentioned query – executed on the last 30 days – has not produced 
 •	Persistence: RedLine Stealer creates a task that is executed every time a user login into the endpoint.
 
 <p align="center">
-  <img src="/assets/posts/2022-06-01-Initial-Access-Simulation/14.PNG">
+  <img src="/assets/posts/2022-06-01-Initial-Access-Simulation/14.JPG">
 </p>
 
 By searching for the following query, it is possible to identify process that achieves persistence through scheduled tasks that are triggered every time a user logs in. 
@@ -199,7 +199,7 @@ Furthermore, other IoCs related to RedLine Stealer have been extracted from the 
 The queries – performed on the last 30 days – has not identified any match with the specified IoCs.
 
 <p align="center">
-  <img src="/assets/posts/2022-06-01-Initial-Access-Simulation/15.PNG">
+  <img src="/assets/posts/2022-06-01-Initial-Access-Simulation/15.JPG">
 </p>
 
 
