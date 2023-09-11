@@ -61,6 +61,7 @@ The threat activities were focused on searching for:
 ### 1. LastPass
 
 In November 2021, CERT-AGID identified a RedLine Stealer sample that was delivered through a fake LastPass browser plugin installation. The malware was a PE file, written in .NET, with a “.ISO” file extension. By running the executable, the malware downloads via an encoded PowerShell script the second stage of the malware that was residing in the domain “cdn.discordapp.com”.
+
 By searching for the following query, it is possible to identify suspicious process that do not belong to Discord or Browsers which perform connections to “cdn.discordapp.com”
 
 ```powershell 
@@ -89,10 +90,6 @@ The malware achieves persistence on the compromised endpoint by adding a key cal
 
 By searching for the following query, it is possible to identify run registry keys which are named “sys_w4”.
 
-<p align="center">
-  <img src="/assets/posts/2022-12-10-RedLine-Stealer/6.JPG">
-</p>
-
 ```powershell 
 DeviceRegistryEvents
 | where RegistryKey contains "Software\\Microsoft\\Windows\\CurrentVersion\\Run"
@@ -101,11 +98,20 @@ DeviceRegistryEvents
 
 The above-mentioned query – executed on the last 30 days – has not produced any results.
 
+
+<p align="center">
+  <img src="/assets/posts/2022-12-10-RedLine-Stealer/6.JPG">
+</p>
+
+
+
+
+
+Finally, it has been performed various queries to identify the IoCs described on CERT-AGID report. The queries – performed on the last 30 days – has not identified any match with the reported IoCs.
+
 <p align="center">
   <img src="/assets/posts/2022-12-10-RedLine-Stealer/7.JPG">
 </p>
-
-Finally, it has been performed various queries to identify the IoCs described on CERT-AGID report. The queries – performed on the last 30 days – has not identified any match with the reported IoCs.
 
 <p align="center">
   <img src="/assets/posts/2022-12-10-RedLine-Stealer/8.JPG">
