@@ -147,7 +147,7 @@ The queries performed on the last 30 days – has not identified any match with 
 
 ### 3. Malicious Excel XLL file
 
-In some cases, threat actors have created fake websites to host malicious Excel XLL files with the objective to compromise victims’ endpoints with RedLine Stealer malware. XLL files are DLL files that include a function name “xlAutoOpen” that is executed by Excel when the file is opened.
+In some cases, threat actors have created fake websites to host malicious `Excel XLL` files with the objective to compromise victims’ endpoints with RedLine Stealer malware. XLL files are DLL files that include a function name “xlAutoOpen” that is executed by Excel when the file is opened.
 
 
 <p align="center">
