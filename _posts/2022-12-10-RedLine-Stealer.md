@@ -8,6 +8,11 @@ layout: "post"
 
 RedLine Stealer is an information stealer malware sold on various online criminal forums (i.e. “Malware-as- a-Service”) by the Russian cybercriminal “REDGlade”, which has the objective to steal sensitive data such as usernames, passwords, cookies, payment card information, etc.
 RedLine has been distributed since the first months of 2020 but has become more prevalent in 2021 and the stolen information are sold on multiple criminal shops, including Amigos Market and Russian Market. The malware is frequently distributed by phishing email and messaging on social media, abusing themes such as COVID-19. Moreover, it masquerades itself as legitimate software installer (e.g. Messaging app, privacy software, etc.).
+
+
+
+
+
 RedLine Stealer can also be used to load additional malware onto the victim system, since it provides download and execution capabilities.
 According to the threat actors who have developed RedLine Stealer, the malware has an admin panel developed in C# and it steals login data from multiple sources, including:
 
