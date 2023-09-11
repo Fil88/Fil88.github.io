@@ -17,10 +17,15 @@ RedLine Stealer can also be used to load additional malware onto the victim syst
 According to the threat actors who have developed RedLine Stealer, the malware has an admin panel developed in C# and it steals login data from multiple sources, including:
 
 • All Chromium and Mozilla Gecko-based web browsers
+
 • Cookies
+
 • Account credentials
+
 • Payment card data
+
 • Autofill forms
+
 • FTP and Instant messenger client data.
 
 The following image shows a RedLine sales thread on the dark web. 
