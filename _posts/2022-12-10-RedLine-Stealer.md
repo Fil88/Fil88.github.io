@@ -52,7 +52,9 @@ The 24th of January 2022, the well-known online sandbox “ANY.RUN” published 
 The threat activities were focused on searching for:
 
 • connections to RedLine Stealer command and control servers
+
 • execution of RedLine Stealer on the endpoints monitored by the EDR
+
 • presence of signs of persistence techniques correlated to RedLine Stealer
 
 
@@ -100,13 +102,13 @@ DeviceRegistryEvents
 The above-mentioned query – executed on the last 30 days – has not produced any results.
 
 <p align="center">
-  <img src="/assets/posts/2022-12-10-RedLine-Stealer/8.JPG">
+  <img src="/assets/posts/2022-12-10-RedLine-Stealer/7.JPG">
 </p>
 
 Finally, it has been performed various queries to identify the IoCs described on CERT-AGID report. The queries – performed on the last 30 days – has not identified any match with the reported IoCs.
 
 <p align="center">
-  <img src="/assets/posts/2022-12-10-RedLine-Stealer/9.JPG">
+  <img src="/assets/posts/2022-12-10-RedLine-Stealer/8.JPG">
 </p>
 
 
@@ -129,7 +131,7 @@ DeviceProcessEvents
 The above-mentioned query – executed on the last 30 days – has not produced any results.
 
 <p align="center">
-  <img src="/assets/posts/2022-12-10-RedLine-Stealer/10.JPG">
+  <img src="/assets/posts/2022-12-10-RedLine-Stealer/9.JPG">
 </p>
 
 
@@ -151,7 +153,7 @@ In some cases, threat actors have created fake websites to host malicious `Excel
 
 
 <p align="center">
-  <img src="/assets/posts/2022-12-10-RedLine-Stealer/12.JPG">
+  <img src="/assets/posts/2022-12-10-RedLine-Stealer/10.JPG">
 </p>
 
 
@@ -173,7 +175,7 @@ During the threat hunting activities, the last RedLine Stealer samples uploaded 
 •	Evasion: RedLine Stealer tries to disable Windows Defender real-time protection via PowerShell.
 
 <p align="center">
-  <img src="/assets/posts/2022-12-10-RedLine-Stealer/12.JPG">
+  <img src="/assets/posts/2022-12-10-RedLine-Stealer/11.JPG">
 </p>
 
 By searching for the following query, it is possible to identify potential malicious processes that are trying to disable Windows Defender.
@@ -190,7 +192,7 @@ The above-mentioned query – executed on the last 30 days – has not produced 
 •	Persistence: RedLine Stealer creates a task that is executed every time a user login into the endpoint.
 
 <p align="center">
-  <img src="/assets/posts/2022-12-10-RedLine-Stealer/14.JPG">
+  <img src="/assets/posts/2022-12-10-RedLine-Stealer/12.JPG">
 </p>
 
 By searching for the following query, it is possible to identify process that achieves persistence through scheduled tasks that are triggered every time a user logs in. 
@@ -209,7 +211,7 @@ Furthermore, other IoCs related to RedLine Stealer have been extracted from the 
 The queries – performed on the last 30 days – has not identified any match with the specified IoCs.
 
 <p align="center">
-  <img src="/assets/posts/2022-12-10-RedLine-Stealer/15.JPG">
+  <img src="/assets/posts/2022-12-10-RedLine-Stealer/13.JPG">
 </p>
 
 
