@@ -573,3 +573,12 @@ Need to go under the radar downloading #mimikatz (and other suspect payloads)? T
 https://twitter.com/ElliotKillick/status/1455897435063074824
 ```
 
+#### WorkFolders.exe
+
+```powershell
+"C:\Windows\System32\WorkFolders.exe" (signed by MS) can be used to run arbitrary executables in the current working directory with the name control.exe. 
+
+It's like a new rundll32.exe #lolbin but for EXEs!
+
+https://twitter.com/ElliotKillick/status/1449812843772227588
+```
