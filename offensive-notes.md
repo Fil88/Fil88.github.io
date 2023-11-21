@@ -560,3 +560,16 @@ C:\Windows\system32\cmd.exe /C adfind.exe -f "(objectcategory=organizationalUnit
 C:\Windows\system32\cmd.exe /C adfind.exe -f "objectcategory=computer" > ad_computers.txt
 C:\Windows\system32\cmd.exe /C adfind.exe -f "(objectcategory=person)" > ad_users.txt
 ```
+
+## 13) LoLBins Executions
+
+#### Cmdl32.exe
+
+```powershell
+Need to go under the radar downloading #mimikatz (and other suspect payloads)? Then newly discovered #lolbin?
+
+"C:\Windows\System32\Cmdl32.exe" (signed by MS) is for you. It's like a new certutil.exe but absolutely unheard of by any antivirus software!
+
+https://twitter.com/ElliotKillick/status/1455897435063074824
+```
+
